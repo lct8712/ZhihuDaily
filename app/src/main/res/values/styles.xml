@@ -1,0 +1,49 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+    <!-- Font styles -->
+    <!-- http://www.google.com/design/spec/style/typography.html#typography-standard-styles -->
+    <style name="text_button">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/text_deep</item>
+    </style>
+
+    <style name="text_caption">
+        <item name="android:textSize">@dimen/text_size_micro</item>
+        <item name="android:textColor">@color/text_light</item>
+    </style>
+
+    <style name="text_body1">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/text_deep</item>
+    </style>
+
+    <style name="text_body2">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/text_deep</item>
+    </style>
+
+    <style name="text_subtitle">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/text_deep</item>
+    </style>
+
+    <style name="text_title">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textColor">@color/text_deep</item>
+    </style>
+
+    <style name="text_headline">
+        <item name="android:textSize">@dimen/text_size_tall</item>
+        <item name="android:textColor">@color/text_deep</item>
+    </style>
+
+    <style name="text_display">
+        <item name="android:textSize">@dimen/text_size_huge</item>
+        <item name="android:textColor">@color/text_light</item>
+    </style>
+
+</resources>
