@@ -1,0 +1,39 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.chentian.zhihudaily.zhihudaily.ui.fragment.StoryDetailFragment">
+
+
+    <com.chentian.zhihudaily.zhihudaily.ui.view.ArticleHeaderView
+            android:id="@+id/article_header"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/slide_image_height"/>
+
+    <ScrollView
+            android:id="@+id/scroll_view_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/slide_image_height"/>
+
+            <WebView
+                    android:id="@+id/web_view_article"
+                    android:background="@android:color/white"
+                    style="@style/text_body2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</FrameLayout>

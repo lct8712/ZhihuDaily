@@ -27,6 +27,8 @@ public class StoryDetail {
 
   private String body;
 
+  private String image;
+
   private String image_source;
 
   private String title;
@@ -75,6 +77,14 @@ public class StoryDetail {
 
   public void setBody(String body) {
     this.body = body;
+  }
+
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
   }
 
   public String getImage_source() {

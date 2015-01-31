@@ -23,7 +23,7 @@
 
     <style name="text_body2">
         <item name="android:textSize">@dimen/text_size_small</item>
-        <item name="android:textColor">@color/text_deep</item>
+        <item name="android:textColor">@color/text_light</item>
     </style>
 
     <style name="text_subtitle">

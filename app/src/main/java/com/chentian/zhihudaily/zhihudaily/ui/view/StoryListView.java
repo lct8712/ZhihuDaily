@@ -21,11 +21,9 @@ import com.chentian.zhihudaily.zhihudaily.util.CollectionUtils;
 public class StoryListView extends ListView {
 
   private Context context;
-
   private StoryAdapter adapter;
 
   private boolean isLoading;
-
   private boolean isEnded;
 
   public StoryListView(Context context, AttributeSet attrs) {

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">知乎日报</string>
+    <string name="action_settings">设置</string>
+    <string name="drawer_open">打开</string>
+    <string name="drawer_close">关闭</string>
+    <string name="empty"> </string>
+    <string name="landing_page">首页</string>
+    <string name="story_icon">文章图标</string>
+    <string name="story_title">文章标题</string>
+    <string name="title_activity_detail">文章详情页</string>
+
+</resources>

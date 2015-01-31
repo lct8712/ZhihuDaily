@@ -25,16 +25,16 @@ public interface NewsService {
   void getBeforeStoryCollection(@Path("date") String date, Callback<StoryCollection> callback);
 
   @GET("/news/{id}")
-  void getStoryDetail(@Path("id") int id, Callback<StoryDetail> callback);
+  void getStoryDetail(@Path("id") long id, Callback<StoryDetail> callback);
 
   @GET("/story-extra/{id}")
-  void getStoryExtra(@Path("id") int id, Callback<StoryDetail> callback);
+  void getStoryExtra(@Path("id") long id, Callback<StoryDetail> callback);
 
   @GET("/story/{id}/short-comments")
-  void getShortComments(@Path("id") int id, Callback<CommentCollection> callback);
+  void getShortComments(@Path("id") long id, Callback<CommentCollection> callback);
 
   @GET("/story/{id}/long-comments")
-  void getLongComments(@Path("id") int id, Callback<CommentCollection> callback);
+  void getLongComments(@Path("id") long id, Callback<CommentCollection> callback);
 
   @GET("/themes")
   void getLatestThemeCollection(Callback<ThemeCollection> callback);

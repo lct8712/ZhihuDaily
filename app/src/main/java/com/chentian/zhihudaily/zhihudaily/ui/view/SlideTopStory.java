@@ -12,15 +12,16 @@ import com.chentian.zhihudaily.zhihudaily.api.model.StoryAbstract;
 import com.chentian.zhihudaily.zhihudaily.util.ViewUtils;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 
 /**
  * Slide images show top stories
+ *   https://github.com/daimajia/AndroidImageSlider
  *
  * @author chentian
  */
 public class SlideTopStory extends SliderLayout {
 
+  private static final String STORY_ID = "STORY_ID";
   private Context context;
 
   public SlideTopStory(Context context, AttributeSet attrs) {
@@ -29,7 +30,7 @@ public class SlideTopStory extends SliderLayout {
     this.context = context;
   }
 
-  public static SlideTopStory newInstanceExpandableDescription(ViewGroup parent) {
+  public static SlideTopStory newInstance(ViewGroup parent) {
     return (SlideTopStory) ViewUtils.newInstance(parent, R.layout.slide_top_story);
   }
 
@@ -43,9 +44,17 @@ public class SlideTopStory extends SliderLayout {
         continue;
       }
 
-      TextSliderView textSliderView = new TextSliderView(context);
-      textSliderView.description(story.getTitle()).image(story.getImageUrl())
+      TitleSliderView textSliderView = new TitleSliderView(context);
+      textSliderView.title(story.getTitle()).image(story.getImageUrl())
               .setScaleType(BaseSliderView.ScaleType.CenterCrop);
+      textSliderView.getBundle().putLong(STORY_ID, story.getId());
+      textSliderView.setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+        @Override
+        public void onSliderClick(BaseSliderView baseSliderView) {
+          long id = baseSliderView.getBundle().getLong(STORY_ID);
+          ViewUtils.openDetailActivity(id, context);
+        }
+      });
       addSlider(textSliderView);
     }
   }

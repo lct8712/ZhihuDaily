@@ -5,6 +5,7 @@ import java.util.List;
 import android.text.TextUtils;
 
 import com.chentian.zhihudaily.zhihudaily.util.CollectionUtils;
+import com.chentian.zhihudaily.zhihudaily.util.Const;
 
 /**
  * Story model displayed in list page, such as:
@@ -100,7 +101,7 @@ public class StoryAbstract {
     }
 
     if (CollectionUtils.isEmpty(images) || images.size() < 1) {
-      return "";
+      return Const.EMPTY_STRING;
     }
     return images.get(0);
   }

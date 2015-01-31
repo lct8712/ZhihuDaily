@@ -54,7 +54,7 @@ public class StoryAdapter extends BaseAdapter {
     // The first item of list is the sliding image view
     if (position == 0) {
       if (slideTopStory == null) {
-        slideTopStory = SlideTopStory.newInstanceExpandableDescription(parent);
+        slideTopStory = SlideTopStory.newInstance(parent);
         slideTopStory.setTopStories(topStoryList);
       }
       convertView = slideTopStory;
