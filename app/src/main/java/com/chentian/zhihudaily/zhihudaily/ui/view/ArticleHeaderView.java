@@ -12,6 +12,8 @@ import com.chentian.zhihudaily.zhihudaily.R;
 import com.koushikdutta.ion.Ion;
 
 /**
+ * Display a header image in story detail view
+ *
  * @author chentian
  */
 public class ArticleHeaderView extends RelativeLayout {

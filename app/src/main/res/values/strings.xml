@@ -9,6 +9,6 @@
     <string name="story_icon">Story Icon</string>
     <string name="story_title">Story Title</string>
     <string name="title_activity_detail">DetailActivity</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="load_failed">Load failed</string>
 
 </resources>

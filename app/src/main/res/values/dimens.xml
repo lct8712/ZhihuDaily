@@ -27,6 +27,6 @@
     <dimen name="story_item_image_height">60dp</dimen>
 
     <!-- Left drawer -->
-    <dimen name="left_drawer_width">240dp</dimen>
+    <dimen name="left_drawer_width">260dp</dimen>
 
 </resources>

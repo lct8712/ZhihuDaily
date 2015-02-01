@@ -4,7 +4,6 @@
                 android:layout_height="match_parent"
                 tools:context="com.chentian.zhihudaily.zhihudaily.ui.fragment.StoryDetailFragment">
 
-
     <com.chentian.zhihudaily.zhihudaily.ui.view.ArticleHeaderView
             android:id="@+id/article_header"
             android:layout_width="match_parent"
@@ -33,7 +32,5 @@
         </LinearLayout>
 
     </ScrollView>
-
-
 
 </FrameLayout>

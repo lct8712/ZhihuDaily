@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 
 import com.chentian.zhihudaily.zhihudaily.R;
 import com.chentian.zhihudaily.zhihudaily.api.model.StoryAbstract;
+import com.chentian.zhihudaily.zhihudaily.ui.view.SlideTopStory;
 import com.chentian.zhihudaily.zhihudaily.ui.view.StoryListView;
 import com.chentian.zhihudaily.zhihudaily.util.ViewUtils;
 
@@ -31,6 +32,8 @@ public class StoryListFragment extends Fragment {
         ViewUtils.openDetailActivity(storyAbstract.getId(), getActivity());
       }
     });
+    listView.setSlideTopStoryView(SlideTopStory.newInstance(listView));
+    listView.loadTopStories();
 
     return view;
   }

@@ -1,8 +1,13 @@
 package com.chentian.zhihudaily.zhihudaily.ui.fragment;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +15,7 @@ import android.view.ViewTreeObserver;
 import android.webkit.WebView;
 import android.widget.HorizontalScrollView;
 import android.widget.ScrollView;
+import android.widget.Toast;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -30,6 +36,12 @@ public class StoryDetailFragment extends Fragment {
   private WebView webViewContent;
   private ArticleHeaderView articleHeader;
   private ScrollView scrollViewContent;
+  private Toolbar toolbar;
+
+  private int lastScrollY = 0;
+  private Queue<Boolean> latestPullingDown;
+  private static final int PULLING_DOWN_TIME_MAX = 7;
+  private static final int PULLING_DOWN_TIME_THRESHOLD = 5;
 
   public StoryDetailFragment() {
   }
@@ -48,9 +60,31 @@ public class StoryDetailFragment extends Fragment {
 
       @Override
       public void failure(RetrofitError error) {
-        // TODO: handle this
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+          Toast.makeText(activity, getString(R.string.load_failed), Toast.LENGTH_SHORT).show();
+          activity.finish();
+        }
       }
     });
+  }
+
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                           Bundle savedInstanceState) {
+    View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+
+    webViewContent = (WebView) rootView.findViewById(R.id.web_view_article);
+    articleHeader = (ArticleHeaderView) rootView.findViewById(R.id.article_header);
+    scrollViewContent = (ScrollView) rootView.findViewById(R.id.scroll_view_content);
+
+    latestPullingDown = new LinkedList<>();
+
+    return rootView;
+  }
+
+  public void setToolbar(Toolbar toolbar) {
+    this.toolbar = toolbar;
   }
 
   private void bindUI(StoryDetail storyDetail) {
@@ -69,6 +103,7 @@ public class StoryDetailFragment extends Fragment {
       @Override
       public void onScrollChanged() {
         changeHeaderPosition();
+        changeToolbarAlpha();
       }
     });
   }
@@ -79,7 +114,8 @@ public class StoryDetailFragment extends Fragment {
     // Set height
     float articleHeight = getResources().getDimensionPixelSize(R.dimen.slide_image_height);
     if (scrollY < 0) {
-      articleHeight -= scrollY;
+      // Pull down, zoom in the image
+      articleHeight += Math.abs(scrollY);
     }
     articleHeader.getLayoutParams().height = (int) articleHeight;
 
@@ -89,15 +125,48 @@ public class StoryDetailFragment extends Fragment {
     articleHeader.requestLayout();
   }
 
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-    View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+  private void changeToolbarAlpha() {
+    if (toolbar == null) {
+      return;
+    }
 
-    webViewContent = (WebView) rootView.findViewById(R.id.web_view_article);
-    articleHeader = (ArticleHeaderView) rootView.findViewById(R.id.article_header);
-    scrollViewContent = (ScrollView) rootView.findViewById(R.id.scroll_view_content);
+    int scrollY = scrollViewContent.getScrollY();
+    if (scrollY < 0) {
+      toolbar.getBackground().setAlpha(0);
+      return;
+    }
 
-    return rootView;
+    float articleHeight = getResources().getDimensionPixelSize(R.dimen.slide_image_height);
+    float contentHeight = articleHeight - toolbar.getHeight();
+    float ratio = Math.min(scrollY / contentHeight, 1.0f);
+    toolbar.getBackground().setAlpha((int) (ratio * 0xFF));
+
+    if (scrollY <= contentHeight) {
+      toolbar.setY(0f);
+      return;
+    }
+
+    // We detect latest moves to ensure a smooth showing-hiding toolbar action
+    // Show the toolbar if user is pulling down
+    boolean isPullingDown = scrollY < lastScrollY;
+    latestPullingDown.offer(isPullingDown);
+    if (latestPullingDown.size() > PULLING_DOWN_TIME_MAX) {
+      latestPullingDown.poll();
+    }
+
+    float toolBarPositionY = (getPullingDownTime() < PULLING_DOWN_TIME_THRESHOLD) ? (contentHeight - scrollY) : 0;
+    toolbar.setY(toolBarPositionY);
+
+    lastScrollY = scrollY;
+  }
+
+  public int getPullingDownTime() {
+    int result = 0;
+    for (Boolean isPullingDown : latestPullingDown) {
+      if (isPullingDown) {
+        result++;
+      }
+    }
+    return result;
   }
 }

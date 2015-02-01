@@ -1,7 +1,18 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:id="@+id/container"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.chentian.zhihudaily.zhihudaily.ui.activity.DetailActivity"
-             tools:ignore="MergeRootFrame"/>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.chentian.zhihudaily.zhihudaily.ui.activity.DetailActivity">
+
+    <!-- The main content view -->
+    <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    <!-- The action bar -->
+    <include
+            layout="@layout/toolbar"/>
+
+</RelativeLayout>

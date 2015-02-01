@@ -4,6 +4,7 @@ import android.util.SparseArray;
 import android.view.View;
 
 /**
+ * ViewHolder to quick find child views in adapter->getView()
  * Copied from http://www.piwai.info/android-adapter-good-practices/
  *
  * @author chentian

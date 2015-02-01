@@ -5,10 +5,10 @@
     <string name="action_settings">设置</string>
     <string name="drawer_open">打开</string>
     <string name="drawer_close">关闭</string>
-    <string name="empty"> </string>
     <string name="landing_page">首页</string>
     <string name="story_icon">文章图标</string>
     <string name="story_title">文章标题</string>
     <string name="title_activity_detail">文章详情页</string>
+    <string name="load_failed">加载失败</string>
 
 </resources>

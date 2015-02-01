@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.chentian.zhihudaily.zhihudaily.R;
 import com.chentian.zhihudaily.zhihudaily.api.model.StoryAbstract;
+import com.chentian.zhihudaily.zhihudaily.util.CollectionUtils;
 import com.chentian.zhihudaily.zhihudaily.util.ViewUtils;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -35,11 +36,7 @@ public class SlideTopStory extends SliderLayout {
   }
 
   public void setTopStories(List<StoryAbstract> stories) {
-    if (stories == null) {
-      return;
-    }
-
-    for (StoryAbstract story : stories) {
+    for (StoryAbstract story : CollectionUtils.notNull(stories)) {
       if (TextUtils.isEmpty(story.getImageUrl())) {
         continue;
       }

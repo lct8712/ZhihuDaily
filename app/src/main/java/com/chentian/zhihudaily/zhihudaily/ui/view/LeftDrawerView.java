@@ -5,6 +5,9 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 /**
+ * Guidelines for navigation drawer
+ *   http://www.google.com/design/spec/patterns/navigation-drawer.html
+ *
  * @author chentian
  */
 public class LeftDrawerView extends LinearLayout {

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+
+    </style>
+
+    <style name="MyToolBar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    </style>
+
+    <style name="MyToolBar.Overlay">
+        <item name="android:actionBarStyle">@style/MyToolBar.Transparent</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="MyToolBar.Transparent">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+</resources>

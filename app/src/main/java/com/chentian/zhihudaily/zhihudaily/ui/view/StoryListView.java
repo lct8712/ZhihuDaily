@@ -21,6 +21,7 @@ import com.chentian.zhihudaily.zhihudaily.util.CollectionUtils;
 public class StoryListView extends ListView {
 
   private Context context;
+  private SlideTopStory slideTopStory;
   private StoryAdapter adapter;
 
   private boolean isLoading;
@@ -30,8 +31,6 @@ public class StoryListView extends ListView {
     super(context, attrs);
 
     this.context = context;
-
-    loadTopStories();
 
     setOnScrollListener(new OnScrollListener() {
       private static final int THRESHOLD = 5;
@@ -49,7 +48,12 @@ public class StoryListView extends ListView {
     });
   }
 
-  private void loadTopStories() {
+  public void setSlideTopStoryView(SlideTopStory slideTopStory) {
+    this.slideTopStory = slideTopStory;
+    addHeaderView(slideTopStory);
+  }
+
+  public void loadTopStories() {
     NewsService newsService = RestClient.getInstance().getNewsService();
     newsService.getLatestStoryCollection(new Callback<StoryCollection>() {
       @Override
@@ -57,8 +61,9 @@ public class StoryListView extends ListView {
         adapter = new StoryAdapter(context);
         adapter.setLatestDate(storyCollection.getDate());
         adapter.setStoryList(storyCollection.getStories());
-        adapter.setTopStoryList(storyCollection.getTop_stories());
         setAdapter(adapter);
+
+        slideTopStory.setTopStories(storyCollection.getTop_stories());
 
         loadMoreStories();
 

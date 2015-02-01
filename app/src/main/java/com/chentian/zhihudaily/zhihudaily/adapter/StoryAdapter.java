@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.chentian.zhihudaily.zhihudaily.R;
 import com.chentian.zhihudaily.zhihudaily.api.model.StoryAbstract;
-import com.chentian.zhihudaily.zhihudaily.ui.view.SlideTopStory;
 import com.koushikdutta.ion.Ion;
 
 /**
@@ -23,9 +22,7 @@ import com.koushikdutta.ion.Ion;
 public class StoryAdapter extends BaseAdapter {
 
   private Context context;
-  private SlideTopStory slideTopStory;
 
-  private List<StoryAbstract> topStoryList;
   private List<StoryAbstract> storyList;
   private String latestDate;
 
@@ -51,42 +48,25 @@ public class StoryAdapter extends BaseAdapter {
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
-    // The first item of list is the sliding image view
-    if (position == 0) {
-      if (slideTopStory == null) {
-        slideTopStory = SlideTopStory.newInstance(parent);
-        slideTopStory.setTopStories(topStoryList);
-      }
-      convertView = slideTopStory;
-    } else if (convertView == null || convertView instanceof SlideTopStory) {
+    if (convertView == null) {
       convertView = LayoutInflater.from(context).inflate(R.layout.story_list_item, parent, false);
     }
 
-    // Fill story item data
-    if (position != 0) {
-      TextView txtTitle = ViewHolder.get(convertView, R.id.title);
-      ImageView imageIcon = ViewHolder.get(convertView, R.id.image);
+    TextView txtTitle = ViewHolder.get(convertView, R.id.title);
+    ImageView imageIcon = ViewHolder.get(convertView, R.id.image);
 
-      StoryAbstract storyAbstract = getItem(position);
-      txtTitle.setText(storyAbstract.getTitle());
+    StoryAbstract storyAbstract = getItem(position);
+    txtTitle.setText(storyAbstract.getTitle());
 
-      String imageUrl = storyAbstract.getImageUrl();
-      if (!TextUtils.isEmpty(imageUrl)) {
-        Ion.with(imageIcon)
-                .placeholder(R.drawable.loading)
-                .error(R.drawable.loading)
-                .load(imageUrl);
-      }
+    String imageUrl = storyAbstract.getImageUrl();
+    if (!TextUtils.isEmpty(imageUrl)) {
+      Ion.with(imageIcon)
+              .placeholder(R.drawable.loading)
+              .error(R.drawable.loading)
+              .load(imageUrl);
     }
 
     return convertView;
-  }
-
-  public void setTopStoryList(List<StoryAbstract> data) {
-    topStoryList = data;
-    if (slideTopStory != null) {
-      slideTopStory.setTopStories(data);
-    }
   }
 
   public void setStoryList(List<StoryAbstract> data) {
