@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import com.chentian.zhihudaily.zhihudaily.R;
 import com.chentian.zhihudaily.zhihudaily.ui.fragment.StoryDetailFragment;
 import com.chentian.zhihudaily.zhihudaily.util.Const;
+import com.chentian.zhihudaily.zhihudaily.util.ViewUtils;
 
 /**
  * Activity to read story detail content
@@ -53,7 +54,7 @@ public class DetailActivity extends BaseActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case android.R.id.home:
-        finish();
+        ViewUtils.finishActivityWithSlideAnim(this);
         break;
       case R.id.action_settings:
         break;
@@ -63,4 +64,8 @@ public class DetailActivity extends BaseActivity {
     return super.onOptionsItemSelected(item);
   }
 
+  @Override
+  public void onBackPressed() {
+    ViewUtils.finishActivityWithSlideAnim(this);
+  }
 }

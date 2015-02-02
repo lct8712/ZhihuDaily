@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Anim -->
+    <integer name="anim_activity_slide">350</integer>
+
+</resources>

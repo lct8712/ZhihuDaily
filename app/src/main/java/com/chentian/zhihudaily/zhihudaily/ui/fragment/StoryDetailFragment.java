@@ -146,7 +146,12 @@ public class StoryDetailFragment extends Fragment {
       return;
     }
 
-    // We detect latest moves to ensure a smooth showing-hiding toolbar action
+    // Don't show toolbar if use has pulled up the whole article
+    if (scrollY + scrollViewContent.getHeight() > webViewContent.getMeasuredHeight() + articleHeight) {
+      return;
+    }
+
+    // We detect several latest moves to ensure a smooth showing-hiding toolbar effect
     // Show the toolbar if user is pulling down
     boolean isPullingDown = scrollY < lastScrollY;
     latestPullingDown.offer(isPullingDown);

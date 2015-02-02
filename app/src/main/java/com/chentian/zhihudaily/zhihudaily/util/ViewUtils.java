@@ -1,11 +1,13 @@
 package com.chentian.zhihudaily.zhihudaily.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chentian.zhihudaily.zhihudaily.R;
 import com.chentian.zhihudaily.zhihudaily.ui.activity.DetailActivity;
 
 /**
@@ -39,5 +41,13 @@ public class ViewUtils {
     Intent intent = new Intent(context, DetailActivity.class);
     intent.putExtra(DetailActivity.EXTRA_ID, id);
     context.startActivity(intent);
+    if (context instanceof Activity) {
+      ((Activity) context).overridePendingTransition(R.anim.right_slide_in, R.anim.left_slide_out);
+    }
+  }
+
+  public static void finishActivityWithSlideAnim(Activity activity) {
+    activity.finish();
+    activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
   }
 }

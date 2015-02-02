@@ -8,6 +8,7 @@
             android:id="@+id/list_view"
             android:divider="@color/list_background"
             android:dividerHeight="@dimen/story_list_item_margin"
+            android:overScrollMode="never"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
