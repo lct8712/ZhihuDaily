@@ -15,4 +15,7 @@
     <color name="title_slide_background_start">#00EFEFEF</color>
     <color name="title_slide_background_end">#AA000000</color>
 
+    <color name="left_drawer_divider">#1B2329</color>
+    <color name="left_drawer_text">#94999D</color>
+
 </resources>

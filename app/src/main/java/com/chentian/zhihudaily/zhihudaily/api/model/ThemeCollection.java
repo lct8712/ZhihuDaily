@@ -1,72 +1,30 @@
 package com.chentian.zhihudaily.zhihudaily.api.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.annotations.Expose;
+
 /**
- * Collection of themes, a theme is a list of stories with same subject, such as:
+ * Collection of themes, a theme is a list of stories with same subject:
  *   http://news-at.zhihu.com/api/4/themes
  *
  * @author chentian
  */
 public class ThemeCollection {
 
-  public class Theme {
-
-    private long id;
-
-    private int color;
-
-    private String name;
-
-    private String thumbnail;
-
-    private String description;
-
-    public long getId() {
-      return id;
-    }
-
-    public void setId(long id) {
-      this.id = id;
-    }
-
-    public int getColor() {
-      return color;
-    }
-
-    public void setColor(int color) {
-      this.color = color;
-    }
-
-    public String getName() {
-      return name;
-    }
-
-    public void setName(String name) {
-      this.name = name;
-    }
-
-    public String getThumbnail() {
-      return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-      this.thumbnail = thumbnail;
-    }
-
-    public String getDescription() {
-      return description;
-    }
-
-    public void setDescription(String description) {
-      this.description = description;
-    }
+  public ThemeCollection() {
+    subscribed = new ArrayList<>();
+    others = new ArrayList<>();
   }
 
+  @Expose
   private int limit;
 
+  @Expose
   private List<Theme> subscribed;
 
+  @Expose
   private List<Theme> others;
 
   public int getLimit() {

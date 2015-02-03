@@ -15,15 +15,18 @@
 
         <!-- The main content view -->
         <FrameLayout
-                android:id="@+id/content_frame"
+                android:id="@+id/content_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
     </LinearLayout>
 
     <!-- The navigation drawer -->
-    <include
-            android:id="@+id/left_drawer_view"
-            layout="@layout/left_drawer_view"/>
+    <fragment
+            android:id="@+id/navigation_drawer"
+            android:name="com.chentian.zhihudaily.zhihudaily.ui.fragment.NavigationDrawerFragment"
+            android:layout_gravity="start"
+            android:layout_width="@dimen/left_drawer_width"
+            android:layout_height="match_parent"/>
 
 </android.support.v4.widget.DrawerLayout>

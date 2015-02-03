@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:background="@android:color/white"
-                android:paddingLeft="@dimen/story_item_text_padding"
-                android:paddingRight="@dimen/story_item_text_padding"
+                android:paddingLeft="@dimen/story_item_padding"
+                android:paddingRight="@dimen/story_item_padding"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/story_list_item_height">
 
@@ -12,6 +12,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
+            android:layout_marginRight="@dimen/story_item_text_image_margin"
+            android:layout_marginEnd="@dimen/story_item_text_image_margin"
             android:layout_alignTop="@id/image"
             android:layout_toLeftOf="@id/image"
             android:layout_toStartOf="@id/image"/>

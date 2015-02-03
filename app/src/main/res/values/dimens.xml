@@ -22,11 +22,18 @@
     <dimen name="story_list_item_height">90dp</dimen>
     <dimen name="story_list_item_margin">6dp</dimen>
     <dimen name="story_list_item_text_margin_top">10dp</dimen>
-    <dimen name="story_item_text_padding">15dp</dimen>
+    <dimen name="story_item_padding">15dp</dimen>
+    <dimen name="story_item_text_image_margin">12dp</dimen>
     <dimen name="story_item_image_width">80dp</dimen>
     <dimen name="story_item_image_height">60dp</dimen>
 
     <!-- Left drawer -->
     <dimen name="left_drawer_width">260dp</dimen>
+    <dimen name="left_drawer_item_height">48dp</dimen>
+    <dimen name="left_drawer_item_padding_left">16dp</dimen>
+    <dimen name="left_drawer_item_padding_right">32dp</dimen>
+    <dimen name="left_drawer_item_icon_size">16dp</dimen>
+    <dimen name="left_drawer_item_image_margin">32dp</dimen>
+    <dimen name="left_drawer_item_action_icon_margin">16dp</dimen>
 
 </resources>

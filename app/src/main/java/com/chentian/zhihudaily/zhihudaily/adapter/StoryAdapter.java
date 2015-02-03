@@ -27,8 +27,8 @@ public class StoryAdapter extends BaseAdapter {
   private String latestDate;
 
   public StoryAdapter(Context context) {
-    this.storyList = new ArrayList<>();
     this.context = context;
+    this.storyList = new ArrayList<>();
   }
 
   @Override
@@ -49,7 +49,7 @@ public class StoryAdapter extends BaseAdapter {
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
     if (convertView == null) {
-      convertView = LayoutInflater.from(context).inflate(R.layout.story_list_item, parent, false);
+      convertView = LayoutInflater.from(context).inflate(R.layout.list_item_story, parent, false);
     }
 
     TextView txtTitle = ViewHolder.get(convertView, R.id.title);

@@ -29,7 +29,7 @@ import com.chentian.zhihudaily.zhihudaily.ui.view.ArticleHeaderView;
 import com.chentian.zhihudaily.zhihudaily.util.WebUtil;
 
 /**
- * A placeholder fragment containing a simple view.
+ * Fragment containing detail of a story
  */
 public class StoryDetailFragment extends Fragment {
 

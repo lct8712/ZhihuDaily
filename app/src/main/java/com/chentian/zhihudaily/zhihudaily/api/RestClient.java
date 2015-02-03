@@ -1,8 +1,12 @@
 package com.chentian.zhihudaily.zhihudaily.api;
 
 import retrofit.RestAdapter;
+import retrofit.converter.GsonConverter;
 
 import com.chentian.zhihudaily.zhihudaily.api.service.NewsService;
+import com.chentian.zhihudaily.zhihudaily.api.service.ThemeService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * Rest API client using Retrofit
@@ -13,16 +17,22 @@ public class RestClient {
 
   private static RestClient instance;
 
-  private static final String API_PREFIX = "http://news.at.zhihu.com/api/4";
-
   private NewsService newsService;
 
-  private RestClient() {
-    RestAdapter appsRestAdapter = new RestAdapter.Builder()
-            .setEndpoint(API_PREFIX)
-            .build();
+  private ThemeService themeService;
 
-    newsService = appsRestAdapter.create(NewsService.class);
+  private RestClient() {
+    newsService = new RestAdapter.Builder()
+            .setEndpoint(NewsService.API_PREFIX)
+            .build()
+            .create(NewsService.class);
+
+    Gson gsonExpose = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+    themeService = new RestAdapter.Builder()
+            .setEndpoint(NewsService.API_PREFIX)
+            .setConverter(new GsonConverter(gsonExpose))
+            .build()
+            .create(ThemeService.class);
   }
 
   public static RestClient getInstance() {
@@ -34,5 +44,9 @@ public class RestClient {
 
   public NewsService getNewsService() {
     return newsService;
+  }
+
+  public ThemeService getThemeService() {
+    return themeService;
   }
 }

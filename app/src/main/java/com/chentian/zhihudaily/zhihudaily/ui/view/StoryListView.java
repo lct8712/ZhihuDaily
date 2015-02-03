@@ -14,6 +14,7 @@ import com.chentian.zhihudaily.zhihudaily.api.RestClient;
 import com.chentian.zhihudaily.zhihudaily.api.model.StoryCollection;
 import com.chentian.zhihudaily.zhihudaily.api.service.NewsService;
 import com.chentian.zhihudaily.zhihudaily.util.CollectionUtils;
+import com.chentian.zhihudaily.zhihudaily.util.Const;
 
 /**
  * @author chentian
@@ -67,12 +68,12 @@ public class StoryListView extends ListView {
 
         loadMoreStories();
 
-        Log.d("ui", "Get story collection success, size: " + storyCollection.getStories().size());
+        Log.d(Const.LogTag.API, "Get story collection success, size: " + storyCollection.getStories().size());
       }
 
       @Override
       public void failure(RetrofitError error) {
-        Log.d("ui", "Get story collection failure: " + error + ", " + error.getUrl());
+        Log.d(Const.LogTag.API, "Get story collection failure: " + error + ", " + error.getUrl());
       }
     });
   }
@@ -91,13 +92,13 @@ public class StoryListView extends ListView {
         adapter.setLatestDate(storyCollection.getDate());
         adapter.appendStoryList(storyCollection.getStories());
         isEnded = CollectionUtils.isEmpty(storyCollection.getStories());
-        Log.d("ui", "Get more story collection success, size: " + storyCollection.getStories().size());
+        Log.d(Const.LogTag.API, "Get more story collection success, size: " + storyCollection.getStories().size());
       }
 
       @Override
       public void failure(RetrofitError error) {
         isLoading = false;
-        Log.d("ui", "Get more story collection failure: " + error + ", " + error.getUrl());
+        Log.d(Const.LogTag.API, "Get more story collection failure: " + error + ", " + error.getUrl());
       }
     });
   }

@@ -10,5 +10,6 @@
     <string name="story_title">文章标题</string>
     <string name="title_activity_detail">文章详情页</string>
     <string name="load_failed">加载失败</string>
+    <string name="theme_icon">图标</string>
 
 </resources>

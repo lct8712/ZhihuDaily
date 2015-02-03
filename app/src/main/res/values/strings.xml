@@ -10,5 +10,6 @@
     <string name="story_title">Story Title</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="load_failed">Load failed</string>
+    <string name="theme_icon">Theme Icon</string>
 
 </resources>

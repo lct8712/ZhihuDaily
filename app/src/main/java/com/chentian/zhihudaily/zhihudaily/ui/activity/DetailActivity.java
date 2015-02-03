@@ -25,7 +25,7 @@ public class DetailActivity extends BaseActivity {
       fragment.setToolbar(toolbar);
       fragment.setArguments(getIntent().getExtras());
       getSupportFragmentManager().beginTransaction()
-              .add(R.id.content_frame, fragment)
+              .add(R.id.content_container, fragment)
               .commit();
     }
 

@@ -6,6 +6,6 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:minHeight="?attr/actionBarSize"
-        android:background="@color/color_primary"
+        android:background="?attr/colorPrimary"
         app:theme="@style/MyToolBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
