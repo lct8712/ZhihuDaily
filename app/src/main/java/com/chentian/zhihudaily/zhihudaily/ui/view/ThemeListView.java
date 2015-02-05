@@ -17,6 +17,8 @@ import com.chentian.zhihudaily.zhihudaily.util.CollectionUtils;
 import com.chentian.zhihudaily.zhihudaily.util.Const;
 
 /**
+ * List view of themes, shows in left drawer
+ *
  * @author chentian
  */
 public class ThemeListView extends ListView {

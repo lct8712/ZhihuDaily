@@ -15,7 +15,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 
 /**
- * Slide images show top stories
+ * Slide of images, showing top stories
  *   https://github.com/daimajia/AndroidImageSlider
  *
  * @author chentian

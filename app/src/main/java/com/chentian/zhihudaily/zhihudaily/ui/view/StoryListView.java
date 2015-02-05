@@ -1,10 +1,10 @@
 package com.chentian.zhihudaily.zhihudaily.ui.view;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.AbsListView;
-import android.widget.ListView;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -19,10 +19,9 @@ import com.chentian.zhihudaily.zhihudaily.util.Const;
 /**
  * @author chentian
  */
-public class StoryListView extends ListView {
+public class StoryListView extends RecyclerView {
 
   private Context context;
-  private SlideTopStory slideTopStory;
   private StoryAdapter adapter;
 
   private boolean isLoading;
@@ -30,6 +29,8 @@ public class StoryListView extends ListView {
 
   public StoryListView(Context context, AttributeSet attrs) {
     super(context, attrs);
+    final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+    setLayoutManager(layoutManager);
 
     this.context = context;
 
@@ -37,21 +38,14 @@ public class StoryListView extends ListView {
       private static final int THRESHOLD = 5;
 
       @Override
-      public void onScrollStateChanged(AbsListView view, int scrollState) {
-        if (scrollState == SCROLL_STATE_IDLE &&
-                view.getLastVisiblePosition() >= view.getCount() - THRESHOLD) {
+      public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+        int itemCount = layoutManager.getItemCount();
+        int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+        if (newState == SCROLL_STATE_IDLE && lastVisibleItemPosition >= itemCount - THRESHOLD) {
           loadMoreStories();
         }
       }
-
-      @Override
-      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) { }
     });
-  }
-
-  public void setSlideTopStoryView(SlideTopStory slideTopStory) {
-    this.slideTopStory = slideTopStory;
-    addHeaderView(slideTopStory);
   }
 
   public void loadTopStories() {
@@ -62,9 +56,8 @@ public class StoryListView extends ListView {
         adapter = new StoryAdapter(context);
         adapter.setLatestDate(storyCollection.getDate());
         adapter.setStoryList(storyCollection.getStories());
+        adapter.setTopStories(storyCollection.getTop_stories());
         setAdapter(adapter);
-
-        slideTopStory.setTopStories(storyCollection.getTop_stories());
 
         loadMoreStories();
 
