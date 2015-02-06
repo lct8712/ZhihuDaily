@@ -4,11 +4,13 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chentian.zhihudaily.zhihudaily.R;
+import com.chentian.zhihudaily.zhihudaily.util.ViewUtils;
 import com.koushikdutta.ion.Ion;
 
 /**
@@ -21,23 +23,16 @@ public class ArticleHeaderView extends RelativeLayout {
   private ImageView imageViewHeader;
   private TextView txtTitle;
 
-  public ArticleHeaderView(Context context) {
-    super(context);
-    initViews(context);
-  }
-
   public ArticleHeaderView(Context context, AttributeSet attrs) {
     super(context, attrs);
-    initViews(context);
   }
 
-  public ArticleHeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
-    super(context, attrs, defStyleAttr);
-    initViews(context);
+  public static ArticleHeaderView newInstance(ViewGroup parent) {
+    return (ArticleHeaderView) ViewUtils.newInstance(parent, R.layout.article_header_view);
   }
 
-  private void initViews(Context context) {
-    View.inflate(context, R.layout.title_slide_view, this);
+  public static ArticleHeaderView newInstance(Context context) {
+    return (ArticleHeaderView) ViewUtils.newInstance(context, R.layout.article_header_view);
   }
 
   @Override

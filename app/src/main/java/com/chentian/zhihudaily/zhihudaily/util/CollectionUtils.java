@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * @author chentian
  */
-
 public class CollectionUtils {
 
   private CollectionUtils() {

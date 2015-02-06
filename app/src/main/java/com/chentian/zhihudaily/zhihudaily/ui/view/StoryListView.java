@@ -1,7 +1,6 @@
 package com.chentian.zhihudaily.zhihudaily.ui.view;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -17,11 +16,12 @@ import com.chentian.zhihudaily.zhihudaily.util.CollectionUtils;
 import com.chentian.zhihudaily.zhihudaily.util.Const;
 
 /**
+ * List of stories, in main page
+ *
  * @author chentian
  */
-public class StoryListView extends RecyclerView {
+public class StoryListView extends RecycleViewWithDivider {
 
-  private Context context;
   private StoryAdapter adapter;
 
   private boolean isLoading;
@@ -29,10 +29,6 @@ public class StoryListView extends RecyclerView {
 
   public StoryListView(Context context, AttributeSet attrs) {
     super(context, attrs);
-    final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-    setLayoutManager(layoutManager);
-
-    this.context = context;
 
     setOnScrollListener(new OnScrollListener() {
       private static final int THRESHOLD = 5;
@@ -53,7 +49,7 @@ public class StoryListView extends RecyclerView {
     newsService.getLatestStoryCollection(new Callback<StoryCollection>() {
       @Override
       public void success(StoryCollection storyCollection, Response response) {
-        adapter = new StoryAdapter(context);
+        adapter = new StoryAdapter(context, StoryAdapter.HeaderType.SlideHeader);
         adapter.setLatestDate(storyCollection.getDate());
         adapter.setStoryList(storyCollection.getStories());
         adapter.setTopStories(storyCollection.getTop_stories());

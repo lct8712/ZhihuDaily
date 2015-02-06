@@ -14,7 +14,7 @@
             android:gravity="start"
             android:layout_marginRight="@dimen/story_item_text_image_margin"
             android:layout_marginEnd="@dimen/story_item_text_image_margin"
-            android:layout_alignTop="@id/image"
+            android:layout_marginTop="@dimen/story_item_text_image_margin_top"
             android:layout_toLeftOf="@id/image"
             android:layout_toStartOf="@id/image"/>
 

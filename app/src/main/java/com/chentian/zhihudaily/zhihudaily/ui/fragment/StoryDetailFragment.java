@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.webkit.WebView;
 import android.widget.HorizontalScrollView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 import retrofit.Callback;
@@ -30,6 +31,8 @@ import com.chentian.zhihudaily.zhihudaily.util.WebUtil;
 
 /**
  * Fragment containing detail of a story
+ *
+ * @author chentian
  */
 public class StoryDetailFragment extends Fragment {
 
@@ -75,7 +78,9 @@ public class StoryDetailFragment extends Fragment {
     View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
     webViewContent = (WebView) rootView.findViewById(R.id.web_view_article);
-    articleHeader = (ArticleHeaderView) rootView.findViewById(R.id.article_header);
+    articleHeader = ArticleHeaderView.newInstance(container);
+    RelativeLayout articleHeaderContainer = (RelativeLayout) rootView.findViewById(R.id.article_header_container);
+    articleHeaderContainer.addView(articleHeader);
     scrollViewContent = (ScrollView) rootView.findViewById(R.id.scroll_view_content);
 
     latestPullingDown = new LinkedList<>();

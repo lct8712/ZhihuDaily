@@ -36,6 +36,8 @@ public class SlideTopStory extends SliderLayout {
   }
 
   public void setTopStories(List<StoryAbstract> stories) {
+    removeAllSliders();
+
     for (StoryAbstract story : CollectionUtils.notNull(stories)) {
       if (TextUtils.isEmpty(story.getImageUrl())) {
         continue;

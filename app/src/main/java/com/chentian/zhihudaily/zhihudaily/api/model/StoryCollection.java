@@ -2,8 +2,6 @@ package com.chentian.zhihudaily.zhihudaily.api.model;
 
 import java.util.List;
 
-import com.orm.SugarRecord;
-
 /**
  * Collection of stories, could be latest stories or stories before some date such as:
  *   http://news-at.zhihu.com/api/4/news/latest
@@ -11,7 +9,7 @@ import com.orm.SugarRecord;
  *
  * @author chentian
  */
-public class StoryCollection extends SugarRecord<StoryCollection> {
+public class StoryCollection {
 
   private String date;
 

@@ -6,10 +6,10 @@
         android:layout_height="match_parent"
         tools:context="com.chentian.zhihudaily.zhihudaily.ui.fragment.StoryDetailFragment">
 
-    <com.chentian.zhihudaily.zhihudaily.ui.view.ArticleHeaderView
-            android:id="@+id/article_header"
+    <RelativeLayout
+            android:id="@+id/article_header_container"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/slide_image_height"/>
+            android:layout_height="wrap_content"/>
 
     <ScrollView
             android:id="@+id/scroll_view_content"

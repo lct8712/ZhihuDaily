@@ -23,7 +23,6 @@ public class WebUtil {
       result.append(String.format(CSS_LINK_PATTERN, cssUrl));
     }
     result.append(htmlContent.replace(DIV_IMAGE_PLACE_HOLDER, DIV_IMAGE_PLACE_HOLDER_IGNORED));
-//    result.append(htmlContent);
     return result.toString();
   }
 }

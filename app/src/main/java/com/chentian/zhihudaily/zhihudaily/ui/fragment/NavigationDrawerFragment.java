@@ -7,8 +7,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.*;
+import android.widget.AdapterView;
 
 import com.chentian.zhihudaily.zhihudaily.R;
+import com.chentian.zhihudaily.zhihudaily.api.model.Theme;
 import com.chentian.zhihudaily.zhihudaily.ui.view.ThemeListView;
 
 /**
@@ -23,7 +25,7 @@ import com.chentian.zhihudaily.zhihudaily.ui.view.ThemeListView;
 public class NavigationDrawerFragment extends Fragment {
 
   public static interface NavigationDrawerCallback {
-    void onItemSelected(int position);
+    void onItemSelected(int position, Theme theme);
   }
 
   private static final String STATE_SELECTED_POSITION = "state_selected_position";
@@ -34,7 +36,6 @@ public class NavigationDrawerFragment extends Fragment {
   private View drawerContainer;
   private DrawerLayout drawerLayout;
   private ActionBarDrawerToggle drawerToggle;
-//  private ListView listViewDrawer;
   private ThemeListView listViewTheme;
 
   @Override
@@ -44,21 +45,13 @@ public class NavigationDrawerFragment extends Fragment {
 
     listViewTheme = (ThemeListView) rootView.findViewById(R.id.list_theme);
     listViewTheme.loadThemes();
-//    listUnSubscribed = (ThemeListView) rootView.findViewById(R.id.list_unsubscribed);
 
-//    ThemeDao.getSubscribedThemes();
-
-//    listSubscribed.loadSubscribedThemes();
-//    listUnSubscribed.loadUnSubscribedThemes();
-
-//    listViewDrawer = (ListView) rootView.findViewById(R.id.list_view_left_drawer);
-//    listViewDrawer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//      @Override
-//      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        selectItem(position);
-//      }
-//    });
-//    listViewDrawer.setItemChecked(currentSelectPosition, true);
+    listViewTheme.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        selectItem(position);
+      }
+    });
 
     return rootView;
   }
@@ -128,12 +121,12 @@ public class NavigationDrawerFragment extends Fragment {
 
     if (listViewTheme != null) {
       listViewTheme.setItemChecked(position, true);
+      if (navigationDrawerCallback != null) {
+        navigationDrawerCallback.onItemSelected(position, listViewTheme.getTheme(position));
+      }
     }
     if (drawerLayout != null) {
       drawerLayout.closeDrawer(drawerContainer);
-    }
-    if (navigationDrawerCallback != null) {
-      navigationDrawerCallback.onItemSelected(position);
     }
   }
 }

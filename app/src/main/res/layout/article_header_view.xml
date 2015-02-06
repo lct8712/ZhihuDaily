@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<com.chentian.zhihudaily.zhihudaily.ui.view.ArticleHeaderView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/slide_image_height">
 
     <ImageView
             android:id="@+id/daimajia_slider_image"
@@ -36,4 +37,4 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-</RelativeLayout>
+</com.chentian.zhihudaily.zhihudaily.ui.view.ArticleHeaderView>

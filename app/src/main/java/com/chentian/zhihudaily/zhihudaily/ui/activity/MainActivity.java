@@ -2,24 +2,28 @@ package com.chentian.zhihudaily.zhihudaily.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.chentian.zhihudaily.zhihudaily.R;
+import com.chentian.zhihudaily.zhihudaily.api.model.Theme;
 import com.chentian.zhihudaily.zhihudaily.ui.fragment.NavigationDrawerFragment;
 import com.chentian.zhihudaily.zhihudaily.ui.fragment.StoryListFragment;
 
 /**
  * Main activity, showing story list
+ *
+ * @author chentian
  */
 public class MainActivity extends BaseActivity {
 
   private NavigationDrawerFragment navigationDrawerFragment;
+  private StoryListFragment storyListFragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +36,13 @@ public class MainActivity extends BaseActivity {
 
     navigationDrawerFragment.setNavigationDrawerCallback(new NavigationDrawerFragment.NavigationDrawerCallback() {
       @Override
-      public void onItemSelected(int position) {
-        Toast.makeText(MainActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
+      public void onItemSelected(int position, Theme theme) {
+        storyListFragment.loadTheme(theme.getThemeApiId());
       }
     });
 
     if (savedInstanceState == null) {
-      StoryListFragment storyListFragment = new StoryListFragment();
+      storyListFragment = new StoryListFragment();
       getSupportFragmentManager().beginTransaction()
               .add(R.id.content_container, storyListFragment)
               .commit();
@@ -46,7 +50,7 @@ public class MainActivity extends BaseActivity {
   }
 
   @Override
-  public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+  public View onCreateView(View parent, String name, @NonNull Context context, @NonNull AttributeSet attrs) {
     if (toolbar != null) {
       // TODO: test this on a real 5.0 device
       toolbar.getBackground().setAlpha(0xFF);

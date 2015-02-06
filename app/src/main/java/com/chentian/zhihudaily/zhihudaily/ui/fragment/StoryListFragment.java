@@ -8,28 +8,33 @@ import android.view.ViewGroup;
 
 import com.chentian.zhihudaily.zhihudaily.R;
 import com.chentian.zhihudaily.zhihudaily.ui.view.StoryListView;
+import com.chentian.zhihudaily.zhihudaily.ui.view.ThemeStoryListView;
 
 /**
  * Fragment containing list of stories
+ *
+ * @author chentian
  */
 public class StoryListFragment extends Fragment {
 
-  private StoryListView listView;
+  private StoryListView listViewStory;
+  private ThemeStoryListView listViewThemeStory;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_story, container, false);
-    listView = (StoryListView) view.findViewById(R.id.list_view);
-//    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//      @Override
-//      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        StoryAbstract storyAbstract = (StoryAbstract) listView.getAdapter().getItem(position);
-//        ViewUtils.openDetailActivity(storyAbstract.getId(), getActivity());
-//      }
-//    });
-    listView.loadTopStories();
+    listViewStory = (StoryListView) view.findViewById(R.id.list_view_story);
+    listViewThemeStory = (ThemeStoryListView) view.findViewById(R.id.list_view_theme_story);
+
+    listViewStory.loadTopStories();
 
     return view;
+  }
+
+  public void loadTheme(long themeId) {
+    listViewStory.setVisibility(View.GONE);
+    listViewThemeStory.setVisibility(View.VISIBLE);
+    listViewThemeStory.loadThemeStories(themeId);
   }
 }

@@ -11,6 +11,8 @@ import com.chentian.zhihudaily.zhihudaily.util.ViewUtils;
 
 /**
  * Activity to read story detail content
+ *
+ * @author chentian
  */
 public class DetailActivity extends BaseActivity {
 

@@ -11,6 +11,7 @@ import retrofit.client.Response;
 
 import com.chentian.zhihudaily.zhihudaily.adapter.ThemeAdapter;
 import com.chentian.zhihudaily.zhihudaily.api.RestClient;
+import com.chentian.zhihudaily.zhihudaily.api.model.Theme;
 import com.chentian.zhihudaily.zhihudaily.api.model.ThemeCollection;
 import com.chentian.zhihudaily.zhihudaily.dao.ThemeDao;
 import com.chentian.zhihudaily.zhihudaily.util.CollectionUtils;
@@ -71,5 +72,9 @@ public class ThemeListView extends ListView {
         return null;
       }
     }.execute();
+  }
+
+  public Theme getTheme(int position) {
+    return adapter.getItem(position);
   }
 }

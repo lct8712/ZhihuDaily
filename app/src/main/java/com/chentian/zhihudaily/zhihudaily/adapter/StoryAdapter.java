@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.chentian.zhihudaily.zhihudaily.R;
 import com.chentian.zhihudaily.zhihudaily.api.model.StoryAbstract;
+import com.chentian.zhihudaily.zhihudaily.ui.view.ArticleHeaderView;
 import com.chentian.zhihudaily.zhihudaily.ui.view.SlideTopStory;
 import com.chentian.zhihudaily.zhihudaily.util.ViewUtils;
 import com.koushikdutta.ion.Ion;
@@ -23,25 +24,36 @@ import com.koushikdutta.ion.Ion;
  */
 public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-  private static final int ITEM_TYPE_HEADER = 0;
-  private static final int ITEM_TYPE_ITEM = 1;
+  public enum HeaderType {
+    SlideHeader, NormalHeader
+  }
+
+  private static final int ITEM_TYPE_HEADER_SLIDE = 0;
+  private static final int ITEM_TYPE_HEADER_NORMAL = 1;
+  private static final int ITEM_TYPE_ITEM = 2;
 
   private Context context;
 
   private List<StoryAbstract> topStoryList;
   private List<StoryAbstract> storyList;
+  private String headerTitle;
+  private String headerImageUrl;
   private String latestDate;
+  private HeaderType headerType;
 
-  public StoryAdapter(Context context) {
+  public StoryAdapter(Context context, HeaderType headerType) {
     this.context = context;
+    this.headerType = headerType;
     this.storyList = new ArrayList<>();
   }
 
   @Override
   public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
     switch (viewType) {
-      case ITEM_TYPE_HEADER:
-        return new ViewHolderHeader(SlideTopStory.newInstance(viewGroup));
+      case ITEM_TYPE_HEADER_SLIDE:
+        return new ViewHolderHeaderSlide(SlideTopStory.newInstance(viewGroup));
+      case ITEM_TYPE_HEADER_NORMAL:
+        return new ViewHolderHeaderNormal(ArticleHeaderView.newInstance(viewGroup));
       case ITEM_TYPE_ITEM:
         View view = LayoutInflater.from(context).inflate(R.layout.list_item_story, viewGroup, false);
         return new ViewHolderItem(view);
@@ -52,21 +64,30 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   @Override
   public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-    if (viewHolder instanceof ViewHolderHeader) {
-      ViewHolderHeader viewHolderHeader = (ViewHolderHeader) viewHolder;
-      viewHolderHeader.getSlideTopStory().setTopStories(topStoryList);
+    if (viewHolder instanceof ViewHolderHeaderSlide) {
+      ViewHolderHeaderSlide viewHolderHeaderSlide = (ViewHolderHeaderSlide) viewHolder;
+      viewHolderHeaderSlide.getSlideTopStory().setTopStories(topStoryList);
+
+    } else if (viewHolder instanceof ViewHolderHeaderNormal) {
+      ViewHolderHeaderNormal viewHolderHeaderNormal = (ViewHolderHeaderNormal) viewHolder;
+      viewHolderHeaderNormal.getArticleHeaderView().setData(headerTitle, headerImageUrl);
+
     } else if (viewHolder instanceof ViewHolderItem) {
       StoryAbstract storyAbstract = storyList.get(position);
 
       ViewHolderItem viewHolderItem = (ViewHolderItem) viewHolder;
       viewHolderItem.getTxtTitle().setText(storyAbstract.getTitle());
       viewHolderItem.setStoryId(storyAbstract.getId());
+
       String imageUrl = storyAbstract.getImageUrl();
       if (!TextUtils.isEmpty(imageUrl)) {
         Ion.with(viewHolderItem.getImageIcon())
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.loading)
                 .load(imageUrl);
+        viewHolderItem.getImageIcon().setVisibility(View.VISIBLE);
+      } else {
+        viewHolderItem.getImageIcon().setVisibility(View.GONE);
       }
     }
   }
@@ -78,12 +99,28 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   @Override
   public int getItemViewType(int position) {
-    return (position == 0) ? ITEM_TYPE_HEADER : ITEM_TYPE_ITEM;
+    if (position != 0) {
+      return ITEM_TYPE_ITEM;
+    }
+
+    switch (headerType) {
+      case SlideHeader:
+        return ITEM_TYPE_HEADER_SLIDE;
+      case NormalHeader:
+        return ITEM_TYPE_HEADER_NORMAL;
+      default:
+        throw new IllegalArgumentException();
+    }
   }
 
   public void setTopStories(List<StoryAbstract> topStoryList) {
     this.topStoryList = topStoryList;
     notifyItemChanged(0);
+  }
+
+  public void setNormalHeaderData(String headerTitle, String headerImageurl) {
+    this.headerTitle = headerTitle;
+    this.headerImageUrl = headerImageurl;
   }
 
   public void setStoryList(List<StoryAbstract> data) {
@@ -104,12 +141,11 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     this.latestDate = latestDate;
   }
 
-
-  public static class ViewHolderHeader extends RecyclerView.ViewHolder {
+  public static class ViewHolderHeaderSlide extends RecyclerView.ViewHolder {
 
     private final SlideTopStory slideTopStory;
 
-    public ViewHolderHeader(View itemView) {
+    public ViewHolderHeaderSlide(View itemView) {
       super(itemView);
 
       slideTopStory = (SlideTopStory) itemView;
@@ -117,6 +153,21 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public SlideTopStory getSlideTopStory() {
       return slideTopStory;
+    }
+  }
+
+  public static class ViewHolderHeaderNormal extends RecyclerView.ViewHolder {
+
+    private final ArticleHeaderView articleHeaderView;
+
+    public ViewHolderHeaderNormal(View itemView) {
+      super(itemView);
+
+      articleHeaderView = (ArticleHeaderView) itemView;
+    }
+
+    public ArticleHeaderView getArticleHeaderView() {
+      return articleHeaderView;
     }
   }
 

@@ -15,7 +15,7 @@ import com.chentian.zhihudaily.zhihudaily.api.model.*;
  */
 public interface NewsService {
 
-  public static final String API_PREFIX = "http://news.at.zhihu.com/api/4";
+  public static final String API_PREFIX = "http://news-at.zhihu.com/api/4";
 
   @GET("/start-image/1080*1776")
   void getStartImage(Callback<StartImage> callback);
@@ -28,6 +28,9 @@ public interface NewsService {
 
   @GET("/news/{id}")
   void getStoryDetail(@Path("id") long id, Callback<StoryDetail> callback);
+
+  @GET("/theme/{id}")
+  void getThemeStoryCollection(@Path("id") long id, Callback<ThemeStoryCollection> callback);
 
   @GET("/story-extra/{id}")
   void getStoryExtra(@Path("id") long id, Callback<StoryDetail> callback);
