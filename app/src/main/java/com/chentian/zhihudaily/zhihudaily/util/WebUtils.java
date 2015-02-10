@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author chentian
  */
-public class WebUtil {
+public class WebUtils {
 
   public static final String MIME_HTML_TYPE = "text/html";
 

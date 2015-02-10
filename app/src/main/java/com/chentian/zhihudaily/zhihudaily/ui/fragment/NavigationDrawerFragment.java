@@ -7,14 +7,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.*;
-import android.widget.AdapterView;
 
 import com.chentian.zhihudaily.zhihudaily.R;
-import com.chentian.zhihudaily.zhihudaily.api.model.Theme;
+import com.chentian.zhihudaily.zhihudaily.adapter.ThemeAdapter;
 import com.chentian.zhihudaily.zhihudaily.ui.view.ThemeListView;
 
 /**
- * Following the article:
+ * Following the post:
  *   http://www.myandroidsolutions.com/2014/12/16/android-lollipop-navigation-drawer-animation-support/
  * Guidelines for navigation drawer:
  *   https://developer.android.com/design/patterns/navigation-drawer.html
@@ -24,13 +23,8 @@ import com.chentian.zhihudaily.zhihudaily.ui.view.ThemeListView;
  */
 public class NavigationDrawerFragment extends Fragment {
 
-  public static interface NavigationDrawerCallback {
-    void onItemSelected(int position, Theme theme);
-  }
-
   private static final String STATE_SELECTED_POSITION = "state_selected_position";
 
-  private NavigationDrawerCallback navigationDrawerCallback;
   private int currentSelectPosition = 0;
 
   private View drawerContainer;
@@ -45,13 +39,6 @@ public class NavigationDrawerFragment extends Fragment {
 
     listViewTheme = (ThemeListView) rootView.findViewById(R.id.list_theme);
     listViewTheme.loadThemes();
-
-    listViewTheme.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-      @Override
-      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        selectItem(position);
-      }
-    });
 
     return rootView;
   }
@@ -72,7 +59,7 @@ public class NavigationDrawerFragment extends Fragment {
 
   @Override
   public void onSaveInstanceState(Bundle outState) {
-//    super.onSaveInstanceState(outState);
+    super.onSaveInstanceState(outState);
     outState.putInt(STATE_SELECTED_POSITION, currentSelectPosition);
   }
 
@@ -112,21 +99,23 @@ public class NavigationDrawerFragment extends Fragment {
     return drawerToggle;
   }
 
-  public void setNavigationDrawerCallback(NavigationDrawerCallback navigationDrawerCallback) {
-    this.navigationDrawerCallback = navigationDrawerCallback;
+  public void setThemeItemCallback(ThemeAdapter.ThemeItemCallback themeItemCallback) {
+    ThemeAdapter adapter = (ThemeAdapter) listViewTheme.getAdapter();
+    adapter.setThemeItemCallback(themeItemCallback);
   }
 
-  private void selectItem(int position) {
+  private void selectItem(final int position) {
     currentSelectPosition = position;
 
     if (listViewTheme != null) {
-      listViewTheme.setItemChecked(position, true);
-      if (navigationDrawerCallback != null) {
-        navigationDrawerCallback.onItemSelected(position, listViewTheme.getTheme(position));
-      }
+//      listViewTheme.setSelection(position);
+//      listViewTheme.setItemChecked(position, true);
+//      if (navigationDrawerCallback != null) {
+//        navigationDrawerCallback.onThemeItemSelected(position, listViewTheme.getTheme(position));
+//      }
     }
     if (drawerLayout != null) {
-      drawerLayout.closeDrawer(drawerContainer);
+//      drawerLayout.closeDrawer(drawerContainer);
     }
   }
 }

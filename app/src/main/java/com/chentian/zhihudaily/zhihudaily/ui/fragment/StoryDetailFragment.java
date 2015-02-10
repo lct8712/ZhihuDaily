@@ -27,7 +27,7 @@ import com.chentian.zhihudaily.zhihudaily.api.model.StoryDetail;
 import com.chentian.zhihudaily.zhihudaily.api.service.NewsService;
 import com.chentian.zhihudaily.zhihudaily.ui.activity.DetailActivity;
 import com.chentian.zhihudaily.zhihudaily.ui.view.ArticleHeaderView;
-import com.chentian.zhihudaily.zhihudaily.util.WebUtil;
+import com.chentian.zhihudaily.zhihudaily.util.WebUtils;
 
 /**
  * Fragment containing detail of a story
@@ -98,8 +98,8 @@ public class StoryDetailFragment extends Fragment {
       return;
     }
 
-    String data = WebUtil.BuildHtmlWithCss(storyDetail.getBody(), storyDetail.getCss());
-    webViewContent.loadDataWithBaseURL(WebUtil.ASSERT_DIR, data, WebUtil.MIME_HTML_TYPE, WebUtil.DEFAULT_CHARSET, null);
+    String data = WebUtils.BuildHtmlWithCss(storyDetail.getBody(), storyDetail.getCss());
+    webViewContent.loadDataWithBaseURL(WebUtils.ASSERT_DIR, data, WebUtils.MIME_HTML_TYPE, WebUtils.DEFAULT_CHARSET, null);
 
     articleHeader.setData(storyDetail.getTitle(), storyDetail.getImage());
 

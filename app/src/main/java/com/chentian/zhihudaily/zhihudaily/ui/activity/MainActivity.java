@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.chentian.zhihudaily.zhihudaily.R;
+import com.chentian.zhihudaily.zhihudaily.adapter.ThemeAdapter;
 import com.chentian.zhihudaily.zhihudaily.api.model.Theme;
 import com.chentian.zhihudaily.zhihudaily.ui.fragment.NavigationDrawerFragment;
 import com.chentian.zhihudaily.zhihudaily.ui.fragment.StoryListFragment;
@@ -29,17 +30,36 @@ public class MainActivity extends BaseActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    toolbar.setTitle(getString(R.string.landing_page));
     navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().
             findFragmentById(R.id.navigation_drawer);
     navigationDrawerFragment.setUp(findViewById(R.id.navigation_drawer),
             (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
 
-    navigationDrawerFragment.setNavigationDrawerCallback(new NavigationDrawerFragment.NavigationDrawerCallback() {
+    navigationDrawerFragment.setThemeItemCallback(new ThemeAdapter.ThemeItemCallback() {
       @Override
-      public void onItemSelected(int position, Theme theme) {
+      public void onMainPageItemSelect() {
+        toolbar.setTitle(getString(R.string.landing_page));
+        storyListFragment.loadMainPage();
+      }
+
+      @Override
+      public void onThemeItemSelected(Theme theme) {
+        toolbar.setTitle(theme.getName());
         storyListFragment.loadTheme(theme.getThemeApiId());
       }
     });
+//    navigationDrawerFragment.setNavigationDrawerCallback(new NavigationDrawerFragment.NavigationDrawerCallback() {
+//      @Override
+//      public void onMainPageItemSelect() {
+//        storyListFragment.loadMainPage();
+//      }
+//
+//      @Override
+//      public void onThemeItemSelected(long themeId) {
+//        storyListFragment.loadTheme(themeId);
+//      }
+//    });
 
     if (savedInstanceState == null) {
       storyListFragment = new StoryListFragment();

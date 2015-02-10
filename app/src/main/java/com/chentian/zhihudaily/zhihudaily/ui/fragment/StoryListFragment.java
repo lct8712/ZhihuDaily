@@ -27,9 +27,15 @@ public class StoryListFragment extends Fragment {
     listViewStory = (StoryListView) view.findViewById(R.id.list_view_story);
     listViewThemeStory = (ThemeStoryListView) view.findViewById(R.id.list_view_theme_story);
 
-    listViewStory.loadTopStories();
+    loadMainPage();
 
     return view;
+  }
+
+  public void loadMainPage() {
+    listViewThemeStory.setVisibility(View.GONE);
+    listViewStory.setVisibility(View.VISIBLE);
+    listViewStory.loadTopStories();
   }
 
   public void loadTheme(long themeId) {

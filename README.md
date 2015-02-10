@@ -1,5 +1,9 @@
 # ZhihuDaily
 
+# todo
+- action bar title
+- main list view sub header
+
 Http
 https://github.com/square/retrofit
 

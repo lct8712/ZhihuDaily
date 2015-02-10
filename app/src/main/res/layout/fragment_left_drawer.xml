@@ -7,18 +7,10 @@
         android:orientation="vertical"
         tools:context="com.chentian.zhihudaily.zhihudaily.ui.fragment.NavigationDrawerFragment">
 
-    <TextView
-            android:id="@+id/txt_landing_page"
-            android:text="@string/landing_page"
-            style="@style/text_subtitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
     <com.chentian.zhihudaily.zhihudaily.ui.view.ThemeListView
             android:id="@+id/list_theme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:choiceMode="singleChoice"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"/>
 

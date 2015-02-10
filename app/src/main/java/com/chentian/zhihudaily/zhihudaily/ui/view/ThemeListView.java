@@ -2,32 +2,34 @@ package com.chentian.zhihudaily.zhihudaily.ui.view;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.ListView;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import com.chentian.zhihudaily.zhihudaily.adapter.ThemeAdapter;
 import com.chentian.zhihudaily.zhihudaily.api.RestClient;
-import com.chentian.zhihudaily.zhihudaily.api.model.Theme;
 import com.chentian.zhihudaily.zhihudaily.api.model.ThemeCollection;
 import com.chentian.zhihudaily.zhihudaily.dao.ThemeDao;
 import com.chentian.zhihudaily.zhihudaily.util.CollectionUtils;
 import com.chentian.zhihudaily.zhihudaily.util.Const;
 
 /**
- * List view of themes, shows in left drawer
+ * List view of themes, shows in left drawer, including both subscribed and un-subscribed themes
  *
  * @author chentian
  */
-public class ThemeListView extends ListView {
+public class ThemeListView extends RecyclerView {
 
   private ThemeAdapter adapter;
 
   public ThemeListView(Context context, AttributeSet attrs) {
     super(context, attrs);
+
+    setLayoutManager(new LinearLayoutManager(context));
 
     adapter = new ThemeAdapter(context);
     setAdapter(adapter);
@@ -46,7 +48,7 @@ public class ThemeListView extends ListView {
           @Override
           protected Void doInBackground(Void... params) {
             ThemeDao.updateDatabase(themeCollection);
-            adapter.setThemeList();
+            adapter.reloadThemeList();
 
             return null;
           }
@@ -67,14 +69,10 @@ public class ThemeListView extends ListView {
     new AsyncTask<Void, Void, Void>() {
       @Override
       protected Void doInBackground(Void... params) {
-        adapter.setThemeList();
+        adapter.reloadThemeList();
 
         return null;
       }
     }.execute();
-  }
-
-  public Theme getTheme(int position) {
-    return adapter.getItem(position);
   }
 }

@@ -48,14 +48,14 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
   }
 
   @Override
-  public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+  public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     switch (viewType) {
       case ITEM_TYPE_HEADER_SLIDE:
-        return new ViewHolderHeaderSlide(SlideTopStory.newInstance(viewGroup));
+        return new ViewHolderHeaderSlide(SlideTopStory.newInstance(parent));
       case ITEM_TYPE_HEADER_NORMAL:
-        return new ViewHolderHeaderNormal(ArticleHeaderView.newInstance(viewGroup));
+        return new ViewHolderHeaderNormal(ArticleHeaderView.newInstance(parent));
       case ITEM_TYPE_ITEM:
-        View view = LayoutInflater.from(context).inflate(R.layout.list_item_story, viewGroup, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.list_item_story, parent, false);
         return new ViewHolderItem(view);
       default:
         throw new IllegalArgumentException();
@@ -63,32 +63,18 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
   }
 
   @Override
-  public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-    if (viewHolder instanceof ViewHolderHeaderSlide) {
-      ViewHolderHeaderSlide viewHolderHeaderSlide = (ViewHolderHeaderSlide) viewHolder;
+  public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    if (holder instanceof ViewHolderHeaderSlide) {
+      ViewHolderHeaderSlide viewHolderHeaderSlide = (ViewHolderHeaderSlide) holder;
       viewHolderHeaderSlide.getSlideTopStory().setTopStories(topStoryList);
 
-    } else if (viewHolder instanceof ViewHolderHeaderNormal) {
-      ViewHolderHeaderNormal viewHolderHeaderNormal = (ViewHolderHeaderNormal) viewHolder;
+    } else if (holder instanceof ViewHolderHeaderNormal) {
+      ViewHolderHeaderNormal viewHolderHeaderNormal = (ViewHolderHeaderNormal) holder;
       viewHolderHeaderNormal.getArticleHeaderView().setData(headerTitle, headerImageUrl);
 
-    } else if (viewHolder instanceof ViewHolderItem) {
-      StoryAbstract storyAbstract = storyList.get(position);
-
-      ViewHolderItem viewHolderItem = (ViewHolderItem) viewHolder;
-      viewHolderItem.getTxtTitle().setText(storyAbstract.getTitle());
-      viewHolderItem.setStoryId(storyAbstract.getId());
-
-      String imageUrl = storyAbstract.getImageUrl();
-      if (!TextUtils.isEmpty(imageUrl)) {
-        Ion.with(viewHolderItem.getImageIcon())
-                .placeholder(R.drawable.loading)
-                .error(R.drawable.loading)
-                .load(imageUrl);
-        viewHolderItem.getImageIcon().setVisibility(View.VISIBLE);
-      } else {
-        viewHolderItem.getImageIcon().setVisibility(View.GONE);
-      }
+    } else if (holder instanceof ViewHolderItem) {
+      ViewHolderItem viewHolderItem = (ViewHolderItem) holder;
+      viewHolderItem.bindStory(storyList.get(position));
     }
   }
 
@@ -156,7 +142,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
   }
 
-  public static class ViewHolderHeaderNormal extends RecyclerView.ViewHolder {
+  private static class ViewHolderHeaderNormal extends RecyclerView.ViewHolder {
 
     private final ArticleHeaderView articleHeaderView;
 
@@ -171,11 +157,11 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
   }
 
-  public static class ViewHolderItem extends RecyclerView.ViewHolder implements View.OnClickListener {
+  private static class ViewHolderItem extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private final TextView txtTitle;
     private final ImageView imageIcon;
-    private long storyId;
+    private StoryAbstract story;
 
     public ViewHolderItem(View itemView) {
       super(itemView);
@@ -185,21 +171,26 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
       itemView.setOnClickListener(this);
     }
 
+    public void bindStory(StoryAbstract story) {
+      this.story = story;
+
+      txtTitle.setText(story.getTitle());
+
+      String imageUrl = story.getImageUrl();
+      if (!TextUtils.isEmpty(imageUrl)) {
+        Ion.with(imageIcon)
+                .placeholder(R.drawable.loading)
+                .error(R.drawable.loading)
+                .load(imageUrl);
+        imageIcon.setVisibility(View.VISIBLE);
+      } else {
+        imageIcon.setVisibility(View.GONE);
+      }
+    }
+
     @Override
     public void onClick(View view) {
-      ViewUtils.openDetailActivity(storyId, view.getContext());
-    }
-
-    public TextView getTxtTitle() {
-      return txtTitle;
-    }
-
-    public ImageView getImageIcon() {
-      return imageIcon;
-    }
-
-    public void setStoryId(long storyId) {
-      this.storyId = storyId;
+      ViewUtils.openDetailActivity(story.getId(), view.getContext());
     }
   }
 }
