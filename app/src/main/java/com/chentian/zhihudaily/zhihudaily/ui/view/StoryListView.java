@@ -1,6 +1,7 @@
 package com.chentian.zhihudaily.zhihudaily.ui.view;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -20,8 +21,9 @@ import com.chentian.zhihudaily.zhihudaily.util.Const;
  *
  * @author chentian
  */
-public class StoryListView extends RecycleViewWithDivider {
+public class StoryListView extends RecyclerView {
 
+  protected Context context;
   private StoryAdapter adapter;
 
   private boolean isLoading;
@@ -29,6 +31,11 @@ public class StoryListView extends RecycleViewWithDivider {
 
   public StoryListView(Context context, AttributeSet attrs) {
     super(context, attrs);
+
+    this.context = context;
+
+    final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+    setLayoutManager(layoutManager);
 
     setOnScrollListener(new OnScrollListener() {
       private static final int THRESHOLD = 5;

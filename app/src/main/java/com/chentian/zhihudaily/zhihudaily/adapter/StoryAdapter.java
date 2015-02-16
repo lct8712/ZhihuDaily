@@ -3,11 +3,15 @@ package com.chentian.zhihudaily.zhihudaily.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +24,8 @@ import com.chentian.zhihudaily.zhihudaily.util.ViewUtils;
 import com.koushikdutta.ion.Ion;
 
 /**
+ * Adapter used in both main page list and theme list
+ *
  * @author chentian
  */
 public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -127,6 +133,9 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     this.latestDate = latestDate;
   }
 
+  /**
+   * View holder for main page header slide
+   */
   public static class ViewHolderHeaderSlide extends RecyclerView.ViewHolder {
 
     private final SlideTopStory slideTopStory;
@@ -142,6 +151,9 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
   }
 
+  /**
+   * View holder for theme page header image
+   */
   private static class ViewHolderHeaderNormal extends RecyclerView.ViewHolder {
 
     private final ArticleHeaderView articleHeaderView;
@@ -157,6 +169,9 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
   }
 
+  /**
+   * View holder for a story card item
+   */
   private static class ViewHolderItem extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private final TextView txtTitle;
@@ -189,8 +204,25 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     @Override
-    public void onClick(View view) {
-      ViewUtils.openDetailActivity(story.getId(), view.getContext());
+    public void onClick(final View view) {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        int cx = (view.getLeft() + view.getRight()) / 2;
+        int cy = (view.getTop() + view.getBottom()) / 2;
+
+        int finalRadius = view.getWidth();
+
+        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
+        anim.start();
+        anim.addListener(new AnimatorListenerAdapter() {
+          @Override
+          public void onAnimationEnd(Animator animation) {
+            super.onAnimationEnd(animation);
+            ViewUtils.openDetailActivity(story.getId(), view.getContext());
+          }
+        });
+      } else {
+        ViewUtils.openDetailActivity(story.getId(), view.getContext());
+      }
     }
   }
 }

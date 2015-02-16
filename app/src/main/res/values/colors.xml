@@ -3,14 +3,14 @@
 
     <color name="color_primary">#00A2ED</color>
     <color name="color_primary_dark">#366AD3</color>
+    <color name="color_accent">#61F2D4</color>
 
     <color name="text_deep">#DF000000</color>
     <color name="text_light">#99000000</color>
 
     <color name="title_slide_background">#990F0F0F</color>
 
-    <color name="list_background">#F4F4F4</color>
-    <color name="list_item_shadow">#F0F0F0</color>
+    <color name="list_item_touched">#F0F0F0</color>
 
     <color name="title_slide_background_start">#00EFEFEF</color>
     <color name="title_slide_background_end">#AA000000</color>

@@ -13,8 +13,6 @@
     <com.chentian.zhihudaily.zhihudaily.ui.view.ThemeStoryListView
             android:id="@+id/list_view_theme_story"
             android:visibility="gone"
-            android:divider="@color/list_background"
-            android:dividerHeight="@dimen/story_list_item_margin"
             android:overScrollMode="never"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

@@ -11,16 +11,15 @@
     <dimen name="text_size_tall">24sp</dimen>
     <dimen name="text_size_huge">34sp</dimen>
 
-    <dimen name="shadow">1dp</dimen>
-
     <!-- Slide image -->
     <dimen name="slide_image_height">200dp</dimen>
     <dimen name="slide_image_title_padding">10dp</dimen>
     <dimen name="slide_image_title_margin">20dp</dimen>
 
     <!-- Story list -->
-    <dimen name="story_list_item_height">90dp</dimen>
-    <dimen name="story_list_item_margin">6dp</dimen>
+    <dimen name="story_list_item_height">100dp</dimen>
+    <dimen name="story_list_item_margin_vertical">3dp</dimen>
+    <dimen name="story_list_item_margin_horizontal">6dp</dimen>
     <dimen name="story_list_item_text_margin_top">10dp</dimen>
     <dimen name="story_item_padding">15dp</dimen>
     <dimen name="story_item_text_image_margin">12dp</dimen>

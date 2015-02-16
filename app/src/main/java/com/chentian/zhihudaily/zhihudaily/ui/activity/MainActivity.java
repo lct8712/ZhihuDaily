@@ -41,25 +41,16 @@ public class MainActivity extends BaseActivity {
       public void onMainPageItemSelect() {
         toolbar.setTitle(getString(R.string.landing_page));
         storyListFragment.loadMainPage();
+        navigationDrawerFragment.closeDrawer();
       }
 
       @Override
       public void onThemeItemSelected(Theme theme) {
         toolbar.setTitle(theme.getName());
         storyListFragment.loadTheme(theme.getThemeApiId());
+        navigationDrawerFragment.closeDrawer();
       }
     });
-//    navigationDrawerFragment.setNavigationDrawerCallback(new NavigationDrawerFragment.NavigationDrawerCallback() {
-//      @Override
-//      public void onMainPageItemSelect() {
-//        storyListFragment.loadMainPage();
-//      }
-//
-//      @Override
-//      public void onThemeItemSelected(long themeId) {
-//        storyListFragment.loadTheme(themeId);
-//      }
-//    });
 
     if (savedInstanceState == null) {
       storyListFragment = new StoryListFragment();

@@ -95,6 +95,10 @@ public class NavigationDrawerFragment extends Fragment {
     drawerLayout.openDrawer(Gravity.START);
   }
 
+  public void closeDrawer() {
+    drawerLayout.closeDrawer(drawerContainer);
+  }
+
   public ActionBarDrawerToggle getDrawerToggle() {
     return drawerToggle;
   }
