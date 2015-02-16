@@ -1,20 +1,38 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".MainActivity$PlaceholderFragment">
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <com.chentian.zhihudaily.zhihudaily.ui.view.StoryListView
-            android:id="@+id/list_view_story"
-            android:overScrollMode="never"
+    <!-- Story list in main page -->
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_story_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            tools:context=".MainActivity$PlaceholderFragment">
+
+        <com.chentian.zhihudaily.zhihudaily.ui.view.StoryListView
+                android:id="@+id/list_view_story_main"
+                android:overScrollMode="never"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <!-- Story list in theme page -->
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_story_theme"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:context=".MainActivity$PlaceholderFragment">
 
     <com.chentian.zhihudaily.zhihudaily.ui.view.ThemeStoryListView
-            android:id="@+id/list_view_theme_story"
-            android:visibility="gone"
+            android:id="@+id/list_view_story_theme"
             android:overScrollMode="never"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

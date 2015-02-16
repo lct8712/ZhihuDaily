@@ -51,7 +51,7 @@ public class StoryListView extends RecyclerView {
     });
   }
 
-  public void loadTopStories() {
+  public void loadTopStories(final Runnable callback) {
     NewsService newsService = RestClient.getInstance().getNewsService();
     newsService.getLatestStoryCollection(new Callback<StoryCollection>() {
       @Override
@@ -61,6 +61,10 @@ public class StoryListView extends RecyclerView {
         adapter.setStoryList(storyCollection.getStories());
         adapter.setTopStories(storyCollection.getTop_stories());
         setAdapter(adapter);
+
+        if (callback != null) {
+          callback.run();
+        }
 
         loadMoreStories();
 

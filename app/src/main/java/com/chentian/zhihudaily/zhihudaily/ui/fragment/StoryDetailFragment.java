@@ -79,9 +79,10 @@ public class StoryDetailFragment extends Fragment {
 
     webViewContent = (WebView) rootView.findViewById(R.id.web_view_article);
     articleHeader = ArticleHeaderView.newInstance(container);
+    scrollViewContent = (ScrollView) rootView.findViewById(R.id.scroll_view_content);
+
     RelativeLayout articleHeaderContainer = (RelativeLayout) rootView.findViewById(R.id.article_header_container);
     articleHeaderContainer.addView(articleHeader);
-    scrollViewContent = (ScrollView) rootView.findViewById(R.id.scroll_view_content);
 
     latestPullingDown = new LinkedList<>();
 

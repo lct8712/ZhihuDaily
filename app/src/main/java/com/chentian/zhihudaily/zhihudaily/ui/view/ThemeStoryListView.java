@@ -33,7 +33,7 @@ public class ThemeStoryListView extends RecyclerView {
     setLayoutManager(new LinearLayoutManager(context));
   }
 
-  public void loadThemeStories(final long themeId) {
+  public void loadThemeStories(final long themeId, final Runnable callback) {
     NewsService newsService = RestClient.getInstance().getNewsService();
     newsService.getThemeStoryCollection(themeId, new Callback<ThemeStoryCollection>() {
       @Override
@@ -42,6 +42,10 @@ public class ThemeStoryListView extends RecyclerView {
         adapter.setStoryList(themeStoryCollection.getStories());
         adapter.setNormalHeaderData(themeStoryCollection.getDescription(), themeStoryCollection.getImage());
         setAdapter(adapter);
+
+        if (callback != null) {
+          callback.run();
+        }
 
         String logInfo = String.format("Get theme story collection success, id: %d, size: %d",
                 themeId, themeStoryCollection.getStories().size());
