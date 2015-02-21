@@ -37,6 +37,9 @@ public class ViewUtils {
     return LayoutInflater.from(context).inflate(resId, null);
   }
 
+  /**
+   * Open story detail activity, with an animate
+   */
   public static void openDetailActivity(long id, Context context) {
     Intent intent = new Intent(context, DetailActivity.class);
     intent.putExtra(DetailActivity.EXTRA_ID, id);
@@ -46,6 +49,9 @@ public class ViewUtils {
     }
   }
 
+  /**
+   * Close an activity with an slice animate, usually applies to a detail activity
+   */
   public static void finishActivityWithSlideAnim(Activity activity) {
     activity.finish();
     activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);

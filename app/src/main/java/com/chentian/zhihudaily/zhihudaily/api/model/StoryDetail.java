@@ -2,6 +2,8 @@ package com.chentian.zhihudaily.zhihudaily.api.model;
 
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Story model displayed in detail page, such as:
  *   http://news-at.zhihu.com/api/4/news/4475182
@@ -29,11 +31,13 @@ public class StoryDetail {
 
   private String image;
 
-  private String image_source;
+  @SerializedName("image_source")
+  private String imageSource;
 
   private String title;
 
-  private String share_url;
+  @SerializedName("share_url")
+  private String shareUrl;
 
   private List<String> js;
 
@@ -41,7 +45,8 @@ public class StoryDetail {
 
   private List<Recommender> recommenders;
 
-  private String ga_prefix;
+  @SerializedName("ga_prefix")
+  private String gaPrefix;
 
   /**
    * 0 for inside story, 1 for outside story
@@ -51,17 +56,20 @@ public class StoryDetail {
   /**
    * Only for outside story
    */
-  private String theme_name;
+  @SerializedName("theme_name")
+  private String themeName;
 
   /**
    * Only for outside story
    */
-  private String editor_name;
+  @SerializedName("editor_name")
+  private String editorName;
 
   /**
    * Only for outside story
    */
-  private int theme_id;
+  @SerializedName("theme_id")
+  private int themeId;
 
   public long getId() {
     return id;
@@ -87,12 +95,12 @@ public class StoryDetail {
     this.image = image;
   }
 
-  public String getImage_source() {
-    return image_source;
+  public String getImageSource() {
+    return imageSource;
   }
 
-  public void setImage_source(String image_source) {
-    this.image_source = image_source;
+  public void setImageSource(String imageSource) {
+    this.imageSource = imageSource;
   }
 
   public String getTitle() {
@@ -103,12 +111,12 @@ public class StoryDetail {
     this.title = title;
   }
 
-  public String getShare_url() {
-    return share_url;
+  public String getShareUrl() {
+    return shareUrl;
   }
 
-  public void setShare_url(String share_url) {
-    this.share_url = share_url;
+  public void setShareUrl(String shareUrl) {
+    this.shareUrl = shareUrl;
   }
 
   public List<String> getJs() {
@@ -135,12 +143,12 @@ public class StoryDetail {
     this.recommenders = recommenders;
   }
 
-  public String getGa_prefix() {
-    return ga_prefix;
+  public String getGaPrefix() {
+    return gaPrefix;
   }
 
-  public void setGa_prefix(String ga_prefix) {
-    this.ga_prefix = ga_prefix;
+  public void setGaPrefix(String gaPrefix) {
+    this.gaPrefix = gaPrefix;
   }
 
   public int getType() {
@@ -151,27 +159,27 @@ public class StoryDetail {
     this.type = type;
   }
 
-  public String getTheme_name() {
-    return theme_name;
+  public String getThemeName() {
+    return themeName;
   }
 
-  public void setTheme_name(String theme_name) {
-    this.theme_name = theme_name;
+  public void setThemeName(String themeName) {
+    this.themeName = themeName;
   }
 
-  public String getEditor_name() {
-    return editor_name;
+  public String getEditorName() {
+    return editorName;
   }
 
-  public void setEditor_name(String editor_name) {
-    this.editor_name = editor_name;
+  public void setEditorName(String editorName) {
+    this.editorName = editorName;
   }
 
-  public int getTheme_id() {
-    return theme_id;
+  public int getThemeId() {
+    return themeId;
   }
 
-  public void setTheme_id(int theme_id) {
-    this.theme_id = theme_id;
+  public void setThemeId(int themeId) {
+    this.themeId = themeId;
   }
 }

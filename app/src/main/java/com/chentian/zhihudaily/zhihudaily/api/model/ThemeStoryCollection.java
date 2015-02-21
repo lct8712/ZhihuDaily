@@ -2,6 +2,8 @@ package com.chentian.zhihudaily.zhihudaily.api.model;
 
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Collection of theme stories, such as:
  *   http://news-at.zhihu.com/api/4/theme/11
@@ -75,7 +77,8 @@ public class ThemeStoryCollection {
 
   private String image;
 
-  private String image_source;
+  @SerializedName("image_source")
+  private String imageSource;
 
   private List<Editor> editors;
 
@@ -127,12 +130,12 @@ public class ThemeStoryCollection {
     this.image = image;
   }
 
-  public String getImage_source() {
-    return image_source;
+  public String getImageSource() {
+    return imageSource;
   }
 
-  public void setImage_source(String image_source) {
-    this.image_source = image_source;
+  public void setImageSource(String imageSource) {
+    this.imageSource = imageSource;
   }
 
   public List<Editor> getEditors() {

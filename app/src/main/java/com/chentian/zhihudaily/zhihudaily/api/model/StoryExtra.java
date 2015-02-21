@@ -1,5 +1,7 @@
 package com.chentian.zhihudaily.zhihudaily.api.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Extra info of a story, such as:
  *  http://news-at.zhihu.com/api/4/story-extra/4475182
@@ -10,9 +12,11 @@ public class StoryExtra {
 
   private int comments;
 
-  private int long_comments;
+  @SerializedName("long_comments")
+  private int longComments;
 
-  private int short_comments;
+  @SerializedName("short_comments")
+  private int shortComments;
 
   private int popularity;
 
@@ -24,20 +28,20 @@ public class StoryExtra {
     this.comments = comments;
   }
 
-  public int getLong_comments() {
-    return long_comments;
+  public int getLongComments() {
+    return longComments;
   }
 
-  public void setLong_comments(int long_comments) {
-    this.long_comments = long_comments;
+  public void setLongComments(int longComments) {
+    this.longComments = longComments;
   }
 
-  public int getShort_comments() {
-    return short_comments;
+  public int getShortComments() {
+    return shortComments;
   }
 
-  public void setShort_comments(int short_comments) {
-    this.short_comments = short_comments;
+  public void setShortComments(int shortComments) {
+    this.shortComments = shortComments;
   }
 
   public int getPopularity() {

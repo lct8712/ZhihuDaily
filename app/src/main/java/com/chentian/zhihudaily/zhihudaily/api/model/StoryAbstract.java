@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.chentian.zhihudaily.zhihudaily.util.CollectionUtils;
 import com.chentian.zhihudaily.zhihudaily.util.Const;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Story model displayed in list page, such as:
@@ -19,7 +20,8 @@ public class StoryAbstract {
 
   private String title;
 
-  private String ga_prefix;
+  @SerializedName("ga_prefix")
+  private String gaPrefix;
 
   private List<String> images;
 
@@ -27,7 +29,8 @@ public class StoryAbstract {
 
   private boolean multipic;
 
-  private String share_url;
+  @SerializedName("share_url")
+  private String shareUrl;
 
   private int type;
 
@@ -47,12 +50,12 @@ public class StoryAbstract {
     this.title = title;
   }
 
-  public String getGa_prefix() {
-    return ga_prefix;
+  public String getGaPrefix() {
+    return gaPrefix;
   }
 
-  public void setGa_prefix(String ga_prefix) {
-    this.ga_prefix = ga_prefix;
+  public void setGaPrefix(String gaPrefix) {
+    this.gaPrefix = gaPrefix;
   }
 
   public List<String> getImages() {
@@ -71,12 +74,12 @@ public class StoryAbstract {
     this.multipic = multipic;
   }
 
-  public String getShare_url() {
-    return share_url;
+  public String getShareUrl() {
+    return shareUrl;
   }
 
-  public void setShare_url(String share_url) {
-    this.share_url = share_url;
+  public void setShareUrl(String shareUrl) {
+    this.shareUrl = shareUrl;
   }
 
   public int getType() {
