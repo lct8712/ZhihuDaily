@@ -14,6 +14,8 @@ import android.widget.HorizontalScrollView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -33,15 +35,12 @@ import com.chentian.zhihudaily.util.ScrollPullDownHelper;
  */
 public class StoryDetailFragment extends Fragment {
 
-  private WebView webViewContent;
+  @InjectView(R.id.web_view_article) WebView webViewContent;
+  @InjectView(R.id.scroll_view_content) ScrollView scrollViewContent;
+
   private ArticleHeaderView articleHeader;
-  private ScrollView scrollViewContent;
   private Toolbar toolbar;
-
   private ScrollPullDownHelper scrollPullDownHelper;
-
-  public StoryDetailFragment() {
-  }
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -69,11 +68,9 @@ public class StoryDetailFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+    ButterKnife.inject(this, rootView);
 
-    webViewContent = (WebView) rootView.findViewById(R.id.web_view_article);
     articleHeader = ArticleHeaderView.newInstance(container);
-    scrollViewContent = (ScrollView) rootView.findViewById(R.id.scroll_view_content);
-
     RelativeLayout articleHeaderContainer = (RelativeLayout) rootView.findViewById(R.id.article_header_container);
     articleHeaderContainer.addView(articleHeader);
 

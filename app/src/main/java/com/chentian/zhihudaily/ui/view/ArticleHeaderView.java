@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 import com.chentian.zhihudaily.zhihudaily.R;
 import com.chentian.zhihudaily.util.ViewUtils;
@@ -20,8 +22,8 @@ import com.koushikdutta.ion.Ion;
  */
 public class ArticleHeaderView extends RelativeLayout {
 
-  private ImageView imageViewHeader;
-  private TextView txtTitle;
+  @InjectView(R.id.daimajia_slider_image) ImageView imageViewHeader;
+  @InjectView(R.id.title) TextView txtTitle;
 
   public ArticleHeaderView(Context context, AttributeSet attrs) {
     super(context, attrs);
@@ -39,8 +41,8 @@ public class ArticleHeaderView extends RelativeLayout {
   protected void onFinishInflate() {
     super.onFinishInflate();
 
-    imageViewHeader = (ImageView) findViewById(R.id.daimajia_slider_image);
-    txtTitle = (TextView) findViewById(R.id.title);
+    ButterKnife.inject(this);
+
     findViewById(R.id.loading_bar).setVisibility(View.GONE);
   }
 

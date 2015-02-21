@@ -8,15 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 import com.chentian.zhihudaily.data.model.StoryAbstract;
 import com.chentian.zhihudaily.data.model.StoryCollection;
 import com.chentian.zhihudaily.data.model.ThemeStoryCollection;
-import com.chentian.zhihudaily.zhihudaily.R;
-import com.chentian.zhihudaily.ui.adapter.StoryAdapter;
 import com.chentian.zhihudaily.mvp.presenter.StoryListPresenter;
 import com.chentian.zhihudaily.mvp.presenter.impl.StoryListPresenterImpl;
 import com.chentian.zhihudaily.mvp.view.MVPStoryListView;
+import com.chentian.zhihudaily.ui.adapter.StoryAdapter;
+import com.chentian.zhihudaily.zhihudaily.R;
 
 /**
  * Fragment containing list of stories
@@ -25,32 +27,26 @@ import com.chentian.zhihudaily.mvp.view.MVPStoryListView;
  */
 public class StoryListFragment extends Fragment implements MVPStoryListView {
 
-  private StoryListPresenter storyListPresenter;
+  @InjectView(R.id.list_view_story_main) RecyclerView listViewStoryMain;
+  @InjectView(R.id.list_view_story_theme) RecyclerView listViewStoryTheme;
+  @InjectView(R.id.swipe_refresh_story_main) SwipeRefreshLayout swipeRefreshLayoutMain;
+  @InjectView(R.id.swipe_refresh_story_theme) SwipeRefreshLayout swipeRefreshLayoutTheme;
 
-  private RecyclerView listViewStoryMain;
-  private RecyclerView listViewStoryTheme;
-  private SwipeRefreshLayout swipeRefreshLayoutMain;
-  private SwipeRefreshLayout swipeRefreshLayoutTheme;
   private StoryAdapter storyAdapterMain;
   private StoryAdapter storyAdapterTheme;
+  private StoryListPresenter storyListPresenter;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_story, container, false);
+    View rootView = inflater.inflate(R.layout.fragment_story, container, false);
+    ButterKnife.inject(this, rootView);
 
     storyListPresenter = new StoryListPresenterImpl(this);
-
-    listViewStoryMain = (RecyclerView) view.findViewById(R.id.list_view_story_main);
-    listViewStoryTheme = (RecyclerView) view.findViewById(R.id.list_view_story_theme);
-    swipeRefreshLayoutMain = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_story_main);
-    swipeRefreshLayoutTheme = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_story_theme);
-
     buildUI();
-
     loadMainPage();
 
-    return view;
+    return rootView;
   }
 
   public void loadMainPage() {
