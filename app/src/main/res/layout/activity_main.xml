@@ -24,7 +24,7 @@
     <!-- The navigation drawer -->
     <fragment
             android:id="@+id/navigation_drawer"
-            android:name="com.chentian.zhihudaily.zhihudaily.ui.fragment.NavigationDrawerFragment"
+            android:name="com.chentian.zhihudaily.ui.fragment.NavigationDrawerFragment"
             android:layout_gravity="start"
             android:layout_width="@dimen/left_drawer_width"
             android:layout_height="match_parent"/>

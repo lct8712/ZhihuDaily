@@ -1,4 +1,4 @@
-package com.chentian.zhihudaily.zhihudaily.ui.view;
+package com.chentian.zhihudaily.ui.view;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.chentian.zhihudaily.zhihudaily.R;
 import com.chentian.zhihudaily.data.model.StoryAbstract;
 import com.chentian.zhihudaily.common.util.CollectionUtils;
-import com.chentian.zhihudaily.zhihudaily.util.ViewUtils;
+import com.chentian.zhihudaily.util.ViewUtils;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 

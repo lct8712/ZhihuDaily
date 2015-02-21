@@ -1,4 +1,4 @@
-package com.chentian.zhihudaily.zhihudaily.ui.activity;
+package com.chentian.zhihudaily.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,10 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.chentian.zhihudaily.zhihudaily.R;
-import com.chentian.zhihudaily.zhihudaily.adapter.ThemeAdapter;
+import com.chentian.zhihudaily.ui.adapter.ThemeAdapter;
 import com.chentian.zhihudaily.data.model.Theme;
-import com.chentian.zhihudaily.zhihudaily.ui.fragment.NavigationDrawerFragment;
-import com.chentian.zhihudaily.zhihudaily.ui.fragment.StoryListFragment;
+import com.chentian.zhihudaily.ui.fragment.NavigationDrawerFragment;
+import com.chentian.zhihudaily.ui.fragment.StoryListFragment;
 
 /**
  * Main activity, showing story list
@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity {
     navigationDrawerFragment.setUp(findViewById(R.id.navigation_drawer),
             (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
 
-    navigationDrawerFragment.setThemeItemCallback(new ThemeAdapter.ThemeItemCallback() {
+    navigationDrawerFragment.setThemeItemCallback(new ThemeAdapter.ThemeItemSelectListener() {
       @Override
       public void onMainPageItemSelect() {
         toolbar.setTitle(getString(R.string.landing_page));

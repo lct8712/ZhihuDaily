@@ -1,7 +1,4 @@
-package com.chentian.zhihudaily.zhihudaily.ui.fragment;
-
-import java.util.LinkedList;
-import java.util.Queue;
+package com.chentian.zhihudaily.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -25,8 +22,9 @@ import com.chentian.zhihudaily.common.util.WebUtils;
 import com.chentian.zhihudaily.data.datasource.DataSource;
 import com.chentian.zhihudaily.data.model.StoryDetail;
 import com.chentian.zhihudaily.zhihudaily.R;
-import com.chentian.zhihudaily.zhihudaily.ui.activity.DetailActivity;
-import com.chentian.zhihudaily.zhihudaily.ui.view.ArticleHeaderView;
+import com.chentian.zhihudaily.ui.activity.DetailActivity;
+import com.chentian.zhihudaily.ui.view.ArticleHeaderView;
+import com.chentian.zhihudaily.util.ScrollPullDownHelper;
 
 /**
  * Fragment containing detail of a story
@@ -40,10 +38,7 @@ public class StoryDetailFragment extends Fragment {
   private ScrollView scrollViewContent;
   private Toolbar toolbar;
 
-  private int lastScrollY = 0;
-  private Queue<Boolean> latestPullingDown;
-  private static final int PULLING_DOWN_TIME_MAX = 7;
-  private static final int PULLING_DOWN_TIME_THRESHOLD = 5;
+  private ScrollPullDownHelper scrollPullDownHelper;
 
   public StoryDetailFragment() {
   }
@@ -82,7 +77,7 @@ public class StoryDetailFragment extends Fragment {
     RelativeLayout articleHeaderContainer = (RelativeLayout) rootView.findViewById(R.id.article_header_container);
     articleHeaderContainer.addView(articleHeader);
 
-    latestPullingDown = new LinkedList<>();
+    scrollPullDownHelper = new ScrollPullDownHelper();
 
     return rootView;
   }
@@ -98,7 +93,8 @@ public class StoryDetailFragment extends Fragment {
     }
 
     String data = WebUtils.BuildHtmlWithCss(storyDetail.getBody(), storyDetail.getCss());
-    webViewContent.loadDataWithBaseURL(WebUtils.ASSERT_DIR, data, WebUtils.MIME_HTML_TYPE, WebUtils.DEFAULT_CHARSET, null);
+    webViewContent.loadDataWithBaseURL(WebUtils.ASSERT_DIR,
+            data, WebUtils.MIME_HTML_TYPE, WebUtils.DEFAULT_CHARSET, null);
 
     articleHeader.setData(storyDetail.getTitle(), storyDetail.getImage());
 
@@ -150,32 +146,15 @@ public class StoryDetailFragment extends Fragment {
       return;
     }
 
-    // Don't show toolbar if use has pulled up the whole article
+    // Don't show toolbar if user has pulled up the whole article
     if (scrollY + scrollViewContent.getHeight() > webViewContent.getMeasuredHeight() + articleHeight) {
       return;
     }
 
-    // We detect several latest moves to ensure a smooth showing-hiding toolbar effect
     // Show the toolbar if user is pulling down
-    boolean isPullingDown = scrollY < lastScrollY;
-    latestPullingDown.offer(isPullingDown);
-    if (latestPullingDown.size() > PULLING_DOWN_TIME_MAX) {
-      latestPullingDown.poll();
-    }
-
-    float toolBarPositionY = (getPullingDownTime() < PULLING_DOWN_TIME_THRESHOLD) ? (contentHeight - scrollY) : 0;
+    boolean isPullingDown = scrollPullDownHelper.onScrollChanged(scrollY);
+    float toolBarPositionY = isPullingDown ? 0 : (contentHeight - scrollY);
     toolbar.setY(toolBarPositionY);
-
-    lastScrollY = scrollY;
   }
 
-  public int getPullingDownTime() {
-    int result = 0;
-    for (Boolean isPullingDown : latestPullingDown) {
-      if (isPullingDown) {
-        result++;
-      }
-    }
-    return result;
-  }
 }

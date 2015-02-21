@@ -1,12 +1,9 @@
-package com.chentian.zhihudaily.zhihudaily.adapter;
+package com.chentian.zhihudaily.ui.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,18 +11,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.chentian.zhihudaily.zhihudaily.R;
 import com.chentian.zhihudaily.data.model.Theme;
-import com.chentian.zhihudaily.data.dao.ThemeDao;
+import com.chentian.zhihudaily.zhihudaily.R;
 
 /**
+ * Adapter of theme list, shows in left drawer, including both subscribed and un-subscribed themes
+ *
  * @author chentian
  */
 public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-  public static interface ThemeItemCallback {
+  public static interface ThemeItemSelectListener {
     void onMainPageItemSelect();
     void onThemeItemSelected(Theme theme);
+  }
+
+  public static interface ThemeSubscribedListener {
+    void onThemeSubscribed(Theme theme);
   }
 
   private static final int ITEM_TYPE_HEADER = 0;
@@ -33,7 +35,8 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   private Context context;
   private List<Theme> themeList;
-  private ThemeItemCallback themeItemCallback;
+  private ThemeItemSelectListener themeItemSelectListener;
+  private ThemeSubscribedListener themeSubscribedListener;
 
   public ThemeAdapter(Context context) {
     this.context = context;
@@ -72,14 +75,17 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     return (position == 0) ? ITEM_TYPE_HEADER : ITEM_TYPE_ITEM;
   }
 
-  public void reloadThemeList() {
-    this.themeList = ThemeDao.listAll();
-    new Handler(Looper.getMainLooper()).post(new Runnable() {
-      @Override
-      public void run() {
-        notifyDataSetChanged();
-      }
-    });
+  public void setThemeList(List<Theme> themeList) {
+    this.themeList = themeList;
+    notifyDataSetChanged();
+  }
+
+  public void setThemeItemSelectListener(ThemeItemSelectListener themeItemSelectListener) {
+    this.themeItemSelectListener = themeItemSelectListener;
+  }
+
+  public void setThemeSubscribedListener(ThemeSubscribedListener themeSubscribedListener) {
+    this.themeSubscribedListener = themeSubscribedListener;
   }
 
   private class ViewHolderMainThemeItem extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -95,14 +101,10 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onClick(View v) {
-      if (themeItemCallback != null) {
-        themeItemCallback.onMainPageItemSelect();
+      if (themeItemSelectListener != null) {
+        themeItemSelectListener.onMainPageItemSelect();
       }
     }
-  }
-
-  public void setThemeItemCallback(ThemeItemCallback themeItemCallback) {
-    this.themeItemCallback = themeItemCallback;
   }
 
   private class ViewHolderItem extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -134,22 +136,13 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return;
       }
 
-      if (view == imageAction && !theme.isSubscribed()) {
-        theme.setSubscribed(true);
-        new AsyncTask<Void, Void, Void>() {
-          @Override
-          protected Void doInBackground(Void... params) {
-            theme.save();
-            reloadThemeList();
-
-            return null;
-          }
-        }.execute();
+      if (view == imageAction && !theme.isSubscribed() && themeSubscribedListener != null) {
+        themeSubscribedListener.onThemeSubscribed(theme);
         return;
       }
 
-      if (themeItemCallback != null) {
-        themeItemCallback.onThemeItemSelected(theme);
+      if (themeItemSelectListener != null) {
+        themeItemSelectListener.onThemeItemSelected(theme);
       }
     }
   }

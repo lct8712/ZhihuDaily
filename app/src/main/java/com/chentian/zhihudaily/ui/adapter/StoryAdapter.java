@@ -1,26 +1,21 @@
-package com.chentian.zhihudaily.zhihudaily.adapter;
+package com.chentian.zhihudaily.ui.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.chentian.zhihudaily.zhihudaily.R;
 import com.chentian.zhihudaily.data.model.StoryAbstract;
-import com.chentian.zhihudaily.zhihudaily.ui.view.ArticleHeaderView;
-import com.chentian.zhihudaily.zhihudaily.ui.view.SlideTopStory;
-import com.chentian.zhihudaily.zhihudaily.util.ViewUtils;
+import com.chentian.zhihudaily.zhihudaily.R;
+import com.chentian.zhihudaily.ui.view.ArticleHeaderView;
+import com.chentian.zhihudaily.ui.view.SlideTopStory;
 import com.koushikdutta.ion.Ion;
 
 /**
@@ -29,6 +24,10 @@ import com.koushikdutta.ion.Ion;
  * @author chentian
  */
 public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+  public interface OnCardItemClickListener {
+    void onStoryCardItemClick(View view, StoryAbstract story);
+  }
 
   public enum HeaderType {
     SlideHeader, NormalHeader
@@ -44,7 +43,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
   private List<StoryAbstract> storyList;
   private String headerTitle;
   private String headerImageUrl;
-  private String latestDate;
+  private OnCardItemClickListener onCardItemClickListener;
   private HeaderType headerType;
 
   public StoryAdapter(Context context, HeaderType headerType) {
@@ -80,7 +79,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     } else if (holder instanceof ViewHolderItem) {
       ViewHolderItem viewHolderItem = (ViewHolderItem) holder;
-      viewHolderItem.bindStory(storyList.get(position));
+      viewHolderItem.bindStory(storyList.get(position), onCardItemClickListener);
     }
   }
 
@@ -125,12 +124,8 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     notifyDataSetChanged();
   }
 
-  public String getLatestDate() {
-    return latestDate;
-  }
-
-  public void setLatestDate(String latestDate) {
-    this.latestDate = latestDate;
+  public void setOnCardItemClickListener(OnCardItemClickListener onCardItemClickListener) {
+    this.onCardItemClickListener = onCardItemClickListener;
   }
 
   /**
@@ -177,6 +172,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private final TextView txtTitle;
     private final ImageView imageIcon;
     private StoryAbstract story;
+    private OnCardItemClickListener onCardItemClickListener;
 
     public ViewHolderItem(View itemView) {
       super(itemView);
@@ -186,8 +182,9 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
       itemView.setOnClickListener(this);
     }
 
-    public void bindStory(StoryAbstract story) {
+    public void bindStory(StoryAbstract story, OnCardItemClickListener onCardItemClickListener) {
       this.story = story;
+      this.onCardItemClickListener = onCardItemClickListener;
 
       txtTitle.setText(story.getTitle());
 
@@ -205,23 +202,8 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onClick(final View view) {
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        int cx = (view.getLeft() + view.getRight()) / 2;
-        int cy = (view.getTop() + view.getBottom()) / 2;
-
-        int finalRadius = view.getWidth();
-
-        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
-        anim.start();
-        anim.addListener(new AnimatorListenerAdapter() {
-          @Override
-          public void onAnimationEnd(Animator animation) {
-            super.onAnimationEnd(animation);
-            ViewUtils.openDetailActivity(story.getId(), view.getContext());
-          }
-        });
-      } else {
-        ViewUtils.openDetailActivity(story.getId(), view.getContext());
+      if (onCardItemClickListener != null) {
+        onCardItemClickListener.onStoryCardItemClick(view, story);
       }
     }
   }

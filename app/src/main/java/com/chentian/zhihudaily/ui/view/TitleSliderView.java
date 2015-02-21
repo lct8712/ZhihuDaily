@@ -1,4 +1,4 @@
-package com.chentian.zhihudaily.zhihudaily.ui.view;
+package com.chentian.zhihudaily.ui.view;
 
 import android.content.Context;
 import android.view.View;

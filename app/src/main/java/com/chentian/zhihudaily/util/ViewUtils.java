@@ -1,4 +1,4 @@
-package com.chentian.zhihudaily.zhihudaily.util;
+package com.chentian.zhihudaily.util;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chentian.zhihudaily.zhihudaily.R;
-import com.chentian.zhihudaily.zhihudaily.ui.activity.DetailActivity;
+import com.chentian.zhihudaily.ui.activity.DetailActivity;
 
 /**
  * @author chentian

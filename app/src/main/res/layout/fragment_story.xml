@@ -11,7 +11,7 @@
             android:layout_height="match_parent"
             tools:context=".MainActivity$PlaceholderFragment">
 
-        <com.chentian.zhihudaily.zhihudaily.ui.view.StoryListView
+        <android.support.v7.widget.RecyclerView
                 android:id="@+id/list_view_story_main"
                 android:overScrollMode="never"
                 android:layout_width="match_parent"
@@ -27,11 +27,11 @@
             android:visibility="gone"
             tools:context=".MainActivity$PlaceholderFragment">
 
-    <com.chentian.zhihudaily.zhihudaily.ui.view.ThemeStoryListView
-            android:id="@+id/list_view_story_theme"
-            android:overScrollMode="never"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_view_story_theme"
+                android:overScrollMode="never"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

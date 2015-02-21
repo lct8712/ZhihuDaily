@@ -1,13 +1,13 @@
-package com.chentian.zhihudaily.zhihudaily.ui.activity;
+package com.chentian.zhihudaily.ui.activity;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.chentian.zhihudaily.zhihudaily.R;
-import com.chentian.zhihudaily.zhihudaily.ui.fragment.StoryDetailFragment;
+import com.chentian.zhihudaily.ui.fragment.StoryDetailFragment;
 import com.chentian.zhihudaily.common.util.Const;
-import com.chentian.zhihudaily.zhihudaily.util.ViewUtils;
+import com.chentian.zhihudaily.util.ViewUtils;
 
 /**
  * Activity to read story detail content

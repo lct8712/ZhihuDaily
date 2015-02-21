@@ -1,4 +1,4 @@
-package com.chentian.zhihudaily.zhihudaily.ui.view;
+package com.chentian.zhihudaily.ui.view;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chentian.zhihudaily.zhihudaily.R;
-import com.chentian.zhihudaily.zhihudaily.util.ViewUtils;
+import com.chentian.zhihudaily.util.ViewUtils;
 import com.koushikdutta.ion.Ion;
 
 /**

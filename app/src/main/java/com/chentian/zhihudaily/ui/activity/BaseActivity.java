@@ -1,4 +1,4 @@
-package com.chentian.zhihudaily.zhihudaily.ui.activity;
+package com.chentian.zhihudaily.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
