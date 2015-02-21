@@ -9,11 +9,10 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import com.chentian.zhihudaily.common.util.Const;
+import com.chentian.zhihudaily.data.datasource.DataSource;
+import com.chentian.zhihudaily.data.model.ThemeStoryCollection;
 import com.chentian.zhihudaily.zhihudaily.adapter.StoryAdapter;
-import com.chentian.zhihudaily.zhihudaily.api.RestClient;
-import com.chentian.zhihudaily.zhihudaily.api.model.ThemeStoryCollection;
-import com.chentian.zhihudaily.zhihudaily.api.service.NewsService;
-import com.chentian.zhihudaily.zhihudaily.util.Const;
 
 /**
  * List of theme stories
@@ -34,8 +33,7 @@ public class ThemeStoryListView extends RecyclerView {
   }
 
   public void loadThemeStories(final long themeId, final Runnable callback) {
-    NewsService newsService = RestClient.getInstance().getNewsService();
-    newsService.getThemeStoryCollection(themeId, new Callback<ThemeStoryCollection>() {
+    DataSource.getInstance().getThemeStoryCollection(themeId, new Callback<ThemeStoryCollection>() {
       @Override
       public void success(ThemeStoryCollection themeStoryCollection, Response response) {
         adapter = new StoryAdapter(context, StoryAdapter.HeaderType.NormalHeader);

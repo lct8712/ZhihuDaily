@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chentian.zhihudaily.zhihudaily.R;
-import com.chentian.zhihudaily.zhihudaily.api.model.StoryAbstract;
+import com.chentian.zhihudaily.data.model.StoryAbstract;
 import com.chentian.zhihudaily.zhihudaily.ui.view.ArticleHeaderView;
 import com.chentian.zhihudaily.zhihudaily.ui.view.SlideTopStory;
 import com.chentian.zhihudaily.zhihudaily.util.ViewUtils;

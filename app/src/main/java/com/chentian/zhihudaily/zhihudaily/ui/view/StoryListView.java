@@ -9,12 +9,11 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import com.chentian.zhihudaily.common.util.CollectionUtils;
+import com.chentian.zhihudaily.common.util.Const;
+import com.chentian.zhihudaily.data.datasource.DataSource;
+import com.chentian.zhihudaily.data.model.StoryCollection;
 import com.chentian.zhihudaily.zhihudaily.adapter.StoryAdapter;
-import com.chentian.zhihudaily.zhihudaily.api.RestClient;
-import com.chentian.zhihudaily.zhihudaily.api.model.StoryCollection;
-import com.chentian.zhihudaily.zhihudaily.api.service.NewsService;
-import com.chentian.zhihudaily.zhihudaily.util.CollectionUtils;
-import com.chentian.zhihudaily.zhihudaily.util.Const;
 
 /**
  * List of stories, in main page
@@ -52,8 +51,7 @@ public class StoryListView extends RecyclerView {
   }
 
   public void loadTopStories(final Runnable callback) {
-    NewsService newsService = RestClient.getInstance().getNewsService();
-    newsService.getLatestStoryCollection(new Callback<StoryCollection>() {
+    DataSource.getInstance().getLatestStoryCollection(new Callback<StoryCollection>() {
       @Override
       public void success(StoryCollection storyCollection, Response response) {
         adapter = new StoryAdapter(context, StoryAdapter.HeaderType.SlideHeader);
@@ -84,8 +82,7 @@ public class StoryListView extends RecyclerView {
     }
 
     isLoading = true;
-    NewsService newsService = RestClient.getInstance().getNewsService();
-    newsService.getBeforeStoryCollection(adapter.getLatestDate(), new Callback<StoryCollection>() {
+    DataSource.getInstance().getBeforeStoryCollection(adapter.getLatestDate(), new Callback<StoryCollection>() {
       @Override
       public void success(StoryCollection storyCollection, Response response) {
         isLoading = false;

@@ -10,12 +10,12 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import com.chentian.zhihudaily.common.util.CollectionUtils;
+import com.chentian.zhihudaily.common.util.Const;
+import com.chentian.zhihudaily.data.dao.ThemeDao;
+import com.chentian.zhihudaily.data.datasource.DataSource;
+import com.chentian.zhihudaily.data.model.ThemeCollection;
 import com.chentian.zhihudaily.zhihudaily.adapter.ThemeAdapter;
-import com.chentian.zhihudaily.zhihudaily.api.RestClient;
-import com.chentian.zhihudaily.zhihudaily.api.model.ThemeCollection;
-import com.chentian.zhihudaily.zhihudaily.dao.ThemeDao;
-import com.chentian.zhihudaily.zhihudaily.util.CollectionUtils;
-import com.chentian.zhihudaily.zhihudaily.util.Const;
 
 /**
  * List view of themes, shows in left drawer, including both subscribed and un-subscribed themes
@@ -41,7 +41,7 @@ public class ThemeListView extends RecyclerView {
   public void loadThemes() {
     loadThemesFromDatabase();
 
-    RestClient.getInstance().getThemeService().getLatestThemeCollection(new Callback<ThemeCollection>() {
+    DataSource.getInstance().getLatestThemeCollection(new Callback<ThemeCollection>() {
       @Override
       public void success(final ThemeCollection themeCollection, Response response) {
         new AsyncTask<Void, Void, Void>() {

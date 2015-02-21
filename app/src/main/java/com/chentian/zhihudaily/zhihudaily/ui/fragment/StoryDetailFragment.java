@@ -21,13 +21,12 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import com.chentian.zhihudaily.common.util.WebUtils;
+import com.chentian.zhihudaily.data.datasource.DataSource;
+import com.chentian.zhihudaily.data.model.StoryDetail;
 import com.chentian.zhihudaily.zhihudaily.R;
-import com.chentian.zhihudaily.zhihudaily.api.RestClient;
-import com.chentian.zhihudaily.zhihudaily.api.model.StoryDetail;
-import com.chentian.zhihudaily.zhihudaily.api.service.NewsService;
 import com.chentian.zhihudaily.zhihudaily.ui.activity.DetailActivity;
 import com.chentian.zhihudaily.zhihudaily.ui.view.ArticleHeaderView;
-import com.chentian.zhihudaily.zhihudaily.util.WebUtils;
 
 /**
  * Fragment containing detail of a story
@@ -54,8 +53,7 @@ public class StoryDetailFragment extends Fragment {
     super.onCreate(savedInstanceState);
 
     Long id = getArguments().getLong(DetailActivity.EXTRA_ID);
-    NewsService newsService = RestClient.getInstance().getNewsService();
-    newsService.getStoryDetail(id, new Callback<StoryDetail>() {
+    DataSource.getInstance().getStoryDetail(id, new Callback<StoryDetail>() {
       @Override
       public void success(StoryDetail storyDetail, Response response) {
         bindUI(storyDetail);

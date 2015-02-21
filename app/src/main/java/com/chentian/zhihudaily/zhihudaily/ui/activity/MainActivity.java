@@ -12,7 +12,7 @@ import android.view.View;
 
 import com.chentian.zhihudaily.zhihudaily.R;
 import com.chentian.zhihudaily.zhihudaily.adapter.ThemeAdapter;
-import com.chentian.zhihudaily.zhihudaily.api.model.Theme;
+import com.chentian.zhihudaily.data.model.Theme;
 import com.chentian.zhihudaily.zhihudaily.ui.fragment.NavigationDrawerFragment;
 import com.chentian.zhihudaily.zhihudaily.ui.fragment.StoryListFragment;
 

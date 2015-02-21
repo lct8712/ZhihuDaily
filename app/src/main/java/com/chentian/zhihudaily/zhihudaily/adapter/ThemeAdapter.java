@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chentian.zhihudaily.zhihudaily.R;
-import com.chentian.zhihudaily.zhihudaily.api.model.Theme;
-import com.chentian.zhihudaily.zhihudaily.dao.ThemeDao;
+import com.chentian.zhihudaily.data.model.Theme;
+import com.chentian.zhihudaily.data.dao.ThemeDao;
 
 /**
  * @author chentian

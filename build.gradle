@@ -13,6 +13,18 @@ buildscript {
 }
 
 allprojects {
+
+    ext {
+        androidCompileSdkVersion = 21
+        androidBuildToolsVersion = "21.1.2"
+
+        androidApplicationId = 'com.chentian.zhihudaily.zhihudaily'
+        androidMinSdkVersion = 14
+        androidTargetSdkVersion = 21
+        androidVersionCode = 1
+        androidVersionName = "1.0"
+    }
+
     repositories {
         jcenter()
     }

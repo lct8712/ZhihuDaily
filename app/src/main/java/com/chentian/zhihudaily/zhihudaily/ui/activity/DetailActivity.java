@@ -6,7 +6,7 @@ import android.view.MenuItem;
 
 import com.chentian.zhihudaily.zhihudaily.R;
 import com.chentian.zhihudaily.zhihudaily.ui.fragment.StoryDetailFragment;
-import com.chentian.zhihudaily.zhihudaily.util.Const;
+import com.chentian.zhihudaily.common.util.Const;
 import com.chentian.zhihudaily.zhihudaily.util.ViewUtils;
 
 /**
