@@ -10,7 +10,7 @@ import com.chentian.zhihudaily.data.model.Theme;
  *
  * @author chentian
  */
-public interface MVPNavigationDrawerView {
+public interface MVPNavigationDrawerView extends MVPView {
 
   void showThemes(List<Theme> themes);
 

@@ -45,23 +45,6 @@ public class StoryDetailFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    Long id = getArguments().getLong(DetailActivity.EXTRA_ID);
-    DataSource.getInstance().getStoryDetail(id, new Callback<StoryDetail>() {
-      @Override
-      public void success(StoryDetail storyDetail, Response response) {
-        bindUI(storyDetail);
-      }
-
-      @Override
-      public void failure(RetrofitError error) {
-        FragmentActivity activity = getActivity();
-        if (activity != null) {
-          Toast.makeText(activity, getString(R.string.load_failed), Toast.LENGTH_SHORT).show();
-          activity.finish();
-        }
-      }
-    });
   }
 
   @Override
@@ -76,11 +59,32 @@ public class StoryDetailFragment extends Fragment {
 
     scrollPullDownHelper = new ScrollPullDownHelper();
 
+    loadStoryDetail();
+
     return rootView;
   }
 
   public void setToolbar(Toolbar toolbar) {
     this.toolbar = toolbar;
+  }
+
+  private void loadStoryDetail() {
+    Long id = getArguments().getLong(DetailActivity.EXTRA_ID);
+    DataSource.getInstance(getActivity()).getStoryDetail(id, new Callback<StoryDetail>() {
+      @Override
+      public void success(StoryDetail storyDetail, Response response) {
+        bindUI(storyDetail);
+      }
+
+      @Override
+      public void failure(RetrofitError error) {
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+          Toast.makeText(activity, getString(R.string.load_failed), Toast.LENGTH_SHORT).show();
+          activity.finish();
+        }
+      }
+    });
   }
 
   private void bindUI(StoryDetail storyDetail) {

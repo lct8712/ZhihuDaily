@@ -44,7 +44,8 @@ public class StoryListPresenterImpl implements StoryListPresenter {
 
   @Override
   public void loadTopStories() {
-    DataSource.getInstance().getLatestStoryCollection(new Callback<StoryCollection>() {
+    DataSource.getInstance(storyListView.getContext()).
+            getLatestStoryCollection(new Callback<StoryCollection>() {
       @Override
       public void success(StoryCollection storyCollection, Response response) {
         storyListView.showMainStory(storyCollection);
@@ -69,7 +70,8 @@ public class StoryListPresenterImpl implements StoryListPresenter {
     }
 
     isLoading = true;
-    DataSource.getInstance().getBeforeStoryCollection(latestDate, new Callback<StoryCollection>() {
+    DataSource.getInstance(storyListView.getContext()).
+            getBeforeStoryCollection(latestDate, new Callback<StoryCollection>() {
       @Override
       public void success(StoryCollection storyCollection, Response response) {
         storyListView.showMoreStory(storyCollection);
@@ -93,7 +95,8 @@ public class StoryListPresenterImpl implements StoryListPresenter {
   public void loadThemeStories(final long themeId) {
     currentThemeId = themeId;
 
-    DataSource.getInstance().getThemeStoryCollection(themeId, new Callback<ThemeStoryCollection>() {
+    DataSource.getInstance(storyListView.getContext()).
+            getThemeStoryCollection(themeId, new Callback<ThemeStoryCollection>() {
       @Override
       public void success(ThemeStoryCollection themeStoryCollection, Response response) {
         storyListView.showThemeStory(themeStoryCollection);

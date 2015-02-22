@@ -15,5 +15,5 @@ import com.chentian.zhihudaily.data.model.ThemeCollection;
 public interface ThemeService {
 
   @GET("/themes")
-  void getLatestThemeCollection(Callback<ThemeCollection> callback);
+  void getThemeCollection(Callback<ThemeCollection> callback);
 }

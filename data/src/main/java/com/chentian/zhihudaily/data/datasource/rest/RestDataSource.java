@@ -81,7 +81,7 @@ public class RestDataSource extends DataSource {
   }
 
   @Override
-  public void getLatestThemeCollection(Callback<ThemeCollection> callback) {
-    themeService.getLatestThemeCollection(callback);
+  public void getThemeCollection(Callback<ThemeCollection> callback) {
+    themeService.getThemeCollection(callback);
   }
 }

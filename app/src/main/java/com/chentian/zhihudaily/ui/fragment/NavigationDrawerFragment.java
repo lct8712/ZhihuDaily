@@ -2,6 +2,7 @@ package com.chentian.zhihudaily.ui.fragment;
 
 import java.util.List;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -92,6 +93,11 @@ public class NavigationDrawerFragment extends Fragment implements MVPNavigationD
   public void onPause() {
     super.onPause();
     presenter.onPause();
+  }
+
+  @Override
+  public Context getContext() {
+    return getActivity();
   }
 
   @Override

@@ -9,7 +9,7 @@ import com.chentian.zhihudaily.data.model.ThemeStoryCollection;
  *
  * @author chentian
  */
-public interface MVPStoryListView {
+public interface MVPStoryListView extends MVPView {
 
   void showMainStory(StoryCollection storyCollection);
 

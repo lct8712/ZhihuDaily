@@ -1,5 +1,6 @@
 package com.chentian.zhihudaily.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -83,6 +84,11 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
     listViewStoryTheme.scrollToPosition(0);
     storyAdapterTheme.setStoryList(themeStoryCollection.getStories());
     storyAdapterTheme.setNormalHeaderData(themeStoryCollection.getDescription(), themeStoryCollection.getImage());
+  }
+
+  @Override
+  public Context getContext() {
+    return getActivity();
   }
 
   private void buildUI() {

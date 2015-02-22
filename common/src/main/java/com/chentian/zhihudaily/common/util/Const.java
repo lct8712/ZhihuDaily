@@ -15,4 +15,6 @@ public class Const {
 
   public static final String EMPTY_STRING = "";
 
+  public static final String ENCODE_UTF8 = "UTF-8";
+
 }
