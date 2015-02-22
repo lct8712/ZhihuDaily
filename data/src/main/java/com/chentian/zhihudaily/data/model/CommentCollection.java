@@ -9,6 +9,7 @@ import java.util.List;
  *
  * @author chentian
  */
+@SuppressWarnings("unused")
 public class CommentCollection {
 
   /**

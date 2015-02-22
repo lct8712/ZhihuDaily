@@ -10,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
  *
  * @author chentian
  */
+@SuppressWarnings("unused")
 public class ThemeStoryCollection {
 
   public class Editor {

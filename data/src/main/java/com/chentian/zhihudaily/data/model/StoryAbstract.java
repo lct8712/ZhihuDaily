@@ -12,6 +12,7 @@ import com.google.gson.annotations.SerializedName;
  *
  * @author chentian
  */
+@SuppressWarnings("unused")
 public class StoryAbstract {
 
   private long id;
@@ -25,7 +26,8 @@ public class StoryAbstract {
 
   private String image;
 
-  private boolean multipic;
+  @SerializedName("multipic")
+  private boolean multiPic;
 
   @SerializedName("share_url")
   private String shareUrl;
@@ -64,12 +66,12 @@ public class StoryAbstract {
     this.images = images;
   }
 
-  public boolean isMultipic() {
-    return multipic;
+  public boolean isMultiPic() {
+    return multiPic;
   }
 
-  public void setMultipic(boolean multipic) {
-    this.multipic = multipic;
+  public void setMultiPic(boolean multiPic) {
+    this.multiPic = multiPic;
   }
 
   public String getShareUrl() {

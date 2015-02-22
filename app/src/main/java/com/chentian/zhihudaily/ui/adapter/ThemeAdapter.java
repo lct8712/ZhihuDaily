@@ -61,13 +61,14 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     // Ignore the ViewHolderMainThemeItem since there is only one main theme item
     if (holder instanceof ViewHolderItem) {
       ViewHolderItem viewHolderItem = (ViewHolderItem) holder;
-      viewHolderItem.bindTheme(themeList.get(position));
+      viewHolderItem.bindTheme(themeList.get(position - 1));
     }
   }
 
   @Override
   public int getItemCount() {
-    return themeList.size();
+    // "1" for main page
+    return themeList.size() + 1;
   }
 
   @Override

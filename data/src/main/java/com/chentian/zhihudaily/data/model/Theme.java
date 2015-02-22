@@ -7,6 +7,7 @@ import com.orm.SugarRecord;
 /**
 * @author chentian
 */
+@SuppressWarnings("unused")
 public class Theme extends SugarRecord<Theme> {
 
   @Expose

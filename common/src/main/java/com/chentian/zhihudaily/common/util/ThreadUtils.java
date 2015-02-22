@@ -1,9 +1,9 @@
-package com.chentian.zhihudaily.data.util;
+package com.chentian.zhihudaily.common.util;
 
 import android.os.Handler;
 import android.os.Looper;
 
-import com.chentian.zhihudaily.data.BuildConfig;
+import com.chentian.zhihudaily.common.BuildConfig;
 
 /**
  * @author chentian

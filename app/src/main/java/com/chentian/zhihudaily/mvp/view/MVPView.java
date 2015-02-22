@@ -3,7 +3,7 @@ package com.chentian.zhihudaily.mvp.view;
 import android.content.Context;
 
 /**
- * Root class for MVP view classes
+ * Interface for MVP view classes
  *
  * @author chentian
  */

@@ -2,6 +2,8 @@ package com.chentian.zhihudaily.common.util;
 
 import java.util.List;
 
+import android.text.TextUtils;
+
 /**
  * @author chentian
  */
@@ -18,6 +20,10 @@ public class WebUtils {
   private static final String DIV_IMAGE_PLACE_HOLDER_IGNORED = "class=\"img-place-holder-ignored\"";
 
   public static String BuildHtmlWithCss(String htmlContent, List<String> cssUrls) {
+    if (TextUtils.isEmpty(htmlContent)) {
+      return Const.EMPTY_STRING;
+    }
+
     StringBuilder result = new StringBuilder();
     for (String cssUrl : CollectionUtils.notNull(cssUrls)) {
       result.append(String.format(CSS_LINK_PATTERN, cssUrl));

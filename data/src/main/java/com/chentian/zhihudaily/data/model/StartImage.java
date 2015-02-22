@@ -6,6 +6,7 @@ package com.chentian.zhihudaily.data.model;
  *
  * @author chentian
  */
+@SuppressWarnings("unused")
 public class StartImage {
 
   private String text;

@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
  *
  * @author chentian
  */
+@SuppressWarnings("unused")
 public class StoryExtra {
 
   private int comments;

@@ -9,7 +9,7 @@ import retrofit.http.Path;
 
 import com.chentian.zhihudaily.data.datasource.DataSource;
 import com.chentian.zhihudaily.data.model.StoryDetail;
-import com.chentian.zhihudaily.data.util.ThreadUtils;
+import com.chentian.zhihudaily.common.util.ThreadUtils;
 import com.google.gson.Gson;
 
 /**

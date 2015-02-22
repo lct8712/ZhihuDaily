@@ -11,6 +11,7 @@ import com.google.gson.annotations.Expose;
  *
  * @author chentian
  */
+@SuppressWarnings("unused")
 public class ThemeCollection {
 
   public ThemeCollection() {

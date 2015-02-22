@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * @author chentian
  */
+@SuppressWarnings("unused")
 public class CollectionUtils {
 
   private CollectionUtils() {
@@ -42,7 +43,7 @@ public class CollectionUtils {
    * Pick n elements from list randomly
    */
   public static <T> List<T> pickNRandom(List<T> list, int n) {
-    List<T> copy = new ArrayList<T>(list);
+    List<T> copy = new ArrayList<>(list);
     Collections.shuffle(copy);
     return safeSubList(copy, 0, n);
   }
