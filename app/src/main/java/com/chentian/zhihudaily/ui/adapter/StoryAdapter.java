@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chentian.zhihudaily.data.model.StoryAbstract;
+import com.chentian.zhihudaily.domain.StoryRepository;
 import com.chentian.zhihudaily.zhihudaily.R;
 import com.chentian.zhihudaily.ui.view.ArticleHeaderView;
 import com.chentian.zhihudaily.ui.view.SlideTopStory;
@@ -61,7 +62,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return new ViewHolderHeaderNormal(ArticleHeaderView.newInstance(parent));
       case ITEM_TYPE_ITEM:
         View view = LayoutInflater.from(context).inflate(R.layout.list_item_story, parent, false);
-        return new ViewHolderItem(view);
+        return new ViewHolderItem(view, context);
       default:
         throw new IllegalArgumentException();
     }
@@ -171,12 +172,14 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private final TextView txtTitle;
     private final ImageView imageIcon;
+    private Context context;
     private StoryAbstract story;
     private OnCardItemClickListener onCardItemClickListener;
 
-    public ViewHolderItem(View itemView) {
+    public ViewHolderItem(View itemView, Context context) {
       super(itemView);
 
+      this.context = context;
       txtTitle = (TextView) itemView.findViewById(R.id.title);
       imageIcon = (ImageView) itemView.findViewById(R.id.image);
       itemView.setOnClickListener(this);
@@ -187,6 +190,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
       this.onCardItemClickListener = onCardItemClickListener;
 
       txtTitle.setText(story.getTitle());
+      setTextTitleRead(story.isRead());
 
       String imageUrl = story.getImageUrl();
       if (!TextUtils.isEmpty(imageUrl)) {
@@ -200,9 +204,17 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
       }
     }
 
+    private void setTextTitleRead(boolean read) {
+      int colorDeep = context.getResources().getColor(R.color.text_deep);
+      int colorRead = context.getResources().getColor(R.color.list_item_text_read);
+      txtTitle.setTextColor(read ? colorRead : colorDeep);
+    }
+
     @Override
     public void onClick(final View view) {
       if (onCardItemClickListener != null) {
+        StoryRepository.markAsRead(story);
+        setTextTitleRead(true);
         onCardItemClickListener.onStoryCardItemClick(view, story);
       }
     }

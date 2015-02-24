@@ -3,22 +3,21 @@ package com.chentian.zhihudaily.mvp.presenter.impl;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.os.Build;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
+import com.chentian.zhihudaily.common.provider.BusProvider;
 import com.chentian.zhihudaily.common.util.CollectionUtils;
-import com.chentian.zhihudaily.common.util.Const;
-import com.chentian.zhihudaily.data.datasource.DataSource;
 import com.chentian.zhihudaily.data.model.StoryAbstract;
 import com.chentian.zhihudaily.data.model.StoryCollection;
-import com.chentian.zhihudaily.data.model.ThemeStoryCollection;
+import com.chentian.zhihudaily.domain.StoryRepository;
+import com.chentian.zhihudaily.domain.bus.BeforeStoryCollectionResponse;
+import com.chentian.zhihudaily.domain.bus.LatestStoryCollectionResponse;
+import com.chentian.zhihudaily.domain.bus.ThemeStoryCollectionResponse;
 import com.chentian.zhihudaily.mvp.presenter.StoryListPresenter;
 import com.chentian.zhihudaily.mvp.view.MVPStoryListView;
 import com.chentian.zhihudaily.util.ViewUtils;
+import com.squareup.otto.Subscribe;
 
 /**
  * @author chentian
@@ -37,30 +36,18 @@ public class StoryListPresenterImpl implements StoryListPresenter {
   }
 
   @Override
-  public void onResume() { }
+  public void onResume() {
+    BusProvider.getUiBus().register(this);
+  }
 
   @Override
-  public void onPause() { }
+  public void onPause() {
+    BusProvider.getUiBus().unregister(this);
+  }
 
   @Override
   public void loadTopStories() {
-    DataSource.getInstance(storyListView.getContext()).
-            getLatestStoryCollection(new Callback<StoryCollection>() {
-      @Override
-      public void success(StoryCollection storyCollection, Response response) {
-        storyListView.showMainStory(storyCollection);
-        latestDate = storyCollection.getDate();
-
-        loadMoreStories();
-
-        Log.d(Const.LogTag.API, "Get story collection success, size: " + storyCollection.getStories().size());
-      }
-
-      @Override
-      public void failure(RetrofitError error) {
-        Log.d(Const.LogTag.API, "Get story collection failure: " + error + ", " + error.getUrl());
-      }
-    });
+    StoryRepository.syncLatestStoryCollection(storyListView.getContext());
   }
 
   @Override
@@ -70,47 +57,13 @@ public class StoryListPresenterImpl implements StoryListPresenter {
     }
 
     isLoading = true;
-    DataSource.getInstance(storyListView.getContext()).
-            getBeforeStoryCollection(latestDate, new Callback<StoryCollection>() {
-      @Override
-      public void success(StoryCollection storyCollection, Response response) {
-        storyListView.showMoreStory(storyCollection);
-
-        isLoading = false;
-        latestDate = storyCollection.getDate();
-        isEnded = CollectionUtils.isEmpty(storyCollection.getStories());
-
-        Log.d(Const.LogTag.API, "Get more story collection success, size: " + storyCollection.getStories().size());
-      }
-
-      @Override
-      public void failure(RetrofitError error) {
-        isLoading = false;
-        Log.d(Const.LogTag.API, "Get more story collection failure: " + error + ", " + error.getUrl());
-      }
-    });
+    StoryRepository.syncBeforeStoryCollection(storyListView.getContext(), latestDate);
   }
 
   @Override
   public void loadThemeStories(final long themeId) {
     currentThemeId = themeId;
-
-    DataSource.getInstance(storyListView.getContext()).
-            getThemeStoryCollection(themeId, new Callback<ThemeStoryCollection>() {
-      @Override
-      public void success(ThemeStoryCollection themeStoryCollection, Response response) {
-        storyListView.showThemeStory(themeStoryCollection);
-
-        String logInfo = String.format("Get theme story collection success, id: %d, size: %d",
-                themeId, themeStoryCollection.getStories().size());
-        Log.d(Const.LogTag.API, logInfo);
-      }
-
-      @Override
-      public void failure(RetrofitError error) {
-        Log.d(Const.LogTag.API, "Get theme story collection failure: " + error + ", " + error.getUrl());
-      }
-    });
+    StoryRepository.syncThemeStoryCollection(storyListView.getContext(), themeId);
   }
 
   @Override
@@ -143,5 +96,29 @@ public class StoryListPresenterImpl implements StoryListPresenter {
     } else {
       ViewUtils.openDetailActivity(story.getId(), view.getContext());
     }
+  }
+
+  @Subscribe
+  public void onLatestStoryCollectionUpdate(LatestStoryCollectionResponse storyCollectionResponse) {
+    StoryCollection storyCollection = storyCollectionResponse.getStoryCollection();
+    storyListView.showMainStory(storyCollection);
+    latestDate = storyCollection.getDate();
+
+    loadMoreStories();
+  }
+
+  @Subscribe
+  public void onBeforeStoryCollectionUpdate(BeforeStoryCollectionResponse storyCollectionResponse) {
+    StoryCollection storyCollection = storyCollectionResponse.getStoryCollection();
+    storyListView.showMoreStory(storyCollection);
+
+    isLoading = false;
+    latestDate = storyCollection.getDate();
+    isEnded = CollectionUtils.isEmpty(storyCollection.getStories());
+  }
+
+  @Subscribe
+  public void onThemeStoryCollectionUpdate(ThemeStoryCollectionResponse themeStoryCollectionResponse) {
+    storyListView.showThemeStory(themeStoryCollectionResponse.getThemeStoryCollection());
   }
 }

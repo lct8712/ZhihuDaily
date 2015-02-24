@@ -3,6 +3,7 @@ package com.chentian.zhihudaily.domain;
 import java.util.*;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.util.Log;
 import retrofit.Callback;
@@ -16,10 +17,11 @@ import com.chentian.zhihudaily.data.datasource.DataSource;
 import com.chentian.zhihudaily.data.model.Theme;
 import com.chentian.zhihudaily.data.model.ThemeCollection;
 import com.chentian.zhihudaily.common.util.ThreadUtils;
+import com.chentian.zhihudaily.domain.bus.ThemeResponse;
 import com.orm.query.Select;
 
 /**
- * Represents a Repository for reading and writing {@link Theme} related data.
+ * Represents a repository for reading and writing {@link Theme} related data.
  *
  * Methods starts with "sync" may return a result more than once,
  * so they post result to BUS instead of using callback.
@@ -63,12 +65,11 @@ public class ThemeRepository {
   public static List<Theme> listAll() {
     ThreadUtils.checkRunningOnNonUiThread();
 
-    List<Theme> themes = Theme.listAll(Theme.class);
-    if (CollectionUtils.isEmpty(themes)) {
+    try {
+      return Select.from(Theme.class).orderBy("is_subscribed desc").list();
+    } catch (SQLiteException e) {
       return Collections.emptyList();
     }
-
-    return Select.from(Theme.class).orderBy("is_subscribed desc").list();
   }
 
   public static void saveTheme(final Theme theme) {
@@ -76,7 +77,7 @@ public class ThemeRepository {
       @Override
       protected Void doInBackground(Void... params) {
         theme.save();
-        BusProvider.getUiBus().post(listAll());
+        BusProvider.getUiBus().post(new ThemeResponse(listAll()));
 
         return null;
       }
@@ -88,7 +89,7 @@ public class ThemeRepository {
     new AsyncTask<Void, Void, Void>() {
       @Override
       protected Void doInBackground(Void... params) {
-        BusProvider.getUiBus().post(listAll());
+        BusProvider.getUiBus().post(new ThemeResponse(listAll()));
         return null;
       }
     }.execute();
@@ -102,7 +103,7 @@ public class ThemeRepository {
           @Override
           protected Void doInBackground(Void... params) {
             updateDatabase(themeCollection);
-            BusProvider.getUiBus().post(listAll());
+            BusProvider.getUiBus().post(new ThemeResponse(listAll()));
 
             return null;
           }

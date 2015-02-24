@@ -50,6 +50,18 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
     return rootView;
   }
 
+  @Override
+  public void onResume() {
+    super.onResume();
+    storyListPresenter.onResume();
+  }
+
+  @Override
+  public void onPause() {
+    super.onPause();
+    storyListPresenter.onPause();
+  }
+
   public void loadMainPage() {
     swipeRefreshLayoutTheme.setVisibility(View.GONE);
     swipeRefreshLayoutMain.setVisibility(View.VISIBLE);
@@ -69,7 +81,7 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
     swipeRefreshLayoutMain.setRefreshing(false);
 
     storyAdapterMain.setStoryList(storyCollection.getStories());
-    storyAdapterMain.setTopStories(storyCollection.getTop_stories());
+    storyAdapterMain.setTopStories(storyCollection.getTopStories());
   }
 
   @Override

@@ -2,6 +2,8 @@ package com.chentian.zhihudaily.data.model;
 
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Collection of stories, could be latest stories or stories before some date such as:
  *   http://news-at.zhihu.com/api/4/news/latest
@@ -19,7 +21,8 @@ public class StoryCollection {
   /**
    * Only for latest stories
    */
-  private List<StoryAbstract> top_stories;
+  @SerializedName("top_stories")
+  private List<StoryAbstract> topStories;
 
   public String getDate() {
     return date;
@@ -37,11 +40,11 @@ public class StoryCollection {
     this.stories = stories;
   }
 
-  public List<StoryAbstract> getTop_stories() {
-    return top_stories;
+  public List<StoryAbstract> getTopStories() {
+    return topStories;
   }
 
-  public void setTop_stories(List<StoryAbstract> top_stories) {
-    this.top_stories = top_stories;
+  public void setTopStories(List<StoryAbstract> topStories) {
+    this.topStories = topStories;
   }
 }

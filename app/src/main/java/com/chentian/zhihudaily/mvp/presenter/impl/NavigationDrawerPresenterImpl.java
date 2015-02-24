@@ -1,10 +1,9 @@
 package com.chentian.zhihudaily.mvp.presenter.impl;
 
-import java.util.ArrayList;
-
 import com.chentian.zhihudaily.common.provider.BusProvider;
 import com.chentian.zhihudaily.data.model.Theme;
 import com.chentian.zhihudaily.domain.ThemeRepository;
+import com.chentian.zhihudaily.domain.bus.ThemeResponse;
 import com.chentian.zhihudaily.mvp.presenter.NavigationDrawerPresenter;
 import com.chentian.zhihudaily.mvp.view.MVPNavigationDrawerView;
 import com.squareup.otto.Subscribe;
@@ -39,7 +38,7 @@ public class NavigationDrawerPresenterImpl implements NavigationDrawerPresenter 
   }
 
   @Subscribe
-  public void onThemeListUpdate(ArrayList<Theme> themes) {
-    navigationDrawerView.showThemes(themes);
+  public void onThemeListUpdate(ThemeResponse themeResponse) {
+    navigationDrawerView.showThemes(themeResponse.getThemeList());
   }
 }

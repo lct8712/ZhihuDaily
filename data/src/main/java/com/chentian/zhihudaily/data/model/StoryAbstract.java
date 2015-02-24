@@ -34,6 +34,12 @@ public class StoryAbstract {
 
   private int type;
 
+  /**
+   * Is current story has been read
+   * Store in database table using {@link com.chentian.zhihudaily.data.model.ReadStory}
+   */
+  private boolean isRead;
+
   public long getId() {
     return id;
   }
@@ -107,5 +113,13 @@ public class StoryAbstract {
       return Const.EMPTY_STRING;
     }
     return images.get(0);
+  }
+
+  public boolean isRead() {
+    return isRead;
+  }
+
+  public void setRead(boolean isRead) {
+    this.isRead = isRead;
   }
 }
