@@ -172,6 +172,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private final TextView txtTitle;
     private final ImageView imageIcon;
+    private final TextView imageTag;
     private Context context;
     private StoryAbstract story;
     private OnCardItemClickListener onCardItemClickListener;
@@ -182,6 +183,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
       this.context = context;
       txtTitle = (TextView) itemView.findViewById(R.id.title);
       imageIcon = (ImageView) itemView.findViewById(R.id.image);
+      imageTag = (TextView) itemView.findViewById(R.id.image_tag);
       itemView.setOnClickListener(this);
     }
 
@@ -191,6 +193,8 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
       txtTitle.setText(story.getTitle());
       setTextTitleRead(story.isRead());
+
+      imageTag.setVisibility(story.isMultiPic() ? View.VISIBLE : View.GONE);
 
       String imageUrl = story.getImageUrl();
       if (!TextUtils.isEmpty(imageUrl)) {

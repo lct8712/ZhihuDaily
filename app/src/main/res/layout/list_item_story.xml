@@ -40,6 +40,21 @@
                 android:layout_width="@dimen/story_item_image_width"
                 android:layout_height="@dimen/story_item_image_height"/>
 
+        <TextView
+                android:id="@+id/image_tag"
+                android:text="@string/multi_image"
+                android:textSize="@dimen/text_size_micro"
+                android:textColor="@android:color/white"
+                android:background="@color/list_item_image_tab_background"
+                android:paddingLeft="@dimen/story_item_image_tag_padding"
+                android:paddingRight="@dimen/story_item_image_tag_padding"
+                android:paddingEnd="@dimen/story_item_image_tag_padding"
+                android:layout_alignBottom="@id/image"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

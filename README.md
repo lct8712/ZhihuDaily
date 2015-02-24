@@ -7,7 +7,7 @@ A simple approach of zhihu daily android client.
 - offline read
 - Memory cache, Disk cache
 - View pager
-- mark as read
+- detail page loading anim
 - deal with TODO
 - deal with Warning
 

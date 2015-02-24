@@ -11,5 +11,6 @@
     <string name="title_activity_detail">文章详情页</string>
     <string name="load_failed">加载失败</string>
     <string name="theme_icon">图标</string>
+    <string name="multi_image">多图</string>
 
 </resources>
