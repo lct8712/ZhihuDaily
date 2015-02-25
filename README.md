@@ -3,7 +3,6 @@ A simple approach of zhihu daily android client.
 
 # Todo
 - landing image
-- main list view sub header
 - offline read
 - Memory cache, Disk cache
 - View pager
@@ -21,3 +20,8 @@ A simple approach of zhihu daily android client.
 - Image load: https://github.com/koush/ion
 - Sliding Image: https://github.com/daimajia/AndroidImageSlider
 - View Inject: http://jakewharton.github.io/butterknife/
+
+# Screenshots
+![screenshot1](https://raw.githubusercontent.com/lct8712/ZhihuDaily/screenshot/screenshot/screenshot1.png)
+![screenshot2](https://raw.githubusercontent.com/lct8712/ZhihuDaily/screenshot/screenshot/screenshot2.png)
+![screenshot3](https://raw.githubusercontent.com/lct8712/ZhihuDaily/screenshot/screenshot/screenshot3.png)
