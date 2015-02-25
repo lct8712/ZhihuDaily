@@ -2,5 +2,6 @@
 <com.chentian.zhihudaily.ui.view.SlideTopStory
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
+        android:layout_marginBottom="@dimen/story_list_item_margin_vertical"
         android:layout_width="match_parent"
         android:layout_height="@dimen/slide_image_height"/>

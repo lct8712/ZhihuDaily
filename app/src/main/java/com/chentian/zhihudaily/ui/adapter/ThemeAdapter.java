@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chentian.zhihudaily.data.model.Theme;
-import com.chentian.zhihudaily.zhihudaily.R;
+import com.chentian.zhihudaily.R;
 
 /**
  * Adapter of theme list, shows in left drawer, including both subscribed and un-subscribed themes

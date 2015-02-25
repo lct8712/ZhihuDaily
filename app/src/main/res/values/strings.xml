@@ -12,5 +12,6 @@
     <string name="load_failed">Load failed</string>
     <string name="theme_icon">Theme Icon</string>
     <string name="multi_image">multi-pic</string>
+    <string name="today_story">Today hot news</string>
 
 </resources>

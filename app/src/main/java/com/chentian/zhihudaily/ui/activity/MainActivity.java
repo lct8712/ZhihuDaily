@@ -10,7 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.chentian.zhihudaily.zhihudaily.R;
+import com.chentian.zhihudaily.R;
 import com.chentian.zhihudaily.ui.adapter.ThemeAdapter;
 import com.chentian.zhihudaily.data.model.Theme;
 import com.chentian.zhihudaily.ui.fragment.NavigationDrawerFragment;
@@ -30,7 +30,7 @@ public class MainActivity extends BaseActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    toolbar.setTitle(getString(R.string.landing_page));
+    toolbar.setTitle(getString(R.string.today_story));
     navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().
             findFragmentById(R.id.navigation_drawer);
     navigationDrawerFragment.setUp(findViewById(R.id.navigation_drawer),
@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity {
     navigationDrawerFragment.setThemeItemCallback(new ThemeAdapter.ThemeItemSelectListener() {
       @Override
       public void onMainPageItemSelect() {
-        toolbar.setTitle(getString(R.string.landing_page));
+        toolbar.setTitle(getString(R.string.today_story));
         storyListFragment.loadMainPage();
         navigationDrawerFragment.closeDrawer();
       }
@@ -54,6 +54,7 @@ public class MainActivity extends BaseActivity {
 
     if (savedInstanceState == null) {
       storyListFragment = new StoryListFragment();
+      storyListFragment.setToolbar(toolbar);
       getSupportFragmentManager().beginTransaction()
               .add(R.id.content_container, storyListFragment)
               .commit();

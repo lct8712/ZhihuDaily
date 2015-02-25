@@ -2,7 +2,7 @@
 A simple approach of zhihu daily android client.
 
 # Todo
-- action bar title
+- landing image
 - main list view sub header
 - offline read
 - Memory cache, Disk cache

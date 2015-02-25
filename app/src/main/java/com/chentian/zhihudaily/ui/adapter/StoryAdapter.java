@@ -12,10 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chentian.zhihudaily.R;
 import com.chentian.zhihudaily.data.model.StoryAbstract;
 import com.chentian.zhihudaily.domain.StoryRepository;
-import com.chentian.zhihudaily.zhihudaily.R;
 import com.chentian.zhihudaily.ui.view.ArticleHeaderView;
+import com.chentian.zhihudaily.ui.view.SectionedRecycleViewAdapter;
 import com.chentian.zhihudaily.ui.view.SlideTopStory;
 import com.koushikdutta.ion.Ion;
 
@@ -24,7 +25,7 @@ import com.koushikdutta.ion.Ion;
  *
  * @author chentian
  */
-public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class StoryAdapter extends SectionedRecycleViewAdapter {
 
   public interface OnCardItemClickListener {
     void onStoryCardItemClick(View view, StoryAbstract story);
@@ -54,7 +55,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
   }
 
   @Override
-  public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  public RecyclerView.ViewHolder onCreateViewHolderForItem(ViewGroup parent, int viewType) {
     switch (viewType) {
       case ITEM_TYPE_HEADER_SLIDE:
         return new ViewHolderHeaderSlide(SlideTopStory.newInstance(parent));
@@ -69,7 +70,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
   }
 
   @Override
-  public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+  public void onBindViewHolderForItem(RecyclerView.ViewHolder holder, int position) {
     if (holder instanceof ViewHolderHeaderSlide) {
       ViewHolderHeaderSlide viewHolderHeaderSlide = (ViewHolderHeaderSlide) holder;
       viewHolderHeaderSlide.getSlideTopStory().setTopStories(topStoryList);
@@ -80,17 +81,18 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     } else if (holder instanceof ViewHolderItem) {
       ViewHolderItem viewHolderItem = (ViewHolderItem) holder;
-      viewHolderItem.bindStory(storyList.get(position), onCardItemClickListener);
+      viewHolderItem.bindStory(storyList.get(position - 1), onCardItemClickListener);
     }
   }
 
   @Override
-  public int getItemCount() {
-    return storyList.size();
+  public int getItemCountForItem() {
+    // "1" for header, slide header or normal header, not section headers
+    return storyList.size() + 1;
   }
 
   @Override
-  public int getItemViewType(int position) {
+  public int getItemViewTypeForItem(int position) {
     if (position != 0) {
       return ITEM_TYPE_ITEM;
     }
@@ -105,23 +107,35 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
   }
 
+  @Override
+  protected View getSectionHeaderView(ViewGroup parent) {
+    return LayoutInflater.from(context).inflate(R.layout.list_item_section_header, parent, false);
+  }
+
   public void setTopStories(List<StoryAbstract> topStoryList) {
     this.topStoryList = topStoryList;
-    notifyItemChanged(0);
-  }
-
-  public void setNormalHeaderData(String headerTitle, String headerImageurl) {
-    this.headerTitle = headerTitle;
-    this.headerImageUrl = headerImageurl;
-  }
-
-  public void setStoryList(List<StoryAbstract> data) {
-    this.storyList = data;
     notifyDataSetChanged();
   }
 
-  public void appendStoryList(List<StoryAbstract> data) {
-    this.storyList.addAll(data);
+  public void setNormalHeaderData(String headerTitle, String headerImageUrl) {
+    this.headerTitle = headerTitle;
+    this.headerImageUrl = headerImageUrl;
+  }
+
+  public void setStoryList(List<StoryAbstract> data, String sectionTitle) {
+    clearSections();
+    if (!TextUtils.isEmpty(sectionTitle)) {
+      addSection(new Section(1, sectionTitle));
+    }
+
+    storyList = data;
+    notifyDataSetChanged();
+  }
+
+  public void appendStoryList(List<StoryAbstract> data, String sectionTitle) {
+    addSection(new Section(storyList.size() + 1, sectionTitle));
+
+    storyList.addAll(data);
     notifyDataSetChanged();
   }
 

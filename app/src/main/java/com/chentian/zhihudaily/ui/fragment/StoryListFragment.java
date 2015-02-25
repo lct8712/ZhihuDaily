@@ -6,12 +6,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.chentian.zhihudaily.R;
+import com.chentian.zhihudaily.common.util.CommonUtils;
+import com.chentian.zhihudaily.common.util.Const;
 import com.chentian.zhihudaily.data.model.StoryAbstract;
 import com.chentian.zhihudaily.data.model.StoryCollection;
 import com.chentian.zhihudaily.data.model.ThemeStoryCollection;
@@ -19,7 +24,6 @@ import com.chentian.zhihudaily.mvp.presenter.StoryListPresenter;
 import com.chentian.zhihudaily.mvp.presenter.impl.StoryListPresenterImpl;
 import com.chentian.zhihudaily.mvp.view.MVPStoryListView;
 import com.chentian.zhihudaily.ui.adapter.StoryAdapter;
-import com.chentian.zhihudaily.zhihudaily.R;
 
 /**
  * Fragment containing list of stories
@@ -35,6 +39,7 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
 
   private StoryAdapter storyAdapterMain;
   private StoryAdapter storyAdapterTheme;
+  private Toolbar toolbar;
   private StoryListPresenter storyListPresenter;
 
   @Override
@@ -44,7 +49,11 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
     ButterKnife.inject(this, rootView);
 
     storyListPresenter = new StoryListPresenterImpl(this);
-    buildUI();
+
+    bindSwipeRefreshView();
+    bindListView();
+    bindAdapter();
+
     loadMainPage();
 
     return rootView;
@@ -80,13 +89,14 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
   public void showMainStory(StoryCollection storyCollection) {
     swipeRefreshLayoutMain.setRefreshing(false);
 
-    storyAdapterMain.setStoryList(storyCollection.getStories());
+    storyAdapterMain.setStoryList(storyCollection.getStories(), getContext().getString(R.string.today_story));
     storyAdapterMain.setTopStories(storyCollection.getTopStories());
   }
 
   @Override
   public void showMoreStory(StoryCollection storyCollection) {
-    storyAdapterMain.appendStoryList(storyCollection.getStories());
+    String date = CommonUtils.formatDate(storyCollection.getDate());
+    storyAdapterMain.appendStoryList(storyCollection.getStories(), date);
   }
 
   @Override
@@ -94,7 +104,7 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
     swipeRefreshLayoutTheme.setRefreshing(false);
 
     listViewStoryTheme.scrollToPosition(0);
-    storyAdapterTheme.setStoryList(themeStoryCollection.getStories());
+    storyAdapterTheme.setStoryList(themeStoryCollection.getStories(), Const.EMPTY_STRING);
     storyAdapterTheme.setNormalHeaderData(themeStoryCollection.getDescription(), themeStoryCollection.getImage());
   }
 
@@ -103,8 +113,11 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
     return getActivity();
   }
 
-  private void buildUI() {
-    // Swipe refresh view
+  public void setToolbar(Toolbar toolbar) {
+    this.toolbar = toolbar;
+  }
+
+  private void bindSwipeRefreshView() {
     swipeRefreshLayoutMain.setColorSchemeResources(R.color.color_primary);
     swipeRefreshLayoutTheme.setColorSchemeResources(R.color.color_primary);
 
@@ -121,8 +134,9 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
         storyListPresenter.onRefreshThemeStories();
       }
     });
+  }
 
-    // List view
+  private void bindListView() {
     final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
     listViewStoryMain.setLayoutManager(layoutManager);
     listViewStoryMain.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -136,10 +150,33 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
           storyListPresenter.loadMoreStories();
         }
       }
+
+      @Override
+      public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        super.onScrolled(recyclerView, dx, dy);
+        StoryAdapter storyAdapter = (StoryAdapter) listViewStoryMain.getAdapter();
+        if (storyAdapter == null) {
+          return;
+        }
+
+        CharSequence title;
+        int position = layoutManager.findFirstVisibleItemPosition();
+        if (dy > 0) {
+          // Scroll down
+          title = storyAdapter.getSectionTitle(position);
+        } else {
+          // Scroll up
+          title = storyAdapter.getSectionTitleBeforePosition(position);
+        }
+        if (!TextUtils.isEmpty(title)) {
+          toolbar.setTitle(title);
+        }
+      }
     });
     listViewStoryTheme.setLayoutManager(new LinearLayoutManager(getActivity()));
+  }
 
-    // Adapter
+  private void bindAdapter() {
     StoryAdapter.OnCardItemClickListener onCardItemClickListener = new StoryAdapter.OnCardItemClickListener() {
       @Override
       public void onStoryCardItemClick(View view, StoryAbstract story) {

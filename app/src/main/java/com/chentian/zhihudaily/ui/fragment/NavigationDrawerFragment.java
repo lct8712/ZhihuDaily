@@ -14,7 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.*;
 
 import com.chentian.zhihudaily.data.model.Theme;
-import com.chentian.zhihudaily.zhihudaily.R;
+import com.chentian.zhihudaily.R;
 import com.chentian.zhihudaily.ui.adapter.ThemeAdapter;
 import com.chentian.zhihudaily.mvp.presenter.NavigationDrawerPresenter;
 import com.chentian.zhihudaily.mvp.presenter.impl.NavigationDrawerPresenterImpl;

@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.chentian.zhihudaily.zhihudaily.R;
+import com.chentian.zhihudaily.R;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 
 /**

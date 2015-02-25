@@ -11,7 +11,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.chentian.zhihudaily.zhihudaily.R;
+import com.chentian.zhihudaily.R;
 import com.chentian.zhihudaily.util.ViewUtils;
 import com.koushikdutta.ion.Ion;
 

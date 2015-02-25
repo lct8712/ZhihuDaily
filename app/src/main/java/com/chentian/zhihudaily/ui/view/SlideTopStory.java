@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 
-import com.chentian.zhihudaily.zhihudaily.R;
+import com.chentian.zhihudaily.R;
 import com.chentian.zhihudaily.data.model.StoryAbstract;
 import com.chentian.zhihudaily.common.util.CollectionUtils;
 import com.chentian.zhihudaily.util.ViewUtils;

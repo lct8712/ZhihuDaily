@@ -23,7 +23,7 @@ import retrofit.client.Response;
 import com.chentian.zhihudaily.common.util.WebUtils;
 import com.chentian.zhihudaily.data.datasource.DataSource;
 import com.chentian.zhihudaily.data.model.StoryDetail;
-import com.chentian.zhihudaily.zhihudaily.R;
+import com.chentian.zhihudaily.R;
 import com.chentian.zhihudaily.ui.activity.DetailActivity;
 import com.chentian.zhihudaily.ui.view.ArticleHeaderView;
 import com.chentian.zhihudaily.util.ScrollPullDownHelper;
