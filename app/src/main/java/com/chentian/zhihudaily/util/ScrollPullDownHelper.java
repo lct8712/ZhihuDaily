@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- *  We detect several latest moves to ensure a smooth showing-hiding toolbar effect
+ *  Detect several latest moves to ensure a smooth showing-hiding toolbar effect
  *
  * @author chentian
  */

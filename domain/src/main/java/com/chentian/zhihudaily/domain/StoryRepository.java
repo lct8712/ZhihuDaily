@@ -37,6 +37,8 @@ public class StoryRepository {
    * Get latest StoryCollection from data source, then fill the read info from database
    */
   public static void syncLatestStoryCollection(Context context) {
+    Log.d(Const.LogTag.API, "Get latest story collection starts.");
+
     DataSource.getInstance(context).getLatestStoryCollection(new Callback<StoryCollection>() {
       @Override
       public void success(final StoryCollection storyCollection, Response response) {
@@ -52,12 +54,12 @@ public class StoryRepository {
           }
         }.execute();
 
-        Log.d(Const.LogTag.API, "Get story collection success, size: " + storyCollection.getStories().size());
+        Log.d(Const.LogTag.API, "Get latest story collection success, size: " + storyCollection.getStories().size());
       }
 
       @Override
       public void failure(RetrofitError error) {
-        Log.d(Const.LogTag.API, "Get story collection failure: " + error + ", " + error.getUrl());
+        Log.d(Const.LogTag.API, "Get latest story collection failure: " + error + ", " + error.getUrl());
       }
     });
   }
@@ -66,6 +68,8 @@ public class StoryRepository {
    * Get before StoryCollection from data source, then fill the read info from database
    */
   public static void syncBeforeStoryCollection(Context context, String date) {
+    Log.d(Const.LogTag.API, "Get more story collection starts.");
+
     DataSource.getInstance(context).getBeforeStoryCollection(date, new Callback<StoryCollection>() {
       @Override
       public void success(final StoryCollection storyCollection, Response response) {
@@ -91,6 +95,8 @@ public class StoryRepository {
   }
 
   public static void syncThemeStoryCollection(Context context, final long themeId) {
+    Log.d(Const.LogTag.API, "Get theme story collection starts, id: " + themeId);
+
     DataSource.getInstance(context).getThemeStoryCollection(themeId, new Callback<ThemeStoryCollection>() {
       @Override
       public void success(final ThemeStoryCollection themeStoryCollection, Response response) {

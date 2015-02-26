@@ -1,5 +1,7 @@
 package com.chentian.zhihudaily.domain.bus;
 
+import lombok.Data;
+
 import com.chentian.zhihudaily.data.model.ThemeStoryCollection;
 
 /**
@@ -7,19 +9,13 @@ import com.chentian.zhihudaily.data.model.ThemeStoryCollection;
  *
  * @author chentian
  */
+@Data
+@SuppressWarnings("unused")
 public class ThemeStoryCollectionResponse {
 
   private ThemeStoryCollection themeStoryCollection;
 
   public ThemeStoryCollectionResponse(ThemeStoryCollection themeStoryCollection) {
-    this.themeStoryCollection = themeStoryCollection;
-  }
-
-  public ThemeStoryCollection getThemeStoryCollection() {
-    return themeStoryCollection;
-  }
-
-  public void setThemeStoryCollection(ThemeStoryCollection themeStoryCollection) {
     this.themeStoryCollection = themeStoryCollection;
   }
 }

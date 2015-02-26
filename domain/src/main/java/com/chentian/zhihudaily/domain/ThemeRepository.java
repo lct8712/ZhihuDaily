@@ -94,6 +94,8 @@ public class ThemeRepository {
       }
     }.execute();
 
+    Log.d(Const.LogTag.API, "Get themes starts.");
+
     // Load from data source
     DataSource.getInstance(context).
             getThemeCollection(new Callback<ThemeCollection>() {
@@ -109,13 +111,13 @@ public class ThemeRepository {
           }
         }.execute();
 
-        Log.d(Const.LogTag.API, "Load themes success, size:" +
+        Log.d(Const.LogTag.API, "Get themes success, size:" +
                 CollectionUtils.notNull(themeCollection.getOthers()).size());
       }
 
       @Override
       public void failure(RetrofitError error) {
-        Log.d(Const.LogTag.API, "Load themes failed: " + error);
+        Log.d(Const.LogTag.API, "Get themes failed: " + error);
       }
     });
   }
