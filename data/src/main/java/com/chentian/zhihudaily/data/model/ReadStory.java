@@ -1,5 +1,8 @@
 package com.chentian.zhihudaily.data.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import com.orm.SugarRecord;
 
 /**
@@ -7,6 +10,8 @@ import com.orm.SugarRecord;
  *
  * @author chentian
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 @SuppressWarnings("unused")
 public class ReadStory extends SugarRecord<ReadStory> {
 
@@ -15,14 +20,6 @@ public class ReadStory extends SugarRecord<ReadStory> {
   public ReadStory() { }
 
   public ReadStory(long storyId) {
-    this.storyId = storyId;
-  }
-
-  public long getStoryId() {
-    return storyId;
-  }
-
-  public void setStoryId(long storyId) {
     this.storyId = storyId;
   }
 }

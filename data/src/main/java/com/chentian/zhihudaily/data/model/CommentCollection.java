@@ -2,6 +2,8 @@ package com.chentian.zhihudaily.data.model;
 
 import java.util.List;
 
+import lombok.Data;
+
 /**
  * Collection of story comments, such as:
  *   http://news-at.zhihu.com/api/4/story/4232852/long-comments
@@ -9,6 +11,7 @@ import java.util.List;
  *
  * @author chentian
  */
+@Data
 @SuppressWarnings("unused")
 public class CommentCollection {
 
@@ -28,54 +31,6 @@ public class CommentCollection {
     private long id;
 
     private int likes;
-
-    public String getAuthor() {
-      return author;
-    }
-
-    public void setAuthor(String author) {
-      this.author = author;
-    }
-
-    public String getContent() {
-      return content;
-    }
-
-    public void setContent(String content) {
-      this.content = content;
-    }
-
-    public String getAvatar() {
-      return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-      this.avatar = avatar;
-    }
-
-    public int getTime() {
-      return time;
-    }
-
-    public void setTime(int time) {
-      this.time = time;
-    }
-
-    public long getId() {
-      return id;
-    }
-
-    public void setId(long id) {
-      this.id = id;
-    }
-
-    public int getLikes() {
-      return likes;
-    }
-
-    public void setLikes(int likes) {
-      this.likes = likes;
-    }
   }
 
   private List<StoryComment> comments;

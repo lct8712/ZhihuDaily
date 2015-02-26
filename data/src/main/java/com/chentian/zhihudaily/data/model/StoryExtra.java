@@ -1,5 +1,7 @@
 package com.chentian.zhihudaily.data.model;
 
+import lombok.Data;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -8,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
  *
  * @author chentian
  */
+@Data
 @SuppressWarnings("unused")
 public class StoryExtra {
 
@@ -20,36 +23,4 @@ public class StoryExtra {
   private int shortComments;
 
   private int popularity;
-
-  public int getComments() {
-    return comments;
-  }
-
-  public void setComments(int comments) {
-    this.comments = comments;
-  }
-
-  public int getLongComments() {
-    return longComments;
-  }
-
-  public void setLongComments(int longComments) {
-    this.longComments = longComments;
-  }
-
-  public int getShortComments() {
-    return shortComments;
-  }
-
-  public void setShortComments(int shortComments) {
-    this.shortComments = shortComments;
-  }
-
-  public int getPopularity() {
-    return popularity;
-  }
-
-  public void setPopularity(int popularity) {
-    this.popularity = popularity;
-  }
 }

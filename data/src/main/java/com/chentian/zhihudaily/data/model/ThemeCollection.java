@@ -1,7 +1,8 @@
 package com.chentian.zhihudaily.data.model;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import lombok.Data;
 
 import com.google.gson.annotations.Expose;
 
@@ -11,13 +12,9 @@ import com.google.gson.annotations.Expose;
  *
  * @author chentian
  */
+@Data
 @SuppressWarnings("unused")
 public class ThemeCollection {
-
-  public ThemeCollection() {
-    subscribed = new ArrayList<>();
-    others = new ArrayList<>();
-  }
 
   @Expose
   private int limit;
@@ -27,28 +24,4 @@ public class ThemeCollection {
 
   @Expose
   private List<Theme> others;
-
-  public int getLimit() {
-    return limit;
-  }
-
-  public void setLimit(int limit) {
-    this.limit = limit;
-  }
-
-  public List<Theme> getSubscribed() {
-    return subscribed;
-  }
-
-  public void setSubscribed(List<Theme> subscribed) {
-    this.subscribed = subscribed;
-  }
-
-  public List<Theme> getOthers() {
-    return others;
-  }
-
-  public void setOthers(List<Theme> others) {
-    this.others = others;
-  }
 }

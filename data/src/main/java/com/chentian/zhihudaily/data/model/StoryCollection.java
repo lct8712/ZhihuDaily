@@ -2,6 +2,8 @@ package com.chentian.zhihudaily.data.model;
 
 import java.util.List;
 
+import lombok.Data;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -11,6 +13,7 @@ import com.google.gson.annotations.SerializedName;
  *
  * @author chentian
  */
+@Data
 @SuppressWarnings("unused")
 public class StoryCollection {
 
@@ -23,28 +26,4 @@ public class StoryCollection {
    */
   @SerializedName("top_stories")
   private List<StoryAbstract> topStories;
-
-  public String getDate() {
-    return date;
-  }
-
-  public void setDate(String date) {
-    this.date = date;
-  }
-
-  public List<StoryAbstract> getStories() {
-    return stories;
-  }
-
-  public void setStories(List<StoryAbstract> stories) {
-    this.stories = stories;
-  }
-
-  public List<StoryAbstract> getTopStories() {
-    return topStories;
-  }
-
-  public void setTopStories(List<StoryAbstract> topStories) {
-    this.topStories = topStories;
-  }
 }

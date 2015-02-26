@@ -44,9 +44,9 @@ public class ThemeRepository {
       }
     }
 
-    List<Theme> subscribedThemes = themeCollection.getSubscribed();
+    List<Theme> subscribedThemes = CollectionUtils.notNull(themeCollection.getSubscribed());
     List<Theme> otherThemes = new ArrayList<>();
-    for (Theme theme : themeCollection.getOthers()) {
+    for (Theme theme : CollectionUtils.notNull(themeCollection.getOthers())) {
       if (subscribedThemeIds.contains(theme.getThemeApiId())) {
         subscribedThemes.add(theme);
       } else {

@@ -26,6 +26,7 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.chentian.zhihudaily" />
 
+        <!-- Activities -->
         <activity
             android:name="com.chentian.zhihudaily.ui.activity.MainActivity"
             android:label="@string/today_story"
