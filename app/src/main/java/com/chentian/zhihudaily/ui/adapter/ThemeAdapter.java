@@ -96,8 +96,10 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
       itemView.setActivated(true);
       itemView.setOnClickListener(this);
-      ImageView imageAction = (ImageView) itemView.findViewById(R.id.action);
-      imageAction.setVisibility(View.GONE);
+
+
+      itemView.findViewById(R.id.icon).setVisibility(View.VISIBLE);
+      itemView.findViewById(R.id.action).setVisibility(View.GONE);
     }
 
     @Override

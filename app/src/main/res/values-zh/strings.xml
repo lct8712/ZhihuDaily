@@ -13,5 +13,6 @@
     <string name="theme_icon">图标</string>
     <string name="multi_image">多图</string>
     <string name="today_story">今日热闻</string>
+    <string name="left_drawer_background">菜单背景</string>
 
 </resources>

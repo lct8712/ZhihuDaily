@@ -13,5 +13,6 @@
     <string name="theme_icon">Theme Icon</string>
     <string name="multi_image">multi-pic</string>
     <string name="today_story">Today hot news</string>
+    <string name="left_drawer_background">left drawer background</string>
 
 </resources>

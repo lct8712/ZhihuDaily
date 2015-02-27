@@ -32,12 +32,13 @@
     <dimen name="story_item_section_header_padding">15dp</dimen>
 
     <!-- Left drawer -->
+    <dimen name="left_drawer_image_height">140dp</dimen>
     <dimen name="left_drawer_width">260dp</dimen>
     <dimen name="left_drawer_item_height">48dp</dimen>
     <dimen name="left_drawer_item_padding_left">16dp</dimen>
     <dimen name="left_drawer_item_padding_right">32dp</dimen>
     <dimen name="left_drawer_item_icon_size">16dp</dimen>
-    <dimen name="left_drawer_item_image_margin">32dp</dimen>
+    <dimen name="left_drawer_item_image_margin">8dp</dimen>
     <dimen name="left_drawer_item_action_icon_margin">16dp</dimen>
 
 </resources>

@@ -7,6 +7,13 @@
         android:orientation="vertical"
         tools:context="com.chentian.zhihudaily.ui.fragment.NavigationDrawerFragment">
 
+    <ImageView
+            android:src="@drawable/left_drawer_background"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/left_drawer_image_height"
+            android:contentDescription="@string/left_drawer_background"/>
+
     <android.support.v7.widget.RecyclerView
             android:id="@+id/list_theme"
             android:layout_width="match_parent"
