@@ -13,12 +13,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.*;
 
-import com.chentian.zhihudaily.data.model.Theme;
 import com.chentian.zhihudaily.R;
-import com.chentian.zhihudaily.ui.adapter.ThemeAdapter;
+import com.chentian.zhihudaily.data.model.Theme;
 import com.chentian.zhihudaily.mvp.presenter.NavigationDrawerPresenter;
 import com.chentian.zhihudaily.mvp.presenter.impl.NavigationDrawerPresenterImpl;
 import com.chentian.zhihudaily.mvp.view.MVPNavigationDrawerView;
+import com.chentian.zhihudaily.ui.adapter.ThemeAdapter;
+import com.chentian.zhihudaily.util.ViewUtils;
 
 /**
  * Navigation drawer in the left
@@ -34,31 +35,41 @@ import com.chentian.zhihudaily.mvp.view.MVPNavigationDrawerView;
  */
 public class NavigationDrawerFragment extends Fragment implements MVPNavigationDrawerView {
 
-  private static final String STATE_SELECTED_POSITION = "state_selected_position";
-
-  private int currentSelectPosition = 0;
-
   private NavigationDrawerPresenter presenter;
+
   private View drawerContainer;
   private DrawerLayout drawerLayout;
   private ActionBarDrawerToggle drawerToggle;
+  private Toolbar toolbar;
+  private RecyclerView listViewTheme;
   private ThemeAdapter themeAdapter;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_left_drawer, container, false);
+    listViewTheme = (RecyclerView) rootView.findViewById(R.id.list_theme);
 
-    themeAdapter = new ThemeAdapter(getActivity());
+    themeAdapter = new ThemeAdapter(getContext());
     themeAdapter.setThemeSubscribedListener(new ThemeAdapter.ThemeSubscribedListener() {
       @Override
       public void onThemeSubscribed(Theme theme) {
         presenter.onThemeSubscribed(theme);
       }
     });
+    themeAdapter.setThemeItemSelectListener(new ThemeAdapter.ThemeItemSelectListener() {
+      @Override
+      public void onMainPageItemSelect(View view) {
+        presenter.onMainPageItemSelect(view);
+      }
 
-    RecyclerView listViewTheme = (RecyclerView) rootView.findViewById(R.id.list_theme);
-    listViewTheme.setLayoutManager(new LinearLayoutManager(getActivity()));
+      @Override
+      public void onThemeItemSelected(Theme theme, View view) {
+        presenter.onThemeItemSelected(theme, view);
+      }
+    });
+
+    listViewTheme.setLayoutManager(new LinearLayoutManager(getContext()));
     listViewTheme.setAdapter(themeAdapter);
 
     presenter = new NavigationDrawerPresenterImpl(this);
@@ -75,12 +86,6 @@ public class NavigationDrawerFragment extends Fragment implements MVPNavigationD
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
-  }
-
-  @Override
-  public void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    outState.putInt(STATE_SELECTED_POSITION, currentSelectPosition);
   }
 
   @Override
@@ -105,9 +110,15 @@ public class NavigationDrawerFragment extends Fragment implements MVPNavigationD
     themeAdapter.setThemeList(themes);
   }
 
+  @Override
+  public void setToolbarTitle(String title) {
+    toolbar.setTitle(title);
+  }
+
   public void setUp(View drawerContainer, DrawerLayout drawerLayout, Toolbar toolbar) {
     this.drawerContainer = drawerContainer;
     this.drawerLayout = drawerLayout;
+    this.toolbar = toolbar;
 
     drawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar,
             R.string.drawer_open, R.string.drawer_close) {
@@ -137,21 +148,22 @@ public class NavigationDrawerFragment extends Fragment implements MVPNavigationD
     drawerLayout.openDrawer(Gravity.START);
   }
 
+  @Override
   public void closeDrawer() {
     drawerLayout.closeDrawer(drawerContainer);
   }
 
+  @Override
+  public void highlightListItem(View view) {
+    themeAdapter.setSelectedItemView(view);
+    for (int i = 0; i < listViewTheme.getChildCount(); i++) {
+      View child = listViewTheme.getChildAt(i);
+      boolean isSelected = (child == view);
+      ViewUtils.setSelectedBackground(child, isSelected, getContext());
+    }
+  }
+
   public ActionBarDrawerToggle getDrawerToggle() {
     return drawerToggle;
-  }
-
-  public void setThemeItemCallback(ThemeAdapter.ThemeItemSelectListener themeItemSelectListener) {
-    themeAdapter.setThemeItemSelectListener(themeItemSelectListener);
-  }
-
-  private void selectItem(final int position) {
-    currentSelectPosition = position;
-
-    // TODO: highlight selected item
   }
 }

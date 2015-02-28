@@ -2,6 +2,8 @@ package com.chentian.zhihudaily.mvp.view;
 
 import java.util.List;
 
+import android.view.View;
+
 import com.chentian.zhihudaily.data.model.Theme;
 
 /**
@@ -14,4 +16,9 @@ public interface MVPNavigationDrawerView extends MVPView {
 
   void showThemes(List<Theme> themes);
 
+  void setToolbarTitle(String title);
+
+  void closeDrawer();
+
+  void highlightListItem(View view);
 }

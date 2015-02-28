@@ -56,4 +56,12 @@ public class ViewUtils {
     activity.finish();
     activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
   }
+
+  /**
+   * Set view's background as selected or noraml
+   */
+  public static void setSelectedBackground(View view, boolean isSelected, Context context) {
+    int colorRes = isSelected ? R.color.left_drawer_background_selected : R.color.left_drawer_background_normal;
+    view.setBackgroundColor(context.getResources().getColor(colorRes));
+  }
 }

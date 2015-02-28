@@ -11,7 +11,7 @@
         android:layout_height="@dimen/story_list_item_height">
 
     <RelativeLayout
-            android:background="@drawable/list_item_selector_story"
+            android:background="@drawable/list_item_selector"
             android:paddingLeft="@dimen/story_item_padding"
             android:paddingRight="@dimen/story_item_padding"
             android:layout_width="match_parent"

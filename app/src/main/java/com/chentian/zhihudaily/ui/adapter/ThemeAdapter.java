@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.chentian.zhihudaily.data.model.Theme;
 import com.chentian.zhihudaily.R;
+import com.chentian.zhihudaily.util.ViewUtils;
 
 /**
  * Adapter of theme list, shows in left drawer, including both subscribed and un-subscribed themes
@@ -22,8 +23,8 @@ import com.chentian.zhihudaily.R;
 public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
   public static interface ThemeItemSelectListener {
-    void onMainPageItemSelect();
-    void onThemeItemSelected(Theme theme);
+    void onMainPageItemSelect(View view);
+    void onThemeItemSelected(Theme theme, View view);
   }
 
   public static interface ThemeSubscribedListener {
@@ -35,6 +36,7 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   private Context context;
   private List<Theme> themeList;
+  private View selectedItemView;
   private ThemeItemSelectListener themeItemSelectListener;
   private ThemeSubscribedListener themeSubscribedListener;
 
@@ -63,6 +65,10 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
       ViewHolderItem viewHolderItem = (ViewHolderItem) holder;
       viewHolderItem.bindTheme(themeList.get(position - 1));
     }
+
+    // Set item background
+    boolean isSelected = (holder.itemView == selectedItemView);
+    ViewUtils.setSelectedBackground(holder.itemView, isSelected, context);
   }
 
   @Override
@@ -89,23 +95,29 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     this.themeSubscribedListener = themeSubscribedListener;
   }
 
+  public void setSelectedItemView(View selectedItemView) {
+    this.selectedItemView = selectedItemView;
+  }
+
   private class ViewHolderMainThemeItem extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     public ViewHolderMainThemeItem(View itemView) {
       super(itemView);
 
+      setSelectedItemView(itemView);
+
+      itemView.setBackgroundColor(context.getResources().getColor(R.color.left_drawer_background_selected));
       itemView.setActivated(true);
       itemView.setOnClickListener(this);
-
 
       itemView.findViewById(R.id.icon).setVisibility(View.VISIBLE);
       itemView.findViewById(R.id.action).setVisibility(View.GONE);
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
       if (themeItemSelectListener != null) {
-        themeItemSelectListener.onMainPageItemSelect();
+        themeItemSelectListener.onMainPageItemSelect(view);
       }
     }
   }
@@ -145,7 +157,7 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
       }
 
       if (themeItemSelectListener != null) {
-        themeItemSelectListener.onThemeItemSelected(theme);
+        themeItemSelectListener.onThemeItemSelected(theme, view);
       }
     }
   }

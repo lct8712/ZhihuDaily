@@ -11,6 +11,10 @@ import com.chentian.zhihudaily.data.model.ThemeStoryCollection;
  */
 public interface MVPStoryListView extends MVPView {
 
+  void loadMainPage();
+
+  void loadTheme(long themeId);
+
   void showMainStory(StoryCollection storyCollection);
 
   void showMoreStory(StoryCollection storyCollection);

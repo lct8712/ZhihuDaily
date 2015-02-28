@@ -6,7 +6,6 @@ A simple approach of zhihu daily android client.
 - offline read
 - Memory cache, Disk cache
 - View pager
-- Left drawer image
 - deal with TODO
 - deal with Warning
 

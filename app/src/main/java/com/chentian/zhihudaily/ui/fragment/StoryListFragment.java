@@ -71,6 +71,7 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
     storyListPresenter.onPause();
   }
 
+  @Override
   public void loadMainPage() {
     swipeRefreshLayoutTheme.setVisibility(View.GONE);
     swipeRefreshLayoutMain.setVisibility(View.VISIBLE);
@@ -78,6 +79,7 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
     storyListPresenter.loadTopStories();
   }
 
+  @Override
   public void loadTheme(long themeId) {
     swipeRefreshLayoutMain.setVisibility(View.GONE);
     swipeRefreshLayoutTheme.setVisibility(View.VISIBLE);

@@ -21,6 +21,6 @@
     <color name="left_drawer_divider">#1B2329</color>
     <color name="left_drawer_text">#94999D</color>
     <color name="left_drawer_background_normal">#FFFFFF</color>
-    <color name="left_drawer_background_selected">#000000</color>
+    <color name="left_drawer_background_selected">#E8E8E8</color>
 
 </resources>

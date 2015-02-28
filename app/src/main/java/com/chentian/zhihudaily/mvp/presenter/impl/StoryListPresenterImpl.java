@@ -12,6 +12,7 @@ import com.chentian.zhihudaily.data.model.StoryAbstract;
 import com.chentian.zhihudaily.data.model.StoryCollection;
 import com.chentian.zhihudaily.domain.StoryRepository;
 import com.chentian.zhihudaily.domain.bus.BeforeStoryCollectionResponse;
+import com.chentian.zhihudaily.domain.bus.DrawerItemSelectedEvent;
 import com.chentian.zhihudaily.domain.bus.LatestStoryCollectionResponse;
 import com.chentian.zhihudaily.domain.bus.ThemeStoryCollectionResponse;
 import com.chentian.zhihudaily.mvp.presenter.StoryListPresenter;
@@ -120,5 +121,19 @@ public class StoryListPresenterImpl implements StoryListPresenter {
   @Subscribe
   public void onThemeStoryCollectionUpdate(ThemeStoryCollectionResponse themeStoryCollectionResponse) {
     storyListView.showThemeStory(themeStoryCollectionResponse.getThemeStoryCollection());
+  }
+
+  @Subscribe
+  public void onDrawerItemSelected(DrawerItemSelectedEvent drawerItemSelectedEvent) {
+    switch (drawerItemSelectedEvent.getItemType()) {
+      case MainPage:
+        storyListView.loadMainPage();
+        break;
+      case Theme:
+        storyListView.loadTheme(drawerItemSelectedEvent.getThemeId());
+        break;
+      default:
+        throw new IllegalArgumentException("drawerItemSelectedEvent item type error.");
+    }
   }
 }
