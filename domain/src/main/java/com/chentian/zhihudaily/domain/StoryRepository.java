@@ -22,9 +22,7 @@ import com.chentian.zhihudaily.data.model.ReadStory;
 import com.chentian.zhihudaily.data.model.StoryAbstract;
 import com.chentian.zhihudaily.data.model.StoryCollection;
 import com.chentian.zhihudaily.data.model.ThemeStoryCollection;
-import com.chentian.zhihudaily.domain.bus.BeforeStoryCollectionResponse;
-import com.chentian.zhihudaily.domain.bus.LatestStoryCollectionResponse;
-import com.chentian.zhihudaily.domain.bus.ThemeStoryCollectionResponse;
+import com.chentian.zhihudaily.domain.bus.*;
 
 /**
  * Represents a repository for reading and writing {@link StoryAbstract} related data.
@@ -54,7 +52,9 @@ public class StoryRepository {
           }
         }.execute();
 
-        Log.d(Const.LogTag.API, "Get latest story collection success, size: " + storyCollection.getStories().size());
+        String logInfo = String.format("Get latest story collection success, size: %d, date: %s",
+                CollectionUtils.notNull(storyCollection.getStories()).size(), storyCollection.getDate());
+        Log.d(Const.LogTag.API, logInfo);
       }
 
       @Override
@@ -84,7 +84,9 @@ public class StoryRepository {
           }
         }.execute();
 
-        Log.d(Const.LogTag.API, "Get more story collection success, size: " + storyCollection.getStories().size());
+        String logInfo = String.format("Get more story collection success, size: %d, date: %s",
+                CollectionUtils.notNull(storyCollection.getStories()).size(), storyCollection.getDate());
+        Log.d(Const.LogTag.API, logInfo);
       }
 
       @Override
@@ -94,10 +96,13 @@ public class StoryRepository {
     });
   }
 
-  public static void syncThemeStoryCollection(Context context, final long themeId) {
-    Log.d(Const.LogTag.API, "Get theme story collection starts, id: " + themeId);
+  /**
+   * Get theme latest StoryCollection from data source, then fill the read info from database
+   */
+  public static void syncThemeLatestStoryCollection(Context context, final long themeId) {
+    Log.d(Const.LogTag.API, "Get theme latest story collection starts, id: " + themeId);
 
-    DataSource.getInstance(context).getThemeStoryCollection(themeId, new Callback<ThemeStoryCollection>() {
+    DataSource.getInstance(context).getThemeLatestStoryCollection(themeId, new Callback<ThemeStoryCollection>() {
       @Override
       public void success(final ThemeStoryCollection themeStoryCollection, Response response) {
         new AsyncTask<Void, Void, Void>() {
@@ -109,19 +114,55 @@ public class StoryRepository {
           }
         }.execute();
 
-        BusProvider.getUiBus().post(new ThemeStoryCollectionResponse(themeStoryCollection));
-        String logInfo = String.format("Get theme story collection success, id: %d, size: %d",
-                themeId, themeStoryCollection.getStories().size());
+        BusProvider.getUiBus().post(new ThemeLatestStoryCollectionResponse(themeStoryCollection));
+        String logInfo = String.format("Get theme latest story collection success, id: %d, size: %d, latest id: %d",
+                themeId, CollectionUtils.notNull(themeStoryCollection.getStories()).size(),
+                themeStoryCollection.getLatestThemeStoryId());
         Log.d(Const.LogTag.API, logInfo);
       }
 
       @Override
       public void failure(RetrofitError error) {
-        Log.d(Const.LogTag.API, "Get theme story collection failure: " + error + ", " + error.getUrl());
+        Log.d(Const.LogTag.API, "Get theme latest story collection failure: " + error + ", " + error.getUrl());
       }
     });
   }
 
+  /**
+   * Get theme before StoryCollection from data source, then fill the read info from database
+   */
+  public static void syncThemeBeforeStoryCollection(Context context, final long themeId, final long storyId) {
+    Log.d(Const.LogTag.API, "Get theme before story collection starts, id: " + themeId);
+
+    DataSource.getInstance(context).getThemeBeforeStoryCollection(themeId, storyId, new Callback<ThemeStoryCollection>() {
+      @Override
+      public void success(final ThemeStoryCollection themeStoryCollection, Response response) {
+        new AsyncTask<Void, Void, Void>() {
+          @Override
+          protected Void doInBackground(Void... params) {
+            fillStoryAbstractListWithReadInfo(getReadStoryIds(), themeStoryCollection.getStories());
+
+            return null;
+          }
+        }.execute();
+
+        BusProvider.getUiBus().post(new ThemeBeforeStoryCollectionResponse(themeStoryCollection));
+        String logInfo = String.format("Get theme before story collection success, id: %d, size: %d, latest id: %d",
+                themeId, CollectionUtils.notNull(themeStoryCollection.getStories()).size(),
+                themeStoryCollection.getLatestThemeStoryId());
+        Log.d(Const.LogTag.API, logInfo);
+      }
+
+      @Override
+      public void failure(RetrofitError error) {
+        Log.d(Const.LogTag.API, "Get theme before story collection failure: " + error + ", " + error.getUrl());
+      }
+    });
+  }
+
+  /**
+   * Mark specify story as read and save it into database
+   */
   public static void markAsRead(StoryAbstract storyAbstract) {
     storyAbstract.setRead(true);
     final ReadStory readStory = new ReadStory(storyAbstract.getId());

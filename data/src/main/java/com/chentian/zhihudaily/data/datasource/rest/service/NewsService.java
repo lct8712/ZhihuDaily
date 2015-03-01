@@ -30,7 +30,11 @@ public interface NewsService {
   void getStoryDetail(@Path("id") long id, Callback<StoryDetail> callback);
 
   @GET("/theme/{id}")
-  void getThemeStoryCollection(@Path("id") long id, Callback<ThemeStoryCollection> callback);
+  void getThemeLatestStoryCollection(@Path("id") long id, Callback<ThemeStoryCollection> callback);
+
+  @GET("/theme/{themeId}/before/{storyId}")
+  void getThemeBeforeStoryCollection(@Path("themeId") long themeId, @Path("storyId") long storyId,
+                                     Callback<ThemeStoryCollection> callback);
 
   @GET("/story-extra/{id}")
   void getStoryExtra(@Path("id") long id, Callback<StoryDetail> callback);

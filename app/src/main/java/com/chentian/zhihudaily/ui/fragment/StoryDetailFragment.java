@@ -5,11 +5,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.*;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -113,9 +117,18 @@ public class StoryDetailFragment extends Fragment implements MVPStoryDetailView 
       return;
     }
 
-    String data = WebUtils.BuildHtmlWithCss(storyDetail.getBody(), storyDetail.getCss());
-    webViewContent.loadDataWithBaseURL(WebUtils.ASSERT_DIR,
-            data, WebUtils.MIME_HTML_TYPE, WebUtils.DEFAULT_CHARSET, null);
+    if (!TextUtils.isEmpty(storyDetail.getBody())) {
+      String data = WebUtils.BuildHtmlWithCss(storyDetail.getBody(), storyDetail.getCss());
+      webViewContent.loadDataWithBaseURL(WebUtils.ASSERT_DIR,
+              data, WebUtils.MIME_HTML_TYPE, WebUtils.DEFAULT_CHARSET, null);
+    } else if (!TextUtils.isEmpty(storyDetail.getShareUrl())) {
+      // TODO: fix ajax bug
+      WebSettings settings = webViewContent.getSettings();
+      settings.setJavaScriptEnabled(true);
+      webViewContent.setWebChromeClient(new WebChromeClient());
+      webViewContent.setWebViewClient(new WebViewClient());
+      webViewContent.loadUrl(storyDetail.getShareUrl());
+    }
 
     articleHeader.setData(storyDetail.getTitle(), storyDetail.getImage());
 

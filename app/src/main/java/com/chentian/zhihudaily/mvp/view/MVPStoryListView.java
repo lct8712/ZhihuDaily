@@ -15,10 +15,12 @@ public interface MVPStoryListView extends MVPView {
 
   void loadTheme(long themeId);
 
-  void showMainStory(StoryCollection storyCollection);
+  void showLatestStory(StoryCollection storyCollection);
 
-  void showMoreStory(StoryCollection storyCollection);
+  void showBeforeStory(StoryCollection storyCollection);
 
-  void showThemeStory(ThemeStoryCollection themeStoryCollection);
+  void showThemeLatestStory(ThemeStoryCollection themeStoryCollection);
+
+  void showThemeBeforeStory(ThemeStoryCollection themeStoryCollection);
 
 }

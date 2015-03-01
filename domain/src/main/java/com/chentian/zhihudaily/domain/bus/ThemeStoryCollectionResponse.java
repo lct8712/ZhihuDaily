@@ -5,13 +5,13 @@ import lombok.Data;
 import com.chentian.zhihudaily.data.model.ThemeStoryCollection;
 
 /**
- * Theme collection entity transfer on bus
+ * Abstract theme collection entity transfer on bus
  *
  * @author chentian
  */
 @Data
 @SuppressWarnings("unused")
-public class ThemeStoryCollectionResponse {
+public abstract class ThemeStoryCollectionResponse {
 
   private ThemeStoryCollection themeStoryCollection;
 

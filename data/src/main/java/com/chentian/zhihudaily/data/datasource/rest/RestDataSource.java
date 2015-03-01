@@ -3,7 +3,6 @@ package com.chentian.zhihudaily.data.datasource.rest;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
-import retrofit.http.Path;
 
 import com.chentian.zhihudaily.data.datasource.DataSource;
 import com.chentian.zhihudaily.data.datasource.rest.service.NewsService;
@@ -51,32 +50,37 @@ public class RestDataSource extends DataSource {
   }
 
   @Override
-  public void getBeforeStoryCollection(@Path("date") String date, Callback<StoryCollection> callback) {
+  public void getBeforeStoryCollection(String date, Callback<StoryCollection> callback) {
     newsService.getBeforeStoryCollection(date, callback);
   }
 
   @Override
-  public void getStoryDetail(@Path("id") long id, Callback<StoryDetail> callback) {
+  public void getStoryDetail(long id, Callback<StoryDetail> callback) {
     newsService.getStoryDetail(id, callback);
   }
 
   @Override
-  public void getThemeStoryCollection(@Path("id") long id, Callback<ThemeStoryCollection> callback) {
-    newsService.getThemeStoryCollection(id, callback);
+  public void getThemeLatestStoryCollection(long id, Callback<ThemeStoryCollection> callback) {
+    newsService.getThemeLatestStoryCollection(id, callback);
   }
 
   @Override
-  public void getStoryExtra(@Path("id") long id, Callback<StoryDetail> callback) {
+  public void getThemeBeforeStoryCollection(long themeId, long storyId, Callback<ThemeStoryCollection> callback) {
+    newsService.getThemeBeforeStoryCollection(themeId, storyId, callback);
+  }
+
+  @Override
+  public void getStoryExtra(long id, Callback<StoryDetail> callback) {
     newsService.getStoryExtra(id, callback);
   }
 
   @Override
-  public void getShortComments(@Path("id") long id, Callback<CommentCollection> callback) {
+  public void getShortComments(long id, Callback<CommentCollection> callback) {
     newsService.getShortComments(id, callback);
   }
 
   @Override
-  public void getLongComments(@Path("id") long id, Callback<CommentCollection> callback) {
+  public void getLongComments(long id, Callback<CommentCollection> callback) {
     newsService.getLongComments(id, callback);
   }
 

@@ -133,7 +133,9 @@ public class StoryAdapter extends SectionedRecycleViewAdapter {
   }
 
   public void appendStoryList(List<StoryAbstract> data, String sectionTitle) {
-    addSection(new Section(storyList.size() + 1, sectionTitle));
+    if (!TextUtils.isEmpty(sectionTitle)) {
+      addSection(new Section(storyList.size() + 1, sectionTitle));
+    }
 
     storyList.addAll(data);
     notifyDataSetChanged();

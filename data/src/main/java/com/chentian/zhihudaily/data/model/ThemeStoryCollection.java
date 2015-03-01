@@ -4,6 +4,7 @@ import java.util.List;
 
 import lombok.Data;
 
+import com.chentian.zhihudaily.common.util.CollectionUtils;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -45,4 +46,11 @@ public class ThemeStoryCollection {
   private String imageSource;
 
   private List<Editor> editors;
+
+  public long getLatestThemeStoryId() {
+    if (CollectionUtils.isEmpty(stories)) {
+      return 0;
+    }
+    return stories.get(stories.size() - 1).getId();
+  }
 }

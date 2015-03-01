@@ -9,11 +9,13 @@ import com.chentian.zhihudaily.data.model.StoryAbstract;
  */
 public interface StoryListPresenter extends MVPPresenter {
 
-  void loadTopStories();
+  void loadLatestStories();
 
-  void loadMoreStories();
+  void loadBeforeStories();
 
-  void loadThemeStories(long themeId);
+  void loadThemeLatestStories(long themeId);
+
+  void loadThemeBeforeStories();
 
   void onRefreshMainStories();
 

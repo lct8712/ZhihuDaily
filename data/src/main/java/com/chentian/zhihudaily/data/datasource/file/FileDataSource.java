@@ -5,11 +5,10 @@ import android.os.AsyncTask;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.http.Path;
 
+import com.chentian.zhihudaily.common.util.ThreadUtils;
 import com.chentian.zhihudaily.data.datasource.DataSource;
 import com.chentian.zhihudaily.data.model.StoryDetail;
-import com.chentian.zhihudaily.common.util.ThreadUtils;
 import com.google.gson.Gson;
 
 /**
@@ -30,7 +29,7 @@ public class FileDataSource extends DataSource {
   }
 
   @Override
-  public void getStoryDetail(@Path("id") final long id, final Callback<StoryDetail> callback) {
+  public void getStoryDetail(final long id, final Callback<StoryDetail> callback) {
     new AsyncTask<Void, Void, Void>() {
       @Override
       protected Void doInBackground(Void... params) {

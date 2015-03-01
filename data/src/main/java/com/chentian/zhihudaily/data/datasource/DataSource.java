@@ -2,7 +2,6 @@ package com.chentian.zhihudaily.data.datasource;
 
 import android.content.Context;
 import retrofit.Callback;
-import retrofit.http.Path;
 
 import com.chentian.zhihudaily.data.datasource.file.FileDataSource;
 import com.chentian.zhihudaily.data.datasource.memory.MemoryDataSource;
@@ -50,27 +49,31 @@ public abstract class DataSource {
     next.getLatestStoryCollection(callback);
   }
 
-  public void getBeforeStoryCollection(@Path("date") String date, Callback<StoryCollection> callback) {
+  public void getBeforeStoryCollection(String date, Callback<StoryCollection> callback) {
     next.getBeforeStoryCollection(date, callback);
   }
 
-  public void getStoryDetail(@Path("id") long id, Callback<StoryDetail> callback) {
+  public void getStoryDetail(long id, Callback<StoryDetail> callback) {
     next.getStoryDetail(id, callback);
   }
 
-  public void getThemeStoryCollection(@Path("id") long id, Callback<ThemeStoryCollection> callback) {
-    next.getThemeStoryCollection(id, callback);
+  public void getThemeLatestStoryCollection(long id, Callback<ThemeStoryCollection> callback) {
+    next.getThemeLatestStoryCollection(id, callback);
   }
 
-  public void getStoryExtra(@Path("id") long id, Callback<StoryDetail> callback) {
+  public void getThemeBeforeStoryCollection(long themeId, long storyId, Callback<ThemeStoryCollection> callback) {
+    next.getThemeBeforeStoryCollection(themeId, storyId, callback);
+  }
+
+  public void getStoryExtra(long id, Callback<StoryDetail> callback) {
     next.getStoryExtra(id, callback);
   }
 
-  public void getShortComments(@Path("id") long id, Callback<CommentCollection> callback) {
+  public void getShortComments(long id, Callback<CommentCollection> callback) {
     next.getShortComments(id, callback);
   }
 
-  public void getLongComments(@Path("id") long id, Callback<CommentCollection> callback) {
+  public void getLongComments(long id, Callback<CommentCollection> callback) {
     next.getLongComments(id, callback);
   }
 }

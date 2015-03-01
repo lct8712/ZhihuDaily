@@ -10,11 +10,9 @@ import com.chentian.zhihudaily.common.provider.BusProvider;
 import com.chentian.zhihudaily.common.util.CollectionUtils;
 import com.chentian.zhihudaily.data.model.StoryAbstract;
 import com.chentian.zhihudaily.data.model.StoryCollection;
+import com.chentian.zhihudaily.data.model.ThemeStoryCollection;
 import com.chentian.zhihudaily.domain.StoryRepository;
-import com.chentian.zhihudaily.domain.bus.BeforeStoryCollectionResponse;
-import com.chentian.zhihudaily.domain.bus.DrawerItemSelectedEvent;
-import com.chentian.zhihudaily.domain.bus.LatestStoryCollectionResponse;
-import com.chentian.zhihudaily.domain.bus.ThemeStoryCollectionResponse;
+import com.chentian.zhihudaily.domain.bus.*;
 import com.chentian.zhihudaily.mvp.presenter.StoryListPresenter;
 import com.chentian.zhihudaily.mvp.view.MVPStoryListView;
 import com.chentian.zhihudaily.util.ViewUtils;
@@ -28,9 +26,13 @@ public class StoryListPresenterImpl implements StoryListPresenter {
   private MVPStoryListView storyListView;
 
   private String latestDate;
-  private boolean isLoading;
-  private boolean isEnded;
+  private boolean isMainStoryLoading;
+  private boolean isMainStoryEnded;
+
   private long currentThemeId;
+  private long latestThemeStoryId;
+  private boolean isThemeStoryLoading;
+  private boolean isThemeStoryEnded;
 
   public StoryListPresenterImpl(MVPStoryListView storyListView) {
     this.storyListView = storyListView;
@@ -47,34 +49,46 @@ public class StoryListPresenterImpl implements StoryListPresenter {
   }
 
   @Override
-  public void loadTopStories() {
+  public void loadLatestStories() {
+    isMainStoryEnded = false;
     StoryRepository.syncLatestStoryCollection(storyListView.getContext());
   }
 
   @Override
-  public void loadMoreStories() {
-    if (isLoading || isEnded) {
+  public void loadBeforeStories() {
+    if (isMainStoryLoading || isMainStoryEnded) {
       return;
     }
 
-    isLoading = true;
+    isMainStoryLoading = true;
     StoryRepository.syncBeforeStoryCollection(storyListView.getContext(), latestDate);
   }
 
   @Override
-  public void loadThemeStories(final long themeId) {
+  public void loadThemeLatestStories(final long themeId) {
     currentThemeId = themeId;
-    StoryRepository.syncThemeStoryCollection(storyListView.getContext(), themeId);
+    isThemeStoryEnded = false;
+    StoryRepository.syncThemeLatestStoryCollection(storyListView.getContext(), themeId);
+  }
+
+  @Override
+  public void loadThemeBeforeStories() {
+    if (isThemeStoryLoading || isThemeStoryEnded || latestThemeStoryId == 0) {
+      return;
+    }
+
+    isThemeStoryLoading = true;
+    StoryRepository.syncThemeBeforeStoryCollection(storyListView.getContext(), currentThemeId, latestThemeStoryId);
   }
 
   @Override
   public void onRefreshMainStories() {
-    loadTopStories();
+    loadLatestStories();
   }
 
   @Override
   public void onRefreshThemeStories() {
-    loadThemeStories(currentThemeId);
+    loadThemeLatestStories(currentThemeId);
   }
 
   @Override
@@ -102,25 +116,39 @@ public class StoryListPresenterImpl implements StoryListPresenter {
   @Subscribe
   public void onLatestStoryCollectionUpdate(LatestStoryCollectionResponse storyCollectionResponse) {
     StoryCollection storyCollection = storyCollectionResponse.getStoryCollection();
-    storyListView.showMainStory(storyCollection);
+    storyListView.showLatestStory(storyCollection);
     latestDate = storyCollection.getDate();
 
-    loadMoreStories();
+    loadBeforeStories();
   }
 
   @Subscribe
   public void onBeforeStoryCollectionUpdate(BeforeStoryCollectionResponse storyCollectionResponse) {
     StoryCollection storyCollection = storyCollectionResponse.getStoryCollection();
-    storyListView.showMoreStory(storyCollection);
+    storyListView.showBeforeStory(storyCollection);
 
-    isLoading = false;
+    isMainStoryLoading = false;
     latestDate = storyCollection.getDate();
-    isEnded = CollectionUtils.isEmpty(storyCollection.getStories());
+    isMainStoryEnded = CollectionUtils.isEmpty(storyCollection.getStories());
   }
 
   @Subscribe
-  public void onThemeStoryCollectionUpdate(ThemeStoryCollectionResponse themeStoryCollectionResponse) {
-    storyListView.showThemeStory(themeStoryCollectionResponse.getThemeStoryCollection());
+  public void onThemeLatestStoryCollectionUpdate(ThemeLatestStoryCollectionResponse themeStoryCollectionResponse) {
+    ThemeStoryCollection themeStoryCollection = themeStoryCollectionResponse.getThemeStoryCollection();
+    storyListView.showThemeLatestStory(themeStoryCollection);
+    latestThemeStoryId = themeStoryCollection.getLatestThemeStoryId();
+
+    loadThemeBeforeStories();
+  }
+
+  @Subscribe
+  public void onThemeBeforeStoryCollectionUpdate(ThemeBeforeStoryCollectionResponse themeStoryCollectionResponse) {
+    ThemeStoryCollection themeStoryCollection = themeStoryCollectionResponse.getThemeStoryCollection();
+    storyListView.showThemeBeforeStory(themeStoryCollection);
+
+    isThemeStoryLoading = false;
+    latestThemeStoryId = themeStoryCollection.getLatestThemeStoryId();
+    isThemeStoryEnded = CollectionUtils.isEmpty(themeStoryCollection.getStories()) || (latestThemeStoryId == 0);
   }
 
   @Subscribe

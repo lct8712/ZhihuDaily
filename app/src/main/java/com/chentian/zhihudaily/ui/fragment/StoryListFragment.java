@@ -32,6 +32,8 @@ import com.chentian.zhihudaily.ui.adapter.StoryAdapter;
  */
 public class StoryListFragment extends Fragment implements MVPStoryListView {
 
+  private static final int SCROLL_THRESHOLD = 5;
+
   @InjectView(R.id.list_view_story_main) RecyclerView listViewStoryMain;
   @InjectView(R.id.list_view_story_theme) RecyclerView listViewStoryTheme;
   @InjectView(R.id.swipe_refresh_story_main) SwipeRefreshLayout swipeRefreshLayoutMain;
@@ -51,7 +53,8 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
     storyListPresenter = new StoryListPresenterImpl(this);
 
     bindSwipeRefreshView();
-    bindListView();
+    bindMainListView();
+    bindThemeListView();
     bindAdapter();
 
     loadMainPage();
@@ -76,7 +79,7 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
     swipeRefreshLayoutTheme.setVisibility(View.GONE);
     swipeRefreshLayoutMain.setVisibility(View.VISIBLE);
 
-    storyListPresenter.loadTopStories();
+    storyListPresenter.loadLatestStories();
   }
 
   @Override
@@ -84,11 +87,11 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
     swipeRefreshLayoutMain.setVisibility(View.GONE);
     swipeRefreshLayoutTheme.setVisibility(View.VISIBLE);
 
-    storyListPresenter.loadThemeStories(themeId);
+    storyListPresenter.loadThemeLatestStories(themeId);
   }
 
   @Override
-  public void showMainStory(StoryCollection storyCollection) {
+  public void showLatestStory(StoryCollection storyCollection) {
     swipeRefreshLayoutMain.setRefreshing(false);
 
     storyAdapterMain.setStoryList(storyCollection.getStories(), getContext().getString(R.string.today_story));
@@ -96,18 +99,23 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
   }
 
   @Override
-  public void showMoreStory(StoryCollection storyCollection) {
+  public void showBeforeStory(StoryCollection storyCollection) {
     String date = CommonUtils.formatDate(storyCollection.getDate());
     storyAdapterMain.appendStoryList(storyCollection.getStories(), date);
   }
 
   @Override
-  public void showThemeStory(ThemeStoryCollection themeStoryCollection) {
+  public void showThemeLatestStory(ThemeStoryCollection themeStoryCollection) {
     swipeRefreshLayoutTheme.setRefreshing(false);
 
     listViewStoryTheme.scrollToPosition(0);
     storyAdapterTheme.setStoryList(themeStoryCollection.getStories(), Const.EMPTY_STRING);
     storyAdapterTheme.setNormalHeaderData(themeStoryCollection.getDescription(), themeStoryCollection.getImage());
+  }
+
+  @Override
+  public void showThemeBeforeStory(ThemeStoryCollection themeStoryCollection) {
+    storyAdapterTheme.appendStoryList(themeStoryCollection.getStories(), Const.EMPTY_STRING);
   }
 
   @Override
@@ -138,18 +146,16 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
     });
   }
 
-  private void bindListView() {
+  private void bindMainListView() {
     final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
     listViewStoryMain.setLayoutManager(layoutManager);
     listViewStoryMain.setOnScrollListener(new RecyclerView.OnScrollListener() {
-      private static final int THRESHOLD = 5;
-
       @Override
       public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
         int itemCount = layoutManager.getItemCount();
         int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
-        if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItemPosition >= itemCount - THRESHOLD) {
-          storyListPresenter.loadMoreStories();
+        if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItemPosition >= itemCount - SCROLL_THRESHOLD) {
+          storyListPresenter.loadBeforeStories();
         }
       }
 
@@ -175,7 +181,21 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
         }
       }
     });
-    listViewStoryTheme.setLayoutManager(new LinearLayoutManager(getActivity()));
+  }
+
+  private void bindThemeListView() {
+    final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+    listViewStoryTheme.setLayoutManager(layoutManager);
+    listViewStoryTheme.setOnScrollListener(new RecyclerView.OnScrollListener() {
+      @Override
+      public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+        int itemCount = layoutManager.getItemCount();
+        int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+        if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItemPosition >= itemCount - SCROLL_THRESHOLD) {
+          storyListPresenter.loadThemeBeforeStories();
+        }
+      }
+    });
   }
 
   private void bindAdapter() {
