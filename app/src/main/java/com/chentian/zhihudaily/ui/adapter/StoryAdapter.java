@@ -18,6 +18,7 @@ import com.chentian.zhihudaily.domain.StoryRepository;
 import com.chentian.zhihudaily.ui.view.ArticleHeaderView;
 import com.chentian.zhihudaily.ui.view.SectionedRecycleViewAdapter;
 import com.chentian.zhihudaily.ui.view.SlideTopStory;
+import com.chentian.zhihudaily.util.ViewUtils;
 import com.koushikdutta.ion.Ion;
 
 /**
@@ -26,10 +27,6 @@ import com.koushikdutta.ion.Ion;
  * @author chentian
  */
 public class StoryAdapter extends SectionedRecycleViewAdapter {
-
-  public interface OnCardItemClickListener {
-    void onStoryCardItemClick(View view, StoryAbstract story);
-  }
 
   public enum HeaderType {
     SlideHeader, NormalHeader
@@ -45,7 +42,6 @@ public class StoryAdapter extends SectionedRecycleViewAdapter {
   private List<StoryAbstract> storyList;
   private String headerTitle;
   private String headerImageUrl;
-  private OnCardItemClickListener onCardItemClickListener;
   private HeaderType headerType;
 
   public StoryAdapter(Context context, HeaderType headerType) {
@@ -81,7 +77,7 @@ public class StoryAdapter extends SectionedRecycleViewAdapter {
 
     } else if (holder instanceof ViewHolderItem) {
       ViewHolderItem viewHolderItem = (ViewHolderItem) holder;
-      viewHolderItem.bindStory(storyList.get(position - 1), onCardItemClickListener);
+      viewHolderItem.bindStory(storyList.get(position - 1));
     }
   }
 
@@ -141,10 +137,6 @@ public class StoryAdapter extends SectionedRecycleViewAdapter {
     notifyDataSetChanged();
   }
 
-  public void setOnCardItemClickListener(OnCardItemClickListener onCardItemClickListener) {
-    this.onCardItemClickListener = onCardItemClickListener;
-  }
-
   /**
    * View holder for main page header slide
    */
@@ -191,7 +183,6 @@ public class StoryAdapter extends SectionedRecycleViewAdapter {
     private final TextView imageTag;
     private Context context;
     private StoryAbstract story;
-    private OnCardItemClickListener onCardItemClickListener;
 
     public ViewHolderItem(View itemView, Context context) {
       super(itemView);
@@ -203,9 +194,8 @@ public class StoryAdapter extends SectionedRecycleViewAdapter {
       itemView.setOnClickListener(this);
     }
 
-    public void bindStory(StoryAbstract story, OnCardItemClickListener onCardItemClickListener) {
+    public void bindStory(StoryAbstract story) {
       this.story = story;
-      this.onCardItemClickListener = onCardItemClickListener;
 
       txtTitle.setText(story.getTitle());
       setTextTitleRead(story.isRead());
@@ -232,11 +222,9 @@ public class StoryAdapter extends SectionedRecycleViewAdapter {
 
     @Override
     public void onClick(final View view) {
-      if (onCardItemClickListener != null) {
-        StoryRepository.markAsRead(story);
-        setTextTitleRead(true);
-        onCardItemClickListener.onStoryCardItemClick(view, story);
-      }
+      StoryRepository.markAsRead(story);
+      setTextTitleRead(true);
+      ViewUtils.openDetailActivity(story.getId(), context);
     }
   }
 }

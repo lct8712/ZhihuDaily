@@ -58,7 +58,7 @@ public class ViewUtils {
   }
 
   /**
-   * Set view's background as selected or noraml
+   * Set view's background as selected or normal
    */
   public static void setSelectedBackground(View view, boolean isSelected, Context context) {
     int colorRes = isSelected ? R.color.left_drawer_background_selected : R.color.left_drawer_background_normal;

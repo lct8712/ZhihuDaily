@@ -17,7 +17,6 @@ import butterknife.InjectView;
 import com.chentian.zhihudaily.R;
 import com.chentian.zhihudaily.common.util.CommonUtils;
 import com.chentian.zhihudaily.common.util.Const;
-import com.chentian.zhihudaily.data.model.StoryAbstract;
 import com.chentian.zhihudaily.data.model.StoryCollection;
 import com.chentian.zhihudaily.data.model.ThemeStoryCollection;
 import com.chentian.zhihudaily.mvp.presenter.StoryListPresenter;
@@ -199,19 +198,10 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
   }
 
   private void bindAdapter() {
-    StoryAdapter.OnCardItemClickListener onCardItemClickListener = new StoryAdapter.OnCardItemClickListener() {
-      @Override
-      public void onStoryCardItemClick(View view, StoryAbstract story) {
-        storyListPresenter.onStoryCardItemClick(view, story);
-      }
-    };
-
     storyAdapterMain = new StoryAdapter(getActivity(), StoryAdapter.HeaderType.SlideHeader);
-    storyAdapterMain.setOnCardItemClickListener(onCardItemClickListener);
     listViewStoryMain.setAdapter(storyAdapterMain);
 
     storyAdapterTheme = new StoryAdapter(getActivity(), StoryAdapter.HeaderType.NormalHeader);
-    storyAdapterTheme.setOnCardItemClickListener(onCardItemClickListener);
     listViewStoryTheme.setAdapter(storyAdapterTheme);
   }
 }

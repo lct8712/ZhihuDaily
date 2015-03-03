@@ -1,21 +1,13 @@
 package com.chentian.zhihudaily.mvp.presenter.impl;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.os.Build;
-import android.view.View;
-import android.view.ViewAnimationUtils;
-
 import com.chentian.zhihudaily.common.provider.BusProvider;
 import com.chentian.zhihudaily.common.util.CollectionUtils;
-import com.chentian.zhihudaily.data.model.StoryAbstract;
 import com.chentian.zhihudaily.data.model.StoryCollection;
 import com.chentian.zhihudaily.data.model.ThemeStoryCollection;
 import com.chentian.zhihudaily.domain.StoryRepository;
 import com.chentian.zhihudaily.domain.bus.*;
 import com.chentian.zhihudaily.mvp.presenter.StoryListPresenter;
 import com.chentian.zhihudaily.mvp.view.MVPStoryListView;
-import com.chentian.zhihudaily.util.ViewUtils;
 import com.squareup.otto.Subscribe;
 
 /**
@@ -89,28 +81,6 @@ public class StoryListPresenterImpl implements StoryListPresenter {
   @Override
   public void onRefreshThemeStories() {
     loadThemeLatestStories(currentThemeId);
-  }
-
-  @Override
-  public void onStoryCardItemClick(final View view, final StoryAbstract story) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      int cx = (view.getLeft() + view.getRight()) / 2;
-      int cy = (view.getTop() + view.getBottom()) / 2;
-
-      int finalRadius = view.getWidth();
-
-      Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
-      anim.start();
-      anim.addListener(new AnimatorListenerAdapter() {
-        @Override
-        public void onAnimationEnd(Animator animation) {
-          super.onAnimationEnd(animation);
-          ViewUtils.openDetailActivity(story.getId(), view.getContext());
-        }
-      });
-    } else {
-      ViewUtils.openDetailActivity(story.getId(), view.getContext());
-    }
   }
 
   @Subscribe

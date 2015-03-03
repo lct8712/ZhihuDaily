@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -117,15 +116,15 @@ public class StoryDetailFragment extends Fragment implements MVPStoryDetailView 
       return;
     }
 
+    // Web view
     if (!TextUtils.isEmpty(storyDetail.getBody())) {
       String data = WebUtils.BuildHtmlWithCss(storyDetail.getBody(), storyDetail.getCss());
       webViewContent.loadDataWithBaseURL(WebUtils.ASSERT_DIR,
               data, WebUtils.MIME_HTML_TYPE, WebUtils.DEFAULT_CHARSET, null);
     } else if (!TextUtils.isEmpty(storyDetail.getShareUrl())) {
-      // TODO: fix ajax bug
       WebSettings settings = webViewContent.getSettings();
       settings.setJavaScriptEnabled(true);
-      webViewContent.setWebChromeClient(new WebChromeClient());
+      settings.setDomStorageEnabled(true);
       webViewContent.setWebViewClient(new WebViewClient());
       webViewContent.loadUrl(storyDetail.getShareUrl());
     }
