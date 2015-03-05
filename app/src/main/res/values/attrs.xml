@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AppTheme">
+
+        <attr name="colorTextDeep" format="reference" />
+        <attr name="colorTextLight" format="reference" />
+
+        <attr name="colorListItemBackgroundNormal" format="reference" />
+        <attr name="colorListItemTextNormal" format="reference" />
+        <attr name="colorListItemTextRead" format="reference" />
+        <attr name="colorListSectionTitle" format="reference" />
+        <attr name="colorFragmentBackground" format="reference" />
+
+        <attr name="colorLeftDrawerBackgroundNormal" format="reference" />
+        <attr name="colorLeftDrawerBackgroundSelected" format="reference" />
+
+        <attr name="drawableListItemSelector" format="reference" />
+        <attr name="drawableActionNew" format="reference" />
+        <attr name="drawableActionNextItem" format="reference" />
+        <attr name="drawableLeftDrawerBackground" format="reference" />
+
+    </declare-styleable>
+</resources>

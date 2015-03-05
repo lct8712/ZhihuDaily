@@ -8,7 +8,7 @@
         tools:context="com.chentian.zhihudaily.ui.fragment.NavigationDrawerFragment">
 
     <ImageView
-            android:src="@drawable/left_drawer_background"
+            android:src="?attr/drawableLeftDrawerBackground"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="@dimen/left_drawer_image_height"

@@ -4,5 +4,5 @@
     <translate
             android:fromXDelta="0"
             android:toXDelta="100%p"
-            android:duration="@integer/anim_activity_slide"/>
+            android:duration="@integer/anim_activity_slide_time"/>
 </set>

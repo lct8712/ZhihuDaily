@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.util.AttributeSet;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.chentian.zhihudaily.R;
@@ -24,6 +21,7 @@ import com.chentian.zhihudaily.ui.fragment.StoryListFragment;
 public class MainActivity extends BaseActivity {
 
   private NavigationDrawerFragment navigationDrawerFragment;
+  private StoryListFragment storyListFragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +41,7 @@ public class MainActivity extends BaseActivity {
             (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
 
     if (savedInstanceState == null) {
-      StoryListFragment storyListFragment = new StoryListFragment();
+      storyListFragment = new StoryListFragment();
       storyListFragment.setToolbar(toolbar);
       getSupportFragmentManager().beginTransaction()
               .add(R.id.content_container, storyListFragment)
@@ -71,29 +69,8 @@ public class MainActivity extends BaseActivity {
   }
 
   @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.menu_main, menu);
-    return super.onCreateOptionsMenu(menu);
-  }
-
-  @Override
   protected void onPostCreate(Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
     navigationDrawerFragment.getDrawerToggle().syncState();
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        navigationDrawerFragment.openDrawer();
-        break;
-      case R.id.action_settings:
-        break;
-      default:
-        break;
-    }
-    return super.onOptionsItemSelected(item);
   }
 }

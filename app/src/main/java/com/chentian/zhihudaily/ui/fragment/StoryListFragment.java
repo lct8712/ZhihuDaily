@@ -23,6 +23,7 @@ import com.chentian.zhihudaily.mvp.presenter.StoryListPresenter;
 import com.chentian.zhihudaily.mvp.presenter.impl.StoryListPresenterImpl;
 import com.chentian.zhihudaily.mvp.view.MVPStoryListView;
 import com.chentian.zhihudaily.ui.adapter.StoryAdapter;
+import com.chentian.zhihudaily.util.ViewUtils;
 
 /**
  * Fragment containing list of stories
@@ -127,8 +128,9 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
   }
 
   private void bindSwipeRefreshView() {
-    swipeRefreshLayoutMain.setColorSchemeResources(R.color.color_primary);
-    swipeRefreshLayoutTheme.setColorSchemeResources(R.color.color_primary);
+    int[] colorRes = {ViewUtils.getAttrValue(getContext(), R.attr.colorPrimary)};
+    swipeRefreshLayoutMain.setColorSchemeColors(colorRes);
+    swipeRefreshLayoutTheme.setColorSchemeColors(colorRes);
 
     swipeRefreshLayoutMain.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
       @Override

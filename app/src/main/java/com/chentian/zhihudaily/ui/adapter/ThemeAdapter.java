@@ -141,8 +141,8 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
       this.theme = theme;
 
       txtTitle.setText(theme.getName());
-      int resId = theme.isSubscribed() ? R.drawable.ic_action_next_item : R.drawable.ic_action_new;
-      imageAction.setImageResource(resId);
+      int resId = theme.isSubscribed() ? R.attr.drawableActionNextItem : R.attr.drawableActionNew;
+      imageAction.setImageResource(ViewUtils.getAttrResourceId(context, resId));
     }
 
     @Override

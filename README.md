@@ -6,7 +6,8 @@ A simple approach of zhihu daily android client.
 - offline read
 - night mode
 - Memory cache, Disk cache
-- View pager
+- view pager
+- account
 - deal with TODO
 - deal with Warning
 

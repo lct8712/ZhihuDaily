@@ -18,8 +18,10 @@ public class WebUtils {
   private static final String CSS_LINK_PATTERN = "<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\"/>";
   private static final String DIV_IMAGE_PLACE_HOLDER = "class=\"img-place-holder\"";
   private static final String DIV_IMAGE_PLACE_HOLDER_IGNORED = "class=\"img-place-holder-ignored\"";
+  private static final String NIGHT_DIV_TAG_START = "<div class=\"night\">";
+  private static final String DIV_TAG_END = "</div>";
 
-  public static String BuildHtmlWithCss(String htmlContent, List<String> cssUrls) {
+  public static String BuildHtmlWithCss(String htmlContent, List<String> cssUrls, boolean isNightMode) {
     if (TextUtils.isEmpty(htmlContent)) {
       return Const.EMPTY_STRING;
     }
@@ -28,7 +30,14 @@ public class WebUtils {
     for (String cssUrl : CollectionUtils.notNull(cssUrls)) {
       result.append(String.format(CSS_LINK_PATTERN, cssUrl));
     }
+
+    if (isNightMode) {
+      result.append(NIGHT_DIV_TAG_START);
+    }
     result.append(htmlContent.replace(DIV_IMAGE_PLACE_HOLDER, DIV_IMAGE_PLACE_HOLDER_IGNORED));
+    if (isNightMode) {
+      result.append(DIV_TAG_END);
+    }
     return result.toString();
   }
 }

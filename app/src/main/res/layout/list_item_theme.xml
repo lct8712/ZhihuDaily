@@ -30,7 +30,6 @@
 
     <ImageView
             android:id="@+id/action"
-            android:src="@drawable/ic_action_new"
             android:contentDescription="@string/story_icon"
             android:layout_gravity="center_vertical"
             android:scaleType="centerCrop"

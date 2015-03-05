@@ -13,6 +13,7 @@
 
         <android.support.v7.widget.RecyclerView
                 android:id="@+id/list_view_story_main"
+                android:background="?attr/colorFragmentBackground"
                 android:overScrollMode="never"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
@@ -29,6 +30,7 @@
 
         <android.support.v7.widget.RecyclerView
                 android:id="@+id/list_view_story_theme"
+                android:background="?attr/colorFragmentBackground"
                 android:overScrollMode="never"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>

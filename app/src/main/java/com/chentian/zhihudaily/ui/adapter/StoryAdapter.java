@@ -215,9 +215,9 @@ public class StoryAdapter extends SectionedRecycleViewAdapter {
     }
 
     private void setTextTitleRead(boolean read) {
-      int colorDeep = context.getResources().getColor(R.color.text_deep);
-      int colorRead = context.getResources().getColor(R.color.list_item_text_read);
-      txtTitle.setTextColor(read ? colorRead : colorDeep);
+      int attrId = read ? R.attr.colorListItemTextRead : R.attr.colorListItemTextNormal;
+      int attrColor = ViewUtils.getAttrValue(context, attrId);
+      txtTitle.setTextColor(attrColor);
     }
 
     @Override

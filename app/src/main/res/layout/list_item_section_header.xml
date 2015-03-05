@@ -11,7 +11,7 @@
             android:paddingRight="@dimen/story_item_section_header_padding"
             android:paddingEnd="@dimen/story_item_section_header_padding"
             android:textSize="@dimen/text_size_small"
-            android:textColor="@color/list_item_section_header_text"
+            android:textColor="?attr/colorListSectionTitle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/story_item_section_header_height"/>
 

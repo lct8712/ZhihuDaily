@@ -10,9 +10,10 @@
     <string name="story_title">文章标题</string>
     <string name="title_activity_detail">文章详情页</string>
     <string name="load_failed">加载失败</string>
-    <string name="theme_icon">图标</string>
     <string name="multi_image">多图</string>
     <string name="today_story">今日热闻</string>
     <string name="left_drawer_background">菜单背景</string>
+    <string name="action_night_mode">夜间模式</string>
+    <string name="action_day_mode">白天模式</string>
 
 </resources>

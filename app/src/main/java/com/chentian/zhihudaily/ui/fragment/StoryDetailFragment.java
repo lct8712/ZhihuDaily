@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.chentian.zhihudaily.R;
+import com.chentian.zhihudaily.common.provider.UiModeProvider;
 import com.chentian.zhihudaily.common.util.WebUtils;
 import com.chentian.zhihudaily.data.model.StoryDetail;
 import com.chentian.zhihudaily.mvp.presenter.StoryDetailPresenter;
@@ -118,7 +119,8 @@ public class StoryDetailFragment extends Fragment implements MVPStoryDetailView 
 
     // Web view
     if (!TextUtils.isEmpty(storyDetail.getBody())) {
-      String data = WebUtils.BuildHtmlWithCss(storyDetail.getBody(), storyDetail.getCss());
+      boolean isNightMode = UiModeProvider.getInstance().get(getContext()) == UiModeProvider.UiMode.NightMode;
+      String data = WebUtils.BuildHtmlWithCss(storyDetail.getBody(), storyDetail.getCss(), isNightMode);
       webViewContent.loadDataWithBaseURL(WebUtils.ASSERT_DIR,
               data, WebUtils.MIME_HTML_TYPE, WebUtils.DEFAULT_CHARSET, null);
     } else if (!TextUtils.isEmpty(storyDetail.getShareUrl())) {
@@ -170,7 +172,8 @@ public class StoryDetailFragment extends Fragment implements MVPStoryDetailView 
     }
 
     float articleHeight = getResources().getDimensionPixelSize(R.dimen.slide_image_height);
-    float contentHeight = articleHeight - toolbar.getHeight();
+    int toolbarHeight = toolbar.getHeight();
+    float contentHeight = articleHeight - toolbarHeight;
     float ratio = Math.min(scrollY / contentHeight, 1.0f);
     toolbar.getBackground().setAlpha((int) (ratio * 0xFF));
 
@@ -187,6 +190,10 @@ public class StoryDetailFragment extends Fragment implements MVPStoryDetailView 
     // Show the toolbar if user is pulling down
     boolean isPullingDown = scrollPullDownHelper.onScrollChanged(scrollY);
     float toolBarPositionY = isPullingDown ? 0 : (contentHeight - scrollY);
+    if (scrollY < articleHeight + toolbarHeight) {
+      toolBarPositionY = articleHeight - scrollY - toolbarHeight;
+    }
+
     toolbar.setY(toolBarPositionY);
   }
 }

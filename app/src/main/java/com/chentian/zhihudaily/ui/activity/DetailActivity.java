@@ -2,11 +2,10 @@ package com.chentian.zhihudaily.ui.activity;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import com.chentian.zhihudaily.R;
-import com.chentian.zhihudaily.ui.fragment.StoryDetailFragment;
 import com.chentian.zhihudaily.common.util.Const;
+import com.chentian.zhihudaily.ui.fragment.StoryDetailFragment;
 import com.chentian.zhihudaily.util.ViewUtils;
 
 /**
@@ -46,28 +45,12 @@ public class DetailActivity extends BaseActivity {
   }
 
   @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.menu_detail, menu);
-    return true;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        ViewUtils.finishActivityWithSlideAnim(this);
-        break;
-      case R.id.action_settings:
-        break;
-      default:
-        break;
-    }
-    return super.onOptionsItemSelected(item);
-  }
-
-  @Override
   public void onBackPressed() {
     ViewUtils.finishActivityWithSlideAnim(this);
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    return true;
   }
 }

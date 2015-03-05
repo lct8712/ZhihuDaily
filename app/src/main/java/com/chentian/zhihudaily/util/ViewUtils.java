@@ -3,11 +3,14 @@ package com.chentian.zhihudaily.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.chentian.zhihudaily.R;
+import com.chentian.zhihudaily.common.provider.UiModeProvider;
 import com.chentian.zhihudaily.ui.activity.DetailActivity;
 
 /**
@@ -61,7 +64,41 @@ public class ViewUtils {
    * Set view's background as selected or normal
    */
   public static void setSelectedBackground(View view, boolean isSelected, Context context) {
-    int colorRes = isSelected ? R.color.left_drawer_background_selected : R.color.left_drawer_background_normal;
-    view.setBackgroundColor(context.getResources().getColor(colorRes));
+    int attrId = isSelected ? R.attr.colorLeftDrawerBackgroundSelected : R.attr.colorLeftDrawerBackgroundNormal;
+    view.setBackgroundColor(getAttrValue(context, attrId));
+  }
+
+  /**
+   * Get value from attr, such as color
+   */
+  public static int getAttrValue(Context context, int attrId) {
+    TypedValue typedValue = new TypedValue();
+    context.getTheme().resolveAttribute(attrId, typedValue, true);
+    return  typedValue.data;
+  }
+
+  /**
+   * Get resource id from attr, such as drawable id
+   */
+  public static int getAttrResourceId(Context context, int attrId) {
+    TypedArray typedArray = context.getTheme().obtainStyledAttributes(new int[]{attrId});
+    return typedArray.getResourceId(0, 0);
+  }
+
+  /**
+   * Set activity theme by current setting
+   */
+  public static void setTheme(Activity activity) {
+    UiModeProvider.UiMode uiMode = UiModeProvider.getInstance().get(activity);
+    switch (uiMode) {
+      case DayMode:
+        activity.setTheme(R.style.AppTheme_Light);
+        break;
+      case NightMode:
+        activity.setTheme(R.style.AppTheme_Dark);
+        break;
+      default:
+        throw new IllegalArgumentException("UI mode not found: " + uiMode.name());
+    }
   }
 }
