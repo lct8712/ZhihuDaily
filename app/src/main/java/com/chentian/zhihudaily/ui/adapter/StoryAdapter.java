@@ -12,9 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chentian.zhihudaily.DailyApplication;
 import com.chentian.zhihudaily.R;
+import com.chentian.zhihudaily.common.util.CollectionUtils;
 import com.chentian.zhihudaily.data.model.StoryAbstract;
-import com.chentian.zhihudaily.domain.StoryRepository;
 import com.chentian.zhihudaily.ui.view.ArticleHeaderView;
 import com.chentian.zhihudaily.ui.view.SectionedRecycleViewAdapter;
 import com.chentian.zhihudaily.ui.view.SlideTopStory;
@@ -47,6 +48,7 @@ public class StoryAdapter extends SectionedRecycleViewAdapter {
   public StoryAdapter(Context context, HeaderType headerType) {
     this.context = context;
     this.headerType = headerType;
+    this.topStoryList = new ArrayList<>();
     this.storyList = new ArrayList<>();
   }
 
@@ -109,7 +111,7 @@ public class StoryAdapter extends SectionedRecycleViewAdapter {
   }
 
   public void setTopStories(List<StoryAbstract> topStoryList) {
-    this.topStoryList = topStoryList;
+    this.topStoryList = CollectionUtils.notNull(topStoryList);
     notifyDataSetChanged();
   }
 
@@ -124,7 +126,7 @@ public class StoryAdapter extends SectionedRecycleViewAdapter {
       addSection(new Section(1, sectionTitle));
     }
 
-    storyList = data;
+    storyList = CollectionUtils.notNull(data);
     notifyDataSetChanged();
   }
 
@@ -222,7 +224,7 @@ public class StoryAdapter extends SectionedRecycleViewAdapter {
 
     @Override
     public void onClick(final View view) {
-      StoryRepository.markAsRead(story);
+      DailyApplication.getInstance().getDataRepository().markStoryAsRead(story);
       setTextTitleRead(true);
       ViewUtils.openDetailActivity(story.getId(), context);
     }

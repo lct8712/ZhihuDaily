@@ -3,9 +3,7 @@ A simple approach of zhihu daily android client.
 
 # Todo
 - landing image
-- offline read
-- night mode
-- Memory cache, Disk cache
+- setting: offline read entry, clear cache
 - view pager
 - account
 - deal with TODO

@@ -17,6 +17,7 @@ import android.widget.*;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.chentian.zhihudaily.DailyApplication;
 import com.chentian.zhihudaily.R;
 import com.chentian.zhihudaily.common.provider.UiModeProvider;
 import com.chentian.zhihudaily.common.util.WebUtils;
@@ -119,7 +120,8 @@ public class StoryDetailFragment extends Fragment implements MVPStoryDetailView 
 
     // Web view
     if (!TextUtils.isEmpty(storyDetail.getBody())) {
-      boolean isNightMode = UiModeProvider.getInstance().get(getContext()) == UiModeProvider.UiMode.NightMode;
+      boolean isNightMode = DailyApplication.getInstance().getUiModeProvider().getCurrentMode(getContext())
+              == UiModeProvider.UiMode.NightMode;
       String data = WebUtils.BuildHtmlWithCss(storyDetail.getBody(), storyDetail.getCss(), isNightMode);
       webViewContent.loadDataWithBaseURL(WebUtils.ASSERT_DIR,
               data, WebUtils.MIME_HTML_TYPE, WebUtils.DEFAULT_CHARSET, null);

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.chentian.zhihudaily.DailyApplication;
 import com.chentian.zhihudaily.R;
 import com.chentian.zhihudaily.common.provider.UiModeProvider;
 import com.chentian.zhihudaily.util.ViewUtils;
@@ -45,7 +46,7 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     // Modify ui mode menu item title
     MenuItem menuItemUiMode = menu.findItem(R.id.action_change_mode);
-    UiModeProvider.UiMode uiMode = UiModeProvider.getInstance().get(this);
+    UiModeProvider.UiMode uiMode = DailyApplication.getInstance().getUiModeProvider().getCurrentMode(this);
     int resId = (uiMode == UiModeProvider.UiMode.DayMode) ? R.string.action_night_mode : R.string.action_day_mode;
     menuItemUiMode.setTitle(getString(resId));
 
@@ -71,7 +72,7 @@ public abstract class BaseActivity extends ActionBarActivity {
   }
 
   private void changeUiMode() {
-    UiModeProvider.getInstance().changeUiMode(this);
+    DailyApplication.getInstance().getUiModeProvider().changeUiMode(this);
     invalidateOptionsMenu();
 
     ViewUtils.setTheme(this);

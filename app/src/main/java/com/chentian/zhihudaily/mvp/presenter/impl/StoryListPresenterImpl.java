@@ -1,10 +1,9 @@
 package com.chentian.zhihudaily.mvp.presenter.impl;
 
-import com.chentian.zhihudaily.common.provider.BusProvider;
+import com.chentian.zhihudaily.DailyApplication;
 import com.chentian.zhihudaily.common.util.CollectionUtils;
 import com.chentian.zhihudaily.data.model.StoryCollection;
 import com.chentian.zhihudaily.data.model.ThemeStoryCollection;
-import com.chentian.zhihudaily.domain.StoryRepository;
 import com.chentian.zhihudaily.domain.bus.*;
 import com.chentian.zhihudaily.mvp.presenter.StoryListPresenter;
 import com.chentian.zhihudaily.mvp.view.MVPStoryListView;
@@ -32,18 +31,20 @@ public class StoryListPresenterImpl implements StoryListPresenter {
 
   @Override
   public void onResume() {
-    BusProvider.getUiBus().register(this);
+    DailyApplication.getInstance().getUiBus().register(this);
   }
 
   @Override
   public void onPause() {
-    BusProvider.getUiBus().unregister(this);
+    DailyApplication.getInstance().getUiBus().unregister(this);
   }
 
   @Override
   public void loadLatestStories() {
+    storyListView.showLatestStory(new StoryCollection());
+
     isMainStoryEnded = false;
-    StoryRepository.syncLatestStoryCollection(storyListView.getContext());
+    DailyApplication.getInstance().getDataRepository().syncLatestStoryCollection();
   }
 
   @Override
@@ -53,14 +54,16 @@ public class StoryListPresenterImpl implements StoryListPresenter {
     }
 
     isMainStoryLoading = true;
-    StoryRepository.syncBeforeStoryCollection(storyListView.getContext(), latestDate);
+    DailyApplication.getInstance().getDataRepository().syncBeforeStoryCollection(latestDate);
   }
 
   @Override
   public void loadThemeLatestStories(final long themeId) {
+    storyListView.showThemeLatestStory(new ThemeStoryCollection());
+
     currentThemeId = themeId;
     isThemeStoryEnded = false;
-    StoryRepository.syncThemeLatestStoryCollection(storyListView.getContext(), themeId);
+    DailyApplication.getInstance().getDataRepository().syncThemeLatestStoryCollection(themeId);
   }
 
   @Override
@@ -70,7 +73,8 @@ public class StoryListPresenterImpl implements StoryListPresenter {
     }
 
     isThemeStoryLoading = true;
-    StoryRepository.syncThemeBeforeStoryCollection(storyListView.getContext(), currentThemeId, latestThemeStoryId);
+    DailyApplication.getInstance().getDataRepository().syncThemeBeforeStoryCollection(
+            currentThemeId, latestThemeStoryId);
   }
 
   @Override

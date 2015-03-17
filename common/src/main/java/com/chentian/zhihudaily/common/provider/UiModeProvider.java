@@ -16,21 +16,12 @@ public class UiModeProvider {
     DayMode, NightMode
   }
 
-  private static UiModeProvider instance;
-
   private UiMode currentUiMode;
-
-  public static UiModeProvider getInstance() {
-    if (instance == null) {
-      instance = new UiModeProvider();
-    }
-    return instance;
-  }
 
   /**
    * Get current ui mode
    */
-  public UiMode get(Context context) {
+  public UiMode getCurrentMode(Context context) {
     if (currentUiMode == null) {
       SharedPreferences sharedPreferences = getSharedPreferences(context);
       String uiModeName = sharedPreferences.getString(Const.SharedPreference.KEY_UI_MODE, UiMode.DayMode.name());

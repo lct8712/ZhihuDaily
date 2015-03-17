@@ -5,7 +5,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import com.chentian.zhihudaily.data.datasource.DataSource;
+import com.chentian.zhihudaily.data.datasource.CacheableDataSource;
 import com.chentian.zhihudaily.data.model.StoryDetail;
 
 /**
@@ -13,13 +13,13 @@ import com.chentian.zhihudaily.data.model.StoryDetail;
  *
  * @author chentian
  */
-public class MemoryDataSource extends DataSource {
+public class MemoryDataSource extends CacheableDataSource {
 
   private static final int CACHE_SIZE = 100;
 
   private LruCache<Long, StoryDetail> storyDetailLruCache = new LruCache<>(CACHE_SIZE);
 
-  public MemoryDataSource(DataSource next) {
+  public MemoryDataSource(CacheableDataSource next) {
     super(next);
   }
 

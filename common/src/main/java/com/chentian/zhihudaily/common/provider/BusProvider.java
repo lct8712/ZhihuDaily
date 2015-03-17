@@ -7,7 +7,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
 
 /**
- * Provide instance of otto bus
+ * Provide otto bus
  *
  * @author chentian
  */
@@ -16,7 +16,7 @@ public class BusProvider {
   /**
    * Be able to post from any thread to main thread
    */
-  public static class MainThreadBus extends Bus {
+  public class MainThreadBus extends Bus {
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     @Override public void post(final Object event) {
@@ -33,14 +33,14 @@ public class BusProvider {
     }
   }
 
-  private static Bus dataBus = new Bus(ThreadEnforcer.ANY);
-  private static Bus uiBus = new MainThreadBus();
+  private Bus dataBus = new Bus(ThreadEnforcer.ANY);
+  private Bus uiBus = new MainThreadBus();
 
-  public static Bus getDataBus() {
+  public Bus getDataBus() {
     return dataBus;
   }
 
-  public static Bus getUiBus() {
+  public Bus getUiBus() {
     return uiBus;
   }
 }

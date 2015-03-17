@@ -4,8 +4,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import com.chentian.zhihudaily.common.provider.BusProvider;
-import com.chentian.zhihudaily.data.datasource.DataSource;
+import com.chentian.zhihudaily.DailyApplication;
 import com.chentian.zhihudaily.data.model.StoryDetail;
 import com.chentian.zhihudaily.mvp.presenter.StoryDetailPresenter;
 import com.chentian.zhihudaily.mvp.view.MVPStoryDetailView;
@@ -23,19 +22,19 @@ public class StoryDetailPresenterImpl implements StoryDetailPresenter {
 
   @Override
   public void onResume() {
-    BusProvider.getUiBus().register(this);
+    DailyApplication.getInstance().getUiBus().register(this);
   }
 
   @Override
   public void onPause() {
-    BusProvider.getUiBus().unregister(this);
+    DailyApplication.getInstance().getUiBus().unregister(this);
   }
 
   @Override
   public void loadStoryDetail(long id) {
     storyDetailView.showLoading();
 
-    DataSource.getInstance(storyDetailView.getContext()).getStoryDetail(id, new Callback<StoryDetail>() {
+    DailyApplication.getInstance().getDataRepository().getStoryDetail(id, new Callback<StoryDetail>() {
       @Override
       public void success(StoryDetail storyDetail, Response response) {
         storyDetailView.hideLoading();

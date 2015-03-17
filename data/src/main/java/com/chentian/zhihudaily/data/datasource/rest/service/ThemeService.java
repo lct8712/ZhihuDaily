@@ -6,7 +6,6 @@ import retrofit.http.GET;
 import com.chentian.zhihudaily.data.model.ThemeCollection;
 
 /**
- *
  * Zhihu paper api service for themes
  * The reason to separate this from NewsService is theme use a different gson convert
  *

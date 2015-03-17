@@ -2,10 +2,9 @@ package com.chentian.zhihudaily.mvp.presenter.impl;
 
 import android.view.View;
 
+import com.chentian.zhihudaily.DailyApplication;
 import com.chentian.zhihudaily.R;
-import com.chentian.zhihudaily.common.provider.BusProvider;
 import com.chentian.zhihudaily.data.model.Theme;
-import com.chentian.zhihudaily.domain.ThemeRepository;
 import com.chentian.zhihudaily.domain.bus.DrawerItemSelectedEvent;
 import com.chentian.zhihudaily.domain.bus.ThemeResponse;
 import com.chentian.zhihudaily.mvp.presenter.NavigationDrawerPresenter;
@@ -25,20 +24,20 @@ public class NavigationDrawerPresenterImpl implements NavigationDrawerPresenter 
 
   @Override
   public void onResume() {
-    BusProvider.getUiBus().register(this);
+    DailyApplication.getInstance().getUiBus().register(this);
 
-    ThemeRepository.syncThemeCollection(navigationDrawerView.getContext());
+    DailyApplication.getInstance().getDataRepository().syncThemeCollection();
   }
 
   @Override
   public void onPause() {
-    BusProvider.getUiBus().unregister(this);
+    DailyApplication.getInstance().getUiBus().unregister(this);
   }
 
   @Override
   public void onThemeSubscribed(final Theme theme) {
     theme.setSubscribed(true);
-    ThemeRepository.saveTheme(theme);
+    DailyApplication.getInstance().getDataRepository().saveTheme(theme);
   }
 
   @Override
@@ -47,7 +46,8 @@ public class NavigationDrawerPresenterImpl implements NavigationDrawerPresenter 
     navigationDrawerView.highlightListItem(view);
     navigationDrawerView.closeDrawer();
 
-    BusProvider.getUiBus().post(new DrawerItemSelectedEvent(DrawerItemSelectedEvent.ItemType.MainPage));
+    DailyApplication.getInstance().getUiBus().post(
+            new DrawerItemSelectedEvent(DrawerItemSelectedEvent.ItemType.MainPage));
   }
 
   @Override
@@ -56,7 +56,7 @@ public class NavigationDrawerPresenterImpl implements NavigationDrawerPresenter 
     navigationDrawerView.highlightListItem(view);
     navigationDrawerView.closeDrawer();
 
-    BusProvider.getUiBus().post(
+    DailyApplication.getInstance().getUiBus().post(
             new DrawerItemSelectedEvent(DrawerItemSelectedEvent.ItemType.Theme, theme.getThemeApiId()));
   }
 

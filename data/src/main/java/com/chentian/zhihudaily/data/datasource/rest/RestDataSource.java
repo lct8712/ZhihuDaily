@@ -4,7 +4,7 @@ import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
-import com.chentian.zhihudaily.data.datasource.DataSource;
+import com.chentian.zhihudaily.data.datasource.CacheableDataSource;
 import com.chentian.zhihudaily.data.datasource.rest.service.NewsService;
 import com.chentian.zhihudaily.data.datasource.rest.service.ThemeService;
 import com.chentian.zhihudaily.data.model.*;
@@ -17,13 +17,16 @@ import com.google.gson.GsonBuilder;
  *
  * @author chentian
  */
-public class RestDataSource extends DataSource {
+public class RestDataSource extends CacheableDataSource {
 
   private NewsService newsService;
-
   private ThemeService themeService;
 
-  public RestDataSource(DataSource next) {
+  public RestDataSource() {
+    this(null);
+  }
+
+  public RestDataSource(CacheableDataSource next) {
     super(next);
 
     newsService = new RestAdapter.Builder()
@@ -40,51 +43,42 @@ public class RestDataSource extends DataSource {
   }
 
   @Override
-  public void getStartImage(Callback<StartImage> callback) {
-    newsService.getStartImage(callback);
-  }
-
-  @Override
-  public void getLatestStoryCollection(Callback<StoryCollection> callback) {
-    newsService.getLatestStoryCollection(callback);
-  }
-
-  @Override
-  public void getBeforeStoryCollection(String date, Callback<StoryCollection> callback) {
-    newsService.getBeforeStoryCollection(date, callback);
-  }
-
-  @Override
   public void getStoryDetail(long id, Callback<StoryDetail> callback) {
     newsService.getStoryDetail(id, callback);
   }
 
-  @Override
+  public void getStartImage(Callback<StartImage> callback) {
+    newsService.getStartImage(callback);
+  }
+
+  public void getLatestStoryCollection(Callback<StoryCollection> callback) {
+    newsService.getLatestStoryCollection(callback);
+  }
+
+  public void getBeforeStoryCollection(String date, Callback<StoryCollection> callback) {
+    newsService.getBeforeStoryCollection(date, callback);
+  }
+
   public void getThemeLatestStoryCollection(long id, Callback<ThemeStoryCollection> callback) {
     newsService.getThemeLatestStoryCollection(id, callback);
   }
 
-  @Override
   public void getThemeBeforeStoryCollection(long themeId, long storyId, Callback<ThemeStoryCollection> callback) {
     newsService.getThemeBeforeStoryCollection(themeId, storyId, callback);
   }
 
-  @Override
   public void getStoryExtra(long id, Callback<StoryDetail> callback) {
     newsService.getStoryExtra(id, callback);
   }
 
-  @Override
   public void getShortComments(long id, Callback<CommentCollection> callback) {
     newsService.getShortComments(id, callback);
   }
 
-  @Override
   public void getLongComments(long id, Callback<CommentCollection> callback) {
     newsService.getLongComments(id, callback);
   }
 
-  @Override
   public void getThemeCollection(Callback<ThemeCollection> callback) {
     themeService.getThemeCollection(callback);
   }

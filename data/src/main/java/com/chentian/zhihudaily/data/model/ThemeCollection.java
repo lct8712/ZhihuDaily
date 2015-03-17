@@ -4,6 +4,7 @@ import java.util.List;
 
 import lombok.Data;
 
+import com.chentian.zhihudaily.common.util.CollectionUtils;
 import com.google.gson.annotations.Expose;
 
 /**
@@ -24,4 +25,10 @@ public class ThemeCollection {
 
   @Expose
   private List<Theme> others;
+
+  public List<Theme> getAll() {
+    List<Theme> themes = CollectionUtils.notNull(subscribed);
+    themes.addAll(others);
+    return themes;
+  }
 }

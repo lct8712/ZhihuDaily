@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chentian.zhihudaily.DailyApplication;
 import com.chentian.zhihudaily.R;
 import com.chentian.zhihudaily.common.provider.UiModeProvider;
 import com.chentian.zhihudaily.ui.activity.DetailActivity;
@@ -89,7 +90,7 @@ public class ViewUtils {
    * Set activity theme by current setting
    */
   public static void setTheme(Activity activity) {
-    UiModeProvider.UiMode uiMode = UiModeProvider.getInstance().get(activity);
+    UiModeProvider.UiMode uiMode = DailyApplication.getInstance().getUiModeProvider().getCurrentMode(activity);
     switch (uiMode) {
       case DayMode:
         activity.setTheme(R.style.AppTheme_Light);

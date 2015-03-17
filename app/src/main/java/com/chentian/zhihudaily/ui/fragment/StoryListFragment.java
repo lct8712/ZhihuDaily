@@ -109,8 +109,8 @@ public class StoryListFragment extends Fragment implements MVPStoryListView {
     swipeRefreshLayoutTheme.setRefreshing(false);
 
     listViewStoryTheme.scrollToPosition(0);
-    storyAdapterTheme.setStoryList(themeStoryCollection.getStories(), Const.EMPTY_STRING);
     storyAdapterTheme.setNormalHeaderData(themeStoryCollection.getDescription(), themeStoryCollection.getImage());
+    storyAdapterTheme.setStoryList(themeStoryCollection.getStories(), Const.EMPTY_STRING);
   }
 
   @Override

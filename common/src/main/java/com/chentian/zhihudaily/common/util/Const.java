@@ -9,6 +9,8 @@ public class Const {
 
     public static final String API = "api";
 
+    public static final String OFFLINE = "offline";
+
     public static final String UI = "ui";
 
   }

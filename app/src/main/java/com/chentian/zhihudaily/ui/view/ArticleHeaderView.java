@@ -1,7 +1,6 @@
 package com.chentian.zhihudaily.ui.view;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,9 +47,6 @@ public class ArticleHeaderView extends RelativeLayout {
 
   public void setData(String title, String imageUrl) {
     txtTitle.setText(title);
-    if (!TextUtils.isEmpty(imageUrl)) {
-      Ion.with(imageViewHeader)
-              .load(imageUrl);
-    }
+    Ion.with(imageViewHeader).load(imageUrl);
   }
 }

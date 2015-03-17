@@ -8,8 +8,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.chentian.zhihudaily.R;
-import com.chentian.zhihudaily.data.model.ReadStory;
-import com.chentian.zhihudaily.data.model.Theme;
 import com.chentian.zhihudaily.ui.fragment.NavigationDrawerFragment;
 import com.chentian.zhihudaily.ui.fragment.StoryListFragment;
 
@@ -26,13 +24,6 @@ public class MainActivity extends BaseActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    Theme theme = new Theme();
-    theme.setName("name");
-    theme.save();
-
-    ReadStory readStory = new ReadStory(100L);
-    readStory.save();
 
     toolbar.setTitle(getString(R.string.today_story));
     navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().
