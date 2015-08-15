@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/lct8712/ZhihuDaily.svg?branch=master)](https://travis-ci.org/lct8712/ZhihuDaily)
 # ZhihuDaily
 A simple approach of zhihu daily android client.
 
